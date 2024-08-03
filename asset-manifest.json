@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/saints-touch-photography/static/css/main.e9c89ac3.css",
-    "main.js": "/saints-touch-photography/static/js/main.a47f3057.js",
+    "main.css": "/saints-touch-photography/static/css/main.21701160.css",
+    "main.js": "/saints-touch-photography/static/js/main.b628f953.js",
     "static/js/453.1920f38b.chunk.js": "/saints-touch-photography/static/js/453.1920f38b.chunk.js",
     "static/media/about-photo.jpg": "/saints-touch-photography/static/media/about-photo.f85c51b4904ffe7811c4.jpg",
     "static/media/boudoir2.jpg": "/saints-touch-photography/static/media/boudoir2.d5304227cce772871ec3.jpg",
@@ -96,12 +96,12 @@
     "static/media/creative6.jpg": "/saints-touch-photography/static/media/creative6.fd3d73033c2fef0c68e1.jpg",
     "static/media/creative5.jpg": "/saints-touch-photography/static/media/creative5.5d863725d916c9c58ab5.jpg",
     "index.html": "/saints-touch-photography/index.html",
-    "main.e9c89ac3.css.map": "/saints-touch-photography/static/css/main.e9c89ac3.css.map",
-    "main.a47f3057.js.map": "/saints-touch-photography/static/js/main.a47f3057.js.map",
+    "main.21701160.css.map": "/saints-touch-photography/static/css/main.21701160.css.map",
+    "main.b628f953.js.map": "/saints-touch-photography/static/js/main.b628f953.js.map",
     "453.1920f38b.chunk.js.map": "/saints-touch-photography/static/js/453.1920f38b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e9c89ac3.css",
-    "static/js/main.a47f3057.js"
+    "static/css/main.21701160.css",
+    "static/js/main.b628f953.js"
   ]
 }
