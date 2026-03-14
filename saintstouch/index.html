@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saint's Touch Photography — Clifford Roberts III</title>
+  <meta name="description" content="Cinematic photography by Clifford Roberts III. Portraits, fashion, events, boudoir, maternity & weddings. Based in Virginia Beach, VA." />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J83PE63QCK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J83PE63QCK');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #080808;
+      --cream:  #e8ddd0;
+      --gold:   #c9a87c;
+      --gold2:  #a8845a;
+      --mid:    #1a1a1a;
+      --dim:    rgba(232,221,208,0.55);
+      --ease:   cubic-bezier(.76,0,.24,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    ::selection { background: var(--gold); color: var(--black); }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    #cursor-dot {
+      position: fixed;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: background .2s;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,124,.5);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width .3s var(--ease), height .3s var(--ease), border-color .3s;
+    }
+    body.cursor-hover #cursor-ring {
+      width: 56px; height: 56px;
+      border-color: var(--gold);
+    }
+
+    /* ============================================================
+       LOADER
+    ============================================================ */
+    #loader {
+      position: fixed; inset: 0;
+      background: var(--black);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      transition: opacity .8s var(--ease), visibility .8s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .loader-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0;
+      text-align: center;
+      padding: 0 24px;
+      animation: loaderFade 1s .3s var(--ease) forwards;
+    }
+    .loader-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: .7rem;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      text-align: center;
+      animation: loaderFade .8s .9s var(--ease) forwards;
+    }
+    .loader-bar-wrap {
+      width: min(320px, 60vw);
+      height: 1px;
+      background: rgba(232,221,208,.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-bar {
+      position: absolute;
+      left: -100%; top: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: loaderBar 1.8s .4s var(--ease) forwards;
+    }
+    @keyframes loaderFade { to { opacity: 1; } }
+    @keyframes loaderBar  { to { left: 100%; } }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 800;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 48px;
+      transition: background .5s, padding .4s;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,.88);
+      backdrop-filter: blur(16px);
+      padding: 14px 48px;
+      border-bottom: 1px solid rgba(201,168,124,.1);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color .3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .35s var(--ease);
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 9px 20px;
+      border-radius: 2px;
+      transition: background .3s, color .3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 1px;
+      background: var(--cream);
+      transition: transform .3s, opacity .3s;
+    }
+
+    /* mobile nav */
+    .nav-mobile {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(8,8,8,.97);
+      z-index: 790;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 36px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      letter-spacing: .1em;
+      color: var(--cream);
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+    .nav-mobile a:hover { color: var(--gold); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      width: 100%; height: 100svh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/hero.jpg') center top/cover no-repeat;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,8,.3) 0%,
+        rgba(8,8,8,.15) 40%,
+        rgba(8,8,8,.55) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+    }
+    .hero-eyebrow {
+      font-size: .68rem;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp .8s 2.2s var(--ease) forwards;
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      line-height: .95;
+      letter-spacing: -.01em;
+      max-width: 750px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: revealUp 1s 2.5s var(--ease) forwards;
+    }
+    .hero-headline em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      margin-top: 24px;
+      font-size: .78rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      max-width: 340px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp .8s 2.8s var(--ease) forwards;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; right: 48px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: revealFade .8s 3.1s forwards;
+    }
+    .hero-scroll span {
+      font-size: .6rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--dim);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: .3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+    @keyframes revealUp { to { opacity:1; transform:translateY(0); } }
+    @keyframes revealFade { to { opacity:1; } }
+
+    /* ============================================================
+       MARQUEE
+    ============================================================ */
+    .marquee-section {
+      background: var(--black);
+      border-top: 1px solid rgba(201,168,124,.15);
+      border-bottom: 1px solid rgba(201,168,124,.15);
+      padding: 18px 0;
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: flex; align-items: center; gap: 32px;
+      padding: 0 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+    .marquee-dot { color: var(--gold); font-size: .5rem; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ============================================================
+       SECTION COMMON
+    ============================================================ */
+    section { padding: 120px 48px; }
+    .section-label {
+      font-size: .65rem;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -.01em;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ============================================================
+       PORTFOLIO
+    ============================================================ */
+    #work { padding-top: 100px; }
+    .work-header {
+      display: flex; flex-wrap: wrap;
+      align-items: flex-end; justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 32px;
+    }
+    .filter-btn {
+      background: none;
+      border: 1px solid rgba(232,221,208,.2);
+      color: var(--dim);
+      font-family: 'Inter', sans-serif;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 2px;
+      cursor: none;
+      transition: all .3s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,124,.07);
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 12px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+    }
+    .gallery-item img {
+      height: auto;
+      display: block;
+      transition: transform .7s var(--ease), filter .5s;
+      filter: brightness(.95) saturate(.9);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1.05) saturate(1);
+    }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity .4s;
+      display: flex; align-items: flex-end;
+      padding: 16px;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-label {
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    /* lightbox */
+    #lightbox {
+      position: fixed; inset: 0;
+      background: rgba(8,8,8,.97);
+      z-index: 5000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity .4s, visibility .4s;
+    }
+    #lightbox.open { opacity: 1; visibility: visible; }
+    #lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      width: auto; height: auto;
+      object-fit: contain;
+      border: 1px solid rgba(201,168,124,.15);
+    }
+    #lightbox-close {
+      position: absolute; top: 24px; right: 32px;
+      font-size: 1.8rem; color: var(--dim);
+      cursor: none; background: none; border: none;
+      transition: color .3s;
+    }
+    #lightbox-close:hover { color: var(--gold); }
+    #lightbox-prev, #lightbox-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      font-size: 2rem; color: var(--dim);
+      cursor: none; padding: 12px;
+      transition: color .3s;
+    }
+    #lightbox-prev { left: 20px; }
+    #lightbox-next { right: 20px; }
+    #lightbox-prev:hover, #lightbox-next:hover { color: var(--gold); }
+
+    /* ============================================================
+       SERVICES
+    ============================================================ */
+    #services { background: var(--mid); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      margin-top: 64px;
+      border: 1px solid rgba(201,168,124,.1);
+    }
+    .service-card {
+      padding: 44px 36px;
+      background: var(--mid);
+      border: 1px solid rgba(201,168,124,.08);
+      position: relative;
+      overflow: hidden;
+      transition: background .4s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s var(--ease);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: #202020; }
+
+    .service-icon {
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+      opacity: .6;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .service-price {
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      font-size: .8rem;
+      line-height: 1.7;
+      color: var(--dim);
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    #about { overflow: hidden; }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 60%; height: 60%;
+      border: 1px solid rgba(201,168,124,.25);
+      pointer-events: none;
+    }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+    .about-img img { transition: transform 1s var(--ease); }
+    .about-img:hover img { transform: scale(1.04); }
+
+    .about-body { padding: 20px 0; }
+    .about-bio {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--dim);
+      margin-top: 28px;
+      margin-bottom: 36px;
+    }
+    .about-stat-row {
+      display: flex; gap: 48px; margin-top: 40px;
+    }
+    .about-stat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .about-stat span {
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      display: block;
+      margin-top: 6px;
+    }
+
+    /* ============================================================
+       PROCESS
+    ============================================================ */
+    #process { background: var(--mid); }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 72px;
+    }
+    .process-step {
+      padding: 44px 32px;
+      border: 1px solid rgba(201,168,124,.08);
+      background: var(--mid);
+      position: relative;
+      transition: background .4s;
+    }
+    .process-step:hover { background: #1f1f1f; }
+    .process-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      color: rgba(201,168,124,.15);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .process-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .process-desc {
+      font-size: .8rem;
+      line-height: 1.75;
+      color: var(--dim);
+    }
+    .process-arrow {
+      position: absolute;
+      top: 50%; right: -1px;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: .8rem;
+      opacity: .4;
+    }
+    .process-step:last-child .process-arrow { display: none; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    #contact { text-align: center; padding: 140px 48px; }
+    .contact-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: -.02em;
+      line-height: .95;
+      margin-bottom: 24px;
+    }
+    .contact-headline em { font-style: italic; color: var(--gold); }
+    .contact-sub {
+      font-size: .8rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 56px;
+    }
+    .contact-actions {
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: center;
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 2px;
+      font-weight: 500;
+      transition: background .3s, transform .3s;
+      cursor: none;
+    }
+    .btn-primary:hover { background: var(--cream); transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-block;
+      border: 1px solid rgba(232,221,208,.25);
+      color: var(--dim);
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 2px;
+      transition: border-color .3s, color .3s;
+      cursor: none;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* contact form */
+    .contact-form {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-field {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .form-field label {
+      font-size: .62rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: rgba(232,221,208,.04);
+      border: 1px solid rgba(232,221,208,.15);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: .85rem;
+      padding: 14px 16px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color .3s;
+      cursor: none;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { border-color: var(--gold); }
+    .form-field textarea { resize: vertical; min-height: 120px; }
+    .form-field select option { background: #111; }
+
+    .form-submit {
+      width: 100%;
+      background: none;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      padding: 16px;
+      border-radius: 2px;
+      cursor: none;
+      transition: background .3s, color .3s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--gold); color: var(--black); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: #030303;
+      border-top: 1px solid rgba(201,168,124,.1);
+      padding: 48px;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-links {
+      display: flex; gap: 32px; list-style: none; flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color .3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      font-size: .65rem;
+      letter-spacing: .1em;
+      color: rgba(232,221,208,.25);
+    }
+
+    /* ============================================================
+       DIVIDER / GOLD LINE
+    ============================================================ */
+    .gold-line {
+      width: 40px; height: 1px;
+      background: var(--gold);
+      margin: 20px 0 32px;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .gallery-grid { columns: 2; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; justify-content: center; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; position: absolute; right: 24px; }
+      section { padding: 80px 24px; }
+      #contact { padding: 100px 24px; }
+      .hero-content { padding: 0 24px 60px; }
+      .hero-scroll { right: 24px; }
+      .gallery-grid { columns: 2; column-gap: 8px; }
+      .gallery-item { margin-bottom: 8px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-wrap::after { display: none; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+      .process-grid { grid-template-columns: 1fr; }
+      .about-stat-row { gap: 28px; }
+    }
+
+    /* ============================================================
+       SCROLLBAR
+    ============================================================ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold2); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-title">Saint's Touch Photography</div>
+  <div class="loader-sub">by Clifford Roberts III</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">&#x2715;</button>
+  <button id="lightbox-prev">&#8249;</button>
+  <img id="lightbox-img" src="" alt="" />
+  <button id="lightbox-next">&#8250;</button>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#work" onclick="closeMobileNav()">Work</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+  <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Saint's <span>Touch</span></a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a></li>
+    <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Virginia Beach · Worldwide</div>
+    <h1 class="hero-headline">
+      Where light meets<br><em>authentic emotion.</em>
+    </h1>
+    <p class="hero-sub">Cinematic Portraiture &amp; Visual Storytelling</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee-track">
+    <!-- items injected by JS -->
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="work">
+  <div class="work-header">
+    <div>
+      <div class="section-label reveal">Selected Work</div>
+      <h2 class="section-title reveal reveal-delay-1">The <em>Gallery</em></h2>
+    </div>
+    <div class="filter-bar reveal reveal-delay-2" id="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="portraits">Portraits</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="fashion">Fashion</button>
+      <button class="filter-btn" data-filter="couples">Couples</button>
+      <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+    </div>
+  </div>
+
+  <div class="gallery-grid reveal" id="gallery">
+
+    <!-- Portraits -->
+    <div class="gallery-item" data-category="portraits" data-featured="true" data-src="images/7E9A8458.jpg"><img src="images/7E9A8458.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A8500.jpg"><img src="images/7E9A8500.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A8507.jpg"><img src="images/7E9A8507.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A8516-2.jpg"><img src="images/7E9A8516-2.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-featured="true" data-src="images/_E9A1350.jpg"><img src="images/_E9A1350.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1432.jpg"><img src="images/_E9A1432.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1623.jpg"><img src="images/_E9A1623.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1610.jpg"><img src="images/_E9A1610.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A0029.jpg"><img src="images/_E9A0029.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A0068.jpg"><img src="images/_E9A0068.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A0158-2.jpg"><img src="images/_E9A0158-2.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A0167.jpg"><img src="images/_E9A0167.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A4069.jpg"><img src="images/7E9A4069.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A4094.jpg"><img src="images/7E9A4094.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/7E9A4146.jpg"><img src="images/7E9A4146.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-featured="true" data-src="images/7E9A4117.jpg"><img src="images/7E9A4117.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+
+    <!-- Events -->
+    <div class="gallery-item" data-category="events" data-featured="true" data-src="images/_E9A0921.jpg"><img src="images/_E9A0921.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A0928.jpg"><img src="images/_E9A0928.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A0940.jpg"><img src="images/_E9A0940.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A0963.jpg"><img src="images/_E9A0963.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A0981.jpg"><img src="images/_E9A0981.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A1006.jpg"><img src="images/_E9A1006.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A1027.jpg"><img src="images/_E9A1027.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/_E9A1032.jpg"><img src="images/_E9A1032.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-featured="true" data-src="images/events/7E9A9637.jpg"><img src="images/events/7E9A9637.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9646.jpg"><img src="images/events/7E9A9646.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9651.jpg"><img src="images/events/7E9A9651.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9652.jpg"><img src="images/events/7E9A9652.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9633.jpg"><img src="images/events/7E9A9633.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9665.jpg"><img src="images/events/7E9A9665.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9669.jpg"><img src="images/events/7E9A9669.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9672.jpg"><img src="images/events/7E9A9672.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9674.jpg"><img src="images/events/7E9A9674.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9676.jpg"><img src="images/events/7E9A9676.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9678.jpg"><img src="images/events/7E9A9678.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9680.jpg"><img src="images/events/7E9A9680.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9683.jpg"><img src="images/events/7E9A9683.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9685.jpg"><img src="images/events/7E9A9685.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/events/7E9A9696.jpg"><img src="images/events/7E9A9696.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/IMG_9423.jpg"><img src="images/IMG_9423.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/IMG_9467.jpg"><img src="images/IMG_9467.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+    <div class="gallery-item" data-category="events" data-src="images/IMG_9474.jpg"><img src="images/IMG_9474.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
+
+    <!-- Fashion -->
+    <div class="gallery-item" data-category="fashion" data-featured="true" data-src="images/_MG_7856-Edit.jpg"><img src="images/_MG_7856-Edit.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+    <div class="gallery-item" data-category="fashion" data-featured="true" data-src="images/_MG_8207-Edit.jpg"><img src="images/_MG_8207-Edit.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+    <div class="gallery-item" data-category="fashion" data-src="images/_MG_8305-Edit.jpg"><img src="images/_MG_8305-Edit.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+    <div class="gallery-item" data-category="fashion" data-src="images/_MG_7992-Edit.jpg"><img src="images/_MG_7992-Edit.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+    <div class="gallery-item" data-category="fashion" data-src="images/_MG_8286-Edit.jpg"><img src="images/_MG_8286-Edit.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+    <div class="gallery-item" data-category="fashion" data-src="images/_MG_7667-Edit-2.jpg"><img src="images/_MG_7667-Edit-2.jpg" alt="Fashion" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Fashion</span></div></div>
+
+    <!-- Couples -->
+    <div class="gallery-item" data-category="couples" data-featured="true" data-src="images/couples1.jpeg"><img src="images/couples1.jpeg" alt="Couples" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Couples</span></div></div>
+    <div class="gallery-item" data-category="couples" data-featured="true" data-src="images/IMG_2337.jpg"><img src="images/IMG_2337.jpg" alt="Couples" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Couples</span></div></div>
+    <div class="gallery-item" data-category="couples" data-src="images/IMG_2327.jpg"><img src="images/IMG_2327.jpg" alt="Couples" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Couples</span></div></div>
+    <div class="gallery-item" data-category="couples" data-src="images/IMG_2256.jpg"><img src="images/IMG_2256.jpg" alt="Couples" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Couples</span></div></div>
+
+    <!-- Hospitality -->
+    <div class="gallery-item" data-category="hospitality" data-featured="true" data-src="images/7E9A6687.jpg"><img src="images/7E9A6687.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5523.jpg"><img src="images/hospitality/7E9A5523.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5535.jpg"><img src="images/hospitality/7E9A5535.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5608.jpg"><img src="images/hospitality/7E9A5608.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5662.jpg"><img src="images/hospitality/7E9A5662.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5713.jpg"><img src="images/hospitality/7E9A5713.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A5721.jpg"><img src="images/hospitality/7E9A5721.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A6696.jpg"><img src="images/hospitality/7E9A6696.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A6705.jpg"><img src="images/hospitality/7E9A6705.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A6711.jpg"><img src="images/hospitality/7E9A6711.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-featured="true" data-src="images/hospitality/7E9A9856.jpg"><img src="images/hospitality/7E9A9856.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9881.jpg"><img src="images/hospitality/7E9A9881.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9884.jpg"><img src="images/hospitality/7E9A9884.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9899.jpg"><img src="images/hospitality/7E9A9899.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9937.jpg"><img src="images/hospitality/7E9A9937.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9942.jpg"><img src="images/hospitality/7E9A9942.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9946.jpg"><img src="images/hospitality/7E9A9946.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+    <div class="gallery-item" data-category="hospitality" data-src="images/hospitality/7E9A9951.jpg"><img src="images/hospitality/7E9A9951.jpg" alt="Hospitality" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Hospitality</span></div></div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label reveal">Investment</div>
+  <h2 class="section-title reveal reveal-delay-1">Services &amp; <em>Pricing</em></h2>
+  <div class="gold-line reveal reveal-delay-2"></div>
+
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">◎</div>
+      <div class="service-name">Portraits</div>
+      <div class="service-price">Starting at $350</div>
+      <p class="service-desc">Personal branding, headshots, creative portraits. Clean, cinematic, intentional — tailored to your vision.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">✦</div>
+      <div class="service-name">Maternity</div>
+      <div class="service-price">$400 – $600</div>
+      <p class="service-desc">Celebrating the beauty of new life. Timeless and emotional sessions that you'll treasure forever.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">◈</div>
+      <div class="service-name">Fashion</div>
+      <div class="service-price">Starting at $500</div>
+      <p class="service-desc">Editorial and commercial fashion. Bold lighting, editorial direction, and cinematic post-production.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-4">
+      <div class="service-icon">◇</div>
+      <div class="service-name">Boudoir</div>
+      <div class="service-price">Starting at $600</div>
+      <p class="service-desc">Intimate, empowering, and tastefully luxurious. A safe space to celebrate your authentic self.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">⬡</div>
+      <div class="service-name">Hotels &amp; Spa</div>
+      <div class="service-price">$450 – $700</div>
+      <p class="service-desc">Commercial hospitality photography that elevates your brand — interiors, ambiance, and lifestyle content.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">◉</div>
+      <div class="service-name">Weddings</div>
+      <div class="service-price">Starting at $2,000</div>
+      <p class="service-desc">Your story, told beautifully. Full-day coverage with the cinematic depth your love deserves.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">✈</div>
+      <div class="service-name">International Travel</div>
+      <div class="service-price">Cost of Travel + $1,000/day</div>
+      <p class="service-desc">Destination sessions anywhere in the world. Bring your vision — I'll bring the camera and the craft.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-4" style="display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:16px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--dim);">Not sure which package?</div>
+      <a href="https://wa.me/16562310109" target="_blank" class="btn-primary">Let's Talk →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap reveal">
+      <div class="about-img">
+        <img src="images/IMG_2625.jpg" alt="Clifford Roberts III — Saint's Touch Photography" />
+      </div>
+    </div>
+    <div class="about-body">
+      <div class="section-label reveal">The Photographer</div>
+      <h2 class="section-title reveal reveal-delay-1">Clifford Roberts <em>III</em></h2>
+      <div class="gold-line reveal reveal-delay-2"></div>
+      <p class="about-bio reveal reveal-delay-2">
+        I'm Clifford, the eye behind Saint's Touch Photography. What started as experimenting with Photoshop edits in 2020 grew into a passion for visual storytelling. Based in Virginia Beach, VA — I specialize in portraits, boudoir, maternity, fashion, and events. My style blends cinematic depth with authentic emotion. Every session is intentional. Every image is crafted. Available across Hampton Roads and for destination shoots worldwide.
+      </p>
+      <div class="about-stat-row reveal reveal-delay-3">
+        <div class="about-stat">
+          <strong>6+</strong>
+          <span>Years of Vision</span>
+        </div>
+        <div class="about-stat">
+          <strong>500+</strong>
+          <span>Sessions Shot</span>
+        </div>
+        <div class="about-stat">
+          <strong>∞</strong>
+          <span>Stories Told</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label reveal">How It Works</div>
+  <h2 class="section-title reveal reveal-delay-1">The <em>Process</em></h2>
+  <div class="gold-line reveal reveal-delay-2"></div>
+
+  <div class="process-grid">
+    <div class="process-step reveal reveal-delay-1">
+      <div class="process-num">01</div>
+      <div class="process-name">Reach Out</div>
+      <p class="process-desc">Shoot me a message on WhatsApp or fill out the contact form. Tell me about your vision, your vibe, and what you're looking to create.</p>
+      <span class="process-arrow">→</span>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="process-num">02</div>
+      <div class="process-name">We Connect</div>
+      <p class="process-desc">We hop on a quick call or chat to align on your goals, location, wardrobe ideas, and any special requirements. No pressure, just conversation.</p>
+      <span class="process-arrow">→</span>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="process-num">03</div>
+      <div class="process-name">The Shoot</div>
+      <p class="process-desc">We create together. I guide you through every moment to bring out your authentic self. Relaxed, intentional, and always cinematic.</p>
+      <span class="process-arrow">→</span>
+    </div>
+    <div class="process-step reveal reveal-delay-4">
+      <div class="process-num">04</div>
+      <div class="process-name">Your Gallery</div>
+      <p class="process-desc">Your professionally edited images are delivered via a private online gallery within 2–3 weeks. Print-ready and crafted to last a lifetime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Get in Touch</div>
+  <h1 class="contact-headline reveal reveal-delay-1">
+    Let's Create<br><em>Something</em>
+  </h1>
+  <p class="contact-sub reveal reveal-delay-2">Virginia Beach · Hampton Roads · Worldwide</p>
+
+  <div class="contact-actions reveal reveal-delay-3">
+    <a href="https://wa.me/16562310109" target="_blank" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp Me
+    </a>
+    <a href="mailto:saintstouch.photography@gmail.com" class="btn-secondary">Email Inquiry</a>
+  </div>
+
+  <form class="contact-form reveal reveal-delay-4" action="https://formspree.io/f/xkoqzeaj" method="POST">
+    <div class="form-row">
+      <div class="form-field">
+        <label>First Name</label>
+        <input type="text" name="first_name" placeholder="Jordan" autocomplete="given-name" />
+      </div>
+      <div class="form-field">
+        <label>Last Name</label>
+        <input type="text" name="last_name" placeholder="Williams" autocomplete="family-name" />
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@email.com" autocomplete="email" />
+    </div>
+    <div class="form-field">
+      <label>Session Type</label>
+      <select name="session_type">
+        <option value="">Select a service...</option>
+        <option>Portrait</option>
+        <option>Maternity</option>
+        <option>Fashion</option>
+        <option>Boudoir</option>
+        <option>Couples</option>
+        <option>Event</option>
+        <option>Hotels / Spa</option>
+        <option>Wedding</option>
+        <option>International / Destination</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Tell Me About Your Vision</label>
+      <textarea name="message" placeholder="Describe the shoot, mood, timeline..."></textarea>
+    </div>
+    <button type="submit" class="form-submit">Send Message →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Saint's <span>Touch</span> Photography</div>
+  <ul class="footer-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a></li>
+    <li><a href="https://wa.me/16562310109" target="_blank">WhatsApp</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Saint's Touch Photography · Virginia Beach, VA</div>
+</footer>
+
+
+<script>
+  /* ============================================================
+     LOADER
+  ============================================================ */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+      document.getElementById('hero-bg').classList.add('loaded');
+    }, 2200);
+  });
+
+  /* ============================================================
+     CUSTOM CURSOR
+  ============================================================ */
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  (function animCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    dot.style.left  = mx + 'px';
+    dot.style.top   = my + 'px';
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  document.querySelectorAll('a, button, .gallery-item, .filter-btn, .service-card, .process-step').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  /* ============================================================
+     NAV SCROLL
+  ============================================================ */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ============================================================
+     MOBILE NAV
+  ============================================================ */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileNav.classList.toggle('open', menuOpen);
+    const spans = hamburger.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'translateY(6px) rotate(45deg)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+
+  function closeMobileNav() {
+    menuOpen = false;
+    mobileNav.classList.remove('open');
+    hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+
+  /* ============================================================
+     MARQUEE
+  ============================================================ */
+  const marqueeItems = ['Portrait','Events','Fashion','Boudoir','Maternity','Weddings','Virginia Beach'];
+  const track = document.getElementById('marquee-track');
+  const repeat = 6;
+  let html = '';
+  for (let r = 0; r < repeat; r++) {
+    marqueeItems.forEach((item, i) => {
+      html += `<div class="marquee-item">${item}${i < marqueeItems.length - 1 ? '<span class="marquee-dot">●</span>' : ''}</div>`;
+    });
+  }
+  track.innerHTML = html;
+
+  /* ============================================================
+     PORTFOLIO FILTER
+  ============================================================ */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      galleryItems.forEach(item => {
+        const show = filter === 'all'
+          ? item.dataset.featured === 'true'
+          : item.dataset.category === filter;
+        if (show) {
+          item.classList.remove('hidden');
+          item.style.animation = 'none';
+          item.offsetHeight;
+          item.style.animation = '';
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Init: show only featured on load
+  galleryItems.forEach(item => {
+    if (item.dataset.featured !== 'true') item.classList.add('hidden');
+  });
+
+  /* ============================================================
+     LIGHTBOX
+  ============================================================ */
+  const lightbox     = document.getElementById('lightbox');
+  const lbImg        = document.getElementById('lightbox-img');
+  const lbClose      = document.getElementById('lightbox-close');
+  const lbPrev       = document.getElementById('lightbox-prev');
+  const lbNext       = document.getElementById('lightbox-next');
+  let visibleItems = [];
+  let lbIndex = 0;
+
+  function getVisibleItems() {
+    return [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+  }
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      visibleItems = getVisibleItems();
+      lbIndex = visibleItems.indexOf(item);
+      openLightbox(lbIndex);
+    });
+  });
+
+  function openLightbox(idx) {
+    lbImg.src = visibleItems[idx].dataset.src;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  lbPrev.addEventListener('click', () => { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); });
+  lbNext.addEventListener('click', () => { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); }
+    if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); }
+  });
+
+  /* ============================================================
+     SCROLL REVEAL
+  ============================================================ */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ============================================================
+     CONTACT FORM
+  ============================================================ */
+  // Form submits natively to Formspree — no JS override needed.
+
+  /* ============================================================
+     SMOOTH ANCHOR SCROLL
+  ============================================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ember Coffee Co.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0e0b09;
+      --bg2: #161210;
+      --card: #1c1714;
+      --amber: #c8752a;
+      --amber-light: #e8913e;
+      --cream: #f0e6d3;
+      --muted: #7a6a5a;
+      --text: #ddd0be;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      background: rgba(14,11,9,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,117,42,0.1);
+      transition: padding 0.3s;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+    .logo span { color: var(--amber); }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+    nav ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--amber-light); }
+    .nav-cta {
+      background: var(--amber);
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2rem;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--amber-light) !important; color: #fff !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 0 2rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,117,42,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,117,42,0.06) 0%, transparent 60%);
+    }
+    .hero-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    h1 em { color: var(--amber); font-style: italic; }
+    .hero-sub {
+      max-width: 520px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 2.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: #fff;
+      padding: 0.85rem 2.2rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1px solid rgba(200,117,42,0.4);
+      color: var(--text);
+      padding: 0.85rem 2.2rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber-light); transform: translateY(-2px); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+    .scroll-hint span { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+
+    /* STATS */
+    #stats {
+      padding: 4rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(200,117,42,0.1);
+      border-top: 1px solid rgba(200,117,42,0.1);
+      border-bottom: 1px solid rgba(200,117,42,0.1);
+    }
+    .stat {
+      background: var(--bg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--amber);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* SECTION GENERIC */
+    section { padding: 7rem 4rem; }
+    .section-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--cream);
+      line-height: 1.2;
+    }
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: var(--amber);
+      margin: 1.5rem 0;
+    }
+
+    /* ABOUT */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      background: var(--bg2);
+    }
+    .about-img {
+      position: relative;
+      height: 520px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .about-img-inner {
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(135deg, rgba(200,117,42,0.15), transparent 60%),
+        repeating-linear-gradient(
+          45deg,
+          rgba(200,117,42,0.03) 0px,
+          rgba(200,117,42,0.03) 1px,
+          transparent 1px,
+          transparent 20px
+        ),
+        #1a1410;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-img-icon {
+      font-size: 6rem;
+      opacity: 0.25;
+    }
+    .about-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(200,117,42,0.2);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .about-corner {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 120px;
+      height: 120px;
+      background: var(--amber);
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .about-features {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .feature-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+
+    /* MENU */
+    #menu { background: var(--bg); text-align: center; }
+    #menu h2 { margin-bottom: 0.5rem; }
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2.5rem 0;
+    }
+    .tab {
+      padding: 0.6rem 1.8rem;
+      border-radius: 2rem;
+      border: 1px solid rgba(200,117,42,0.2);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--muted);
+      background: none;
+      transition: all 0.2s;
+    }
+    .tab.active, .tab:hover {
+      background: var(--amber);
+      color: #fff;
+      border-color: var(--amber);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--card);
+      border: 1px solid rgba(200,117,42,0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: left;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .menu-card:hover { border-color: rgba(200,117,42,0.4); transform: translateY(-4px); }
+    .menu-card-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .menu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .menu-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .menu-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .price { color: var(--amber); font-weight: 500; font-size: 1.05rem; }
+    .tag-hot {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(200,117,42,0.15);
+      color: var(--amber);
+      padding: 0.25rem 0.7rem;
+      border-radius: 1rem;
+    }
+
+    /* EXPERIENCE */
+    #experience {
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .exp-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .exp-card {
+      background: var(--card);
+      border: 1px solid rgba(200,117,42,0.1);
+      border-radius: 8px;
+      padding: 1.8rem;
+      transition: border-color 0.2s;
+    }
+    .exp-card:hover { border-color: rgba(200,117,42,0.3); }
+    .exp-card:first-child { grid-column: span 2; }
+    .exp-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+    .exp-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .exp-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--bg); text-align: center; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 3rem auto 0;
+    }
+    .testimonial-card {
+      background: var(--card);
+      border: 1px solid rgba(200,117,42,0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: left;
+    }
+    .stars { color: var(--amber); font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .testimonial-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.75; font-style: italic; }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .author-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .author-name { font-size: 0.85rem; color: var(--cream); font-weight: 500; }
+    .author-sub { font-size: 0.75rem; color: var(--muted); }
+
+    /* HOURS / LOCATION */
+    #visit {
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .hours-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 0; }
+    .hour-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(200,117,42,0.08);
+      font-size: 0.9rem;
+    }
+    .hour-row .day { color: var(--text); }
+    .hour-row .time { color: var(--muted); }
+    .hour-row.today .day { color: var(--amber); font-weight: 500; }
+    .hour-row.today .time { color: var(--amber-light); }
+    .map-placeholder {
+      margin-top: 2rem;
+      height: 260px;
+      background: var(--card);
+      border: 1px solid rgba(200,117,42,0.15);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .map-placeholder span { font-size: 2.5rem; }
+    .address { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 1.1rem; margin-top: 1.5rem; }
+    .address-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* CTA BANNER */
+    #cta {
+      padding: 6rem 4rem;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 80% at 50% 50%, rgba(200,117,42,0.1) 0%, transparent 70%),
+        var(--bg);
+      border-top: 1px solid rgba(200,117,42,0.1);
+    }
+    #cta h2 { margin-bottom: 1rem; }
+    #cta p { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.75; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(200,117,42,0.1);
+    }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--amber); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { display: none; }
+      section { padding: 5rem 1.5rem; }
+      #stats { grid-template-columns: repeat(2, 1fr); padding: 0; }
+      #about, #experience, #visit { grid-template-columns: 1fr; gap: 3rem; }
+      .about-corner { display: none; }
+      .menu-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .exp-cards { grid-template-columns: 1fr; }
+      .exp-card:first-child { grid-column: span 1; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Ember <span>Coffee</span> Co.</div>
+    <ul>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#cta" class="nav-cta">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <p class="hero-tag">Est. 2019 · Artisan Coffee House</p>
+    <h1>Where Every<br/>Sip <em>Ignites</em><br/>the Day</h1>
+    <p class="hero-sub">Handcrafted specialty coffee, sourced from single-origin farms, roasted in-house, and served with intention in every cup.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="#visit" class="btn-ghost">Find Us</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="stat reveal">
+      <span class="stat-num">12+</span>
+      <span class="stat-label">Origins Sourced</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">40k</span>
+      <span class="stat-label">Cups Monthly</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">98%</span>
+      <span class="stat-label">Happy Regulars</span>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">5★</span>
+      <span class="stat-label">Avg. Rating</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img reveal">
+      <div class="about-img-inner">
+        <span class="about-img-icon">☕</span>
+      </div>
+      <div class="about-corner"></div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-tag">Our Story</p>
+      <h2>Rooted in Craft,<br/>Driven by Passion</h2>
+      <div class="divider"></div>
+      <p>Ember Coffee Co. was born out of a simple belief — that great coffee changes the way you experience your morning. Founded in 2019 by two lifelong coffee obsessives, we set out to build a space where craft meets community.</p>
+      <p>We travel to origin farms across Ethiopia, Colombia, and Guatemala, building relationships with the farmers who grow our beans. Everything is roasted in-house, in small batches, with care.</p>
+      <div class="about-features">
+        <div class="feature-item"><span class="feature-dot"></span> Direct-trade relationships with 12 farms</div>
+        <div class="feature-item"><span class="feature-dot"></span> In-house small-batch roasting, daily</div>
+        <div class="feature-item"><span class="feature-dot"></span> Barista-trained staff, SCA certified</div>
+        <div class="feature-item"><span class="feature-dot"></span> Zero waste commitment since 2021</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <p class="section-tag reveal">What We Serve</p>
+    <h2 class="reveal">The Menu</h2>
+    <div class="divider" style="margin: 1.5rem auto;"></div>
+    <div class="menu-tabs reveal">
+      <button class="tab active">Espresso</button>
+      <button class="tab">Pour Over</button>
+      <button class="tab">Cold Brew</button>
+      <button class="tab">Seasonal</button>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🖤</span>
+        <h3>Ember Espresso</h3>
+        <p>Double ristretto pull, rich crema, notes of dark chocolate and toasted walnut. Our house signature.</p>
+        <div class="menu-card-footer">
+          <span class="price">$4.50</span>
+          <span class="tag-hot">Best Seller</span>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🥛</span>
+        <h3>Oat Flat White</h3>
+        <p>Velvety steamed oat milk over a double shot. Smooth, balanced, and dangerously drinkable.</p>
+        <div class="menu-card-footer">
+          <span class="price">$6.00</span>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🍯</span>
+        <h3>Honey Cortado</h3>
+        <p>Equal parts espresso and warm milk, finished with wildflower honey and a pinch of sea salt.</p>
+        <div class="menu-card-footer">
+          <span class="price">$5.50</span>
+          <span class="tag-hot">New</span>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🧊</span>
+        <h3>Ember Cold Brew</h3>
+        <p>18-hour slow steep, served over ice. Clean, low-acid, and dangerously strong.</p>
+        <div class="menu-card-footer">
+          <span class="price">$5.00</span>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🌿</span>
+        <h3>Matcha Latte</h3>
+        <p>Ceremonial-grade matcha whisked into steamed milk of your choice. Earthy, smooth, grounding.</p>
+        <div class="menu-card-footer">
+          <span class="price">$6.50</span>
+        </div>
+      </div>
+      <div class="menu-card reveal">
+        <span class="menu-card-emoji">🔥</span>
+        <h3>Spiced Americano</h3>
+        <p>House espresso diluted with warm water, infused with cinnamon bark and cardamom tincture.</p>
+        <div class="menu-card-footer">
+          <span class="price">$5.00</span>
+          <span class="tag-hot">Seasonal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <p class="section-tag">The Space</p>
+      <h2>More Than<br/>Just Coffee</h2>
+      <div class="divider"></div>
+      <p style="color: var(--muted); line-height: 1.9; margin-bottom: 0.5rem;">We designed Ember to be a place you actually want to stay — warm lighting, good music, fast Wi-Fi, and zero judgment on your third refill.</p>
+    </div>
+    <div class="exp-cards reveal">
+      <div class="exp-card">
+        <span class="exp-icon">🎵</span>
+        <h4>Curated Atmosphere</h4>
+        <p>Hand-picked playlists shift from low-fi morning jazz to ambient afternoon beats. The vibe is intentional.</p>
+      </div>
+      <div class="exp-card">
+        <span class="exp-icon">⚡</span>
+        <h4>Fast Wi-Fi & Outlets</h4>
+        <p>Every seat has easy outlet access. We know you have work to do, and we want you to stay.</p>
+      </div>
+      <div class="exp-card">
+        <span class="exp-icon">📚</span>
+        <h4>Community Shelf</h4>
+        <p>Take a book, leave a book. Our rotating community shelf is free for everyone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <p class="section-tag reveal">What People Say</p>
+    <h2 class="reveal">Real Regulars,<br/>Real Reviews</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I've been to coffee shops across the country and Ember is genuinely top 3. The flat white alone is worth the trip."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JM</div>
+          <div>
+            <div class="author-name">Jordan M.</div>
+            <div class="author-sub">Regular since 2020</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The cold brew is unreal. I stopped buying beans anywhere else. The staff remembers my order. That says everything."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SR</div>
+          <div>
+            <div class="author-name">Sofia R.</div>
+            <div class="author-sub">Remote worker regular</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The atmosphere hits different. Came in for an hour, stayed for four. Would do it again tomorrow."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">TK</div>
+          <div>
+            <div class="author-name">Tyler K.</div>
+            <div class="author-sub">Discovered us on Instagram</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit">
+    <div class="reveal">
+      <p class="section-tag">Hours</p>
+      <h2>Come Find Us</h2>
+      <div class="divider"></div>
+      <div class="hours-list">
+        <div class="hour-row"><span class="day">Monday</span><span class="time">7:00 AM – 8:00 PM</span></div>
+        <div class="hour-row"><span class="day">Tuesday</span><span class="time">7:00 AM – 8:00 PM</span></div>
+        <div class="hour-row"><span class="day">Wednesday</span><span class="time">7:00 AM – 8:00 PM</span></div>
+        <div class="hour-row"><span class="day">Thursday</span><span class="time">7:00 AM – 9:00 PM</span></div>
+        <div class="hour-row today"><span class="day">Friday ← Today</span><span class="time">7:00 AM – 10:00 PM</span></div>
+        <div class="hour-row"><span class="day">Saturday</span><span class="time">8:00 AM – 10:00 PM</span></div>
+        <div class="hour-row"><span class="day">Sunday</span><span class="time">9:00 AM – 6:00 PM</span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="section-tag">Location</p>
+      <h2>Find Your<br/>New Spot</h2>
+      <div class="divider"></div>
+      <div class="map-placeholder">
+        <span>📍</span>
+        <p>Interactive map would live here</p>
+      </div>
+      <p class="address">128 Ember Lane, Brooklyn NY 11201</p>
+      <p class="address-sub">Corner of Atlantic Ave — 2 min walk from the A/C/G trains</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <p class="section-tag reveal">Ready?</p>
+    <h2 class="reveal">Your Next Favorite<br/>Cup is Waiting</h2>
+    <p class="reveal">Order ahead for pickup or come in and let us make something for you. Either way, we'll see you soon.</p>
+    <div class="reveal">
+      <a href="#" class="btn-primary">Order for Pickup</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">Ember <span>Coffee</span> Co.</div>
+    <p>© 2024 Ember Coffee Co. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Menu</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Tab switching (visual only)
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    // Nav shrink on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.padding = window.scrollY > 60 ? '1rem 4rem' : '1.4rem 4rem';
+    });
+  </script>
+</body>
+</html>

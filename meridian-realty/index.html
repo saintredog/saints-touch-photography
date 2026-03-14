@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meridian — Luxury Real Estate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf8f4;
+      --bg2: #f4f0e8;
+      --card: #ffffff;
+      --navy: #0e1623;
+      --navy-mid: #1a2638;
+      --gold: #b8986a;
+      --gold-light: #d4b48a;
+      --text: #2a2420;
+      --muted: #8a8278;
+      --border: rgba(14,22,35,0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(250,248,244,0.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+      font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--navy);
+    }
+    .logo span { color: var(--gold); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover { color: var(--navy); }
+    .nav-cta { background: var(--navy) !important; color: #fff !important; padding: 0.6rem 1.6rem; font-weight: 500 !important; letter-spacing: 0.1em !important; }
+    .nav-cta:hover { background: var(--navy-mid) !important; }
+
+    /* HERO */
+    #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1.2fr; }
+    .hero-left {
+      background: var(--navy);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-left::before {
+      content: 'M'; position: absolute; right: -3rem; bottom: -4rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 30rem; font-weight: 300;
+      color: rgba(255,255,255,0.02); line-height: 1; pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem); font-weight: 300;
+      line-height: 1.05; color: #ffffff;
+      opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+    }
+    h1 em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: 0.9rem; color: rgba(255,255,255,0.45); line-height: 1.85;
+      max-width: 360px; margin-top: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+    }
+    .btn-gold {
+      background: var(--gold); color: #fff; padding: 0.9rem 2rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline-light {
+      border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6);
+      padding: 0.9rem 2rem; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline-light:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+    .hero-right { display: grid; grid-template-rows: 1fr; }
+    .hero-main-photo {
+      background: linear-gradient(160deg, #e8e0d0 0%, #d8cfc0 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-main-photo-inner {
+      font-family: 'Cormorant Garamond', serif; font-size: 12rem; font-weight: 300; font-style: italic;
+      color: rgba(14,22,35,0.05);
+    }
+    .hero-prop-tag {
+      position: absolute; bottom: 2.5rem; left: 2.5rem;
+      background: var(--card); padding: 1.5rem 2rem;
+      box-shadow: 0 8px 32px rgba(14,22,35,0.1);
+      opacity: 0; animation: fadeUp 0.8s 1s forwards;
+    }
+    .tag-address { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .tag-price { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 500; color: var(--navy); }
+    .tag-details { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* LISTINGS */
+    #listings { padding: 7rem 4rem; background: var(--bg); }
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
+    .eyebrow { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+    h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 300; color: var(--navy); line-height: 1.05; }
+    h2 em { font-style: italic; }
+    .view-all { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(184,152,106,0.3); padding-bottom: 0.2rem; transition: border-color 0.2s; }
+    .view-all:hover { border-color: var(--gold); }
+    .listings-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1.5rem; }
+    .listing-card {
+      background: var(--card); border: 1px solid var(--border);
+      transition: box-shadow 0.3s, transform 0.3s; overflow: hidden;
+    }
+    .listing-card:hover { box-shadow: 0 12px 40px rgba(14,22,35,0.1); transform: translateY(-4px); }
+    .listing-photo {
+      height: 240px; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; font-style: italic;
+    }
+    .listing-card:first-child .listing-photo { height: 320px; }
+    .lp1 { background: linear-gradient(160deg, #e4ddd0 0%, #d4cabb 100%); color: rgba(14,22,35,0.06); }
+    .lp2 { background: linear-gradient(160deg, #dde4e8 0%, #c8d4d8 100%); color: rgba(14,22,35,0.06); }
+    .lp3 { background: linear-gradient(160deg, #e8e4d8 0%, #d8d0c4 100%); color: rgba(14,22,35,0.06); }
+    .listing-status {
+      position: absolute; top: 1rem; left: 1rem;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; background: var(--navy); color: #fff;
+    }
+    .listing-status.new { background: var(--gold); }
+    .listing-info { padding: 1.5rem; }
+    .listing-price { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 500; color: var(--navy); }
+    .listing-address { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+    .listing-specs {
+      display: flex; gap: 1.5rem; margin-top: 1rem; padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .spec { font-size: 0.72rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.2rem; }
+    .spec strong { font-size: 0.85rem; color: var(--navy); font-weight: 500; }
+
+    /* ABOUT */
+    #about {
+      padding: 7rem 4rem; background: var(--navy);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    }
+    .about-text .eyebrow { color: var(--gold); }
+    .about-text h2 { color: #fff; }
+    .about-text p { color: rgba(255,255,255,0.45); line-height: 1.85; margin-top: 1.2rem; font-size: 0.9rem; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); margin-top: 3rem; }
+    .about-stat { background: rgba(255,255,255,0.02); padding: 1.8rem; }
+    .about-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--gold-light); }
+    .about-stat-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 0.3rem; }
+    .agent-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      padding: 2.5rem;
+    }
+    .agent-photo {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300;
+      color: #fff; margin-bottom: 1.5rem;
+    }
+    .agent-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: #fff; }
+    .agent-title { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: 0.3rem; }
+    .agent-bio { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.8; margin-top: 1.2rem; }
+    .agent-certs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .agent-cert {
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid rgba(184,152,106,0.3); color: var(--gold);
+      padding: 0.3rem 0.7rem;
+    }
+
+    /* PROCESS */
+    #process { padding: 7rem 4rem; background: var(--bg2); border-top: 1px solid var(--border); }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3.5rem; }
+    .process-step { position: relative; }
+    .process-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300;
+      color: rgba(184,152,106,0.15); line-height: 1; margin-bottom: 1.5rem;
+    }
+    .process-step h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--navy); margin-bottom: 0.6rem; }
+    .process-step p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+    /* CTA */
+    #cta {
+      padding: 8rem 4rem; text-align: center;
+      background: linear-gradient(160deg, #f0ece0 0%, #faf8f4 100%);
+      border-top: 1px solid var(--border);
+    }
+    #cta h2 { font-size: clamp(2.5rem, 5vw, 5.5rem); margin-bottom: 1rem; }
+    #cta p { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-navy {
+      background: var(--navy); color: #fff; padding: 1rem 2.5rem;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-navy:hover { background: var(--navy-mid); transform: translateY(-2px); }
+    .btn-outline-navy {
+      border: 1px solid rgba(14,22,35,0.2); color: var(--navy);
+      padding: 1rem 2.5rem; font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline-navy:hover { border-color: var(--navy); }
+
+    footer {
+      background: var(--navy); padding: 2.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { display: none; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { height: 50vh; }
+      .hero-left { padding: 7rem 1.5rem 4rem; }
+      #listings, #about, #process, #cta { padding: 5rem 1.5rem; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .listings-grid { grid-template-columns: 1fr; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">Meridian<span>.</span></div>
+  <ul>
+    <li><a href="#listings">Listings</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#cta" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Luxury Real Estate · New York</p>
+    <h1>Find Where<br/>You <em>Belong.</em></h1>
+    <p class="hero-sub">Curated luxury properties in New York's most prestigious neighborhoods. Represented with discretion, sold with expertise.</p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-gold">Browse Listings</a>
+      <a href="#cta" class="btn-outline-light">Work With Us</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-main-photo">
+      <div class="hero-main-photo-inner">M</div>
+      <div class="hero-prop-tag">
+        <div class="tag-address">156 West 78th St, Manhattan</div>
+        <div class="tag-price">$4,200,000</div>
+        <div class="tag-details">4 bed · 3 bath · 3,200 sqft</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listings">
+  <div class="section-header reveal">
+    <div>
+      <p class="eyebrow">Featured Properties</p>
+      <h2>Curated<br/><em>Listings</em></h2>
+    </div>
+    <a href="#" class="view-all">View All Properties →</a>
+  </div>
+  <div class="listings-grid">
+    <div class="listing-card reveal">
+      <div class="listing-photo lp1">Penthouse<div class="listing-status new">New</div></div>
+      <div class="listing-info">
+        <div class="listing-price">$6,750,000</div>
+        <div class="listing-address">88 Leonard St, Tribeca, NY 10013</div>
+        <div class="listing-specs">
+          <div class="spec"><strong>5</strong> Beds</div>
+          <div class="spec"><strong>4.5</strong> Baths</div>
+          <div class="spec"><strong>4,800</strong> Sqft</div>
+          <div class="spec"><strong>Penthouse</strong> Type</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-photo lp2">Townhouse<div class="listing-status">For Sale</div></div>
+      <div class="listing-info">
+        <div class="listing-price">$3,950,000</div>
+        <div class="listing-address">214 West 11th St, West Village</div>
+        <div class="listing-specs">
+          <div class="spec"><strong>4</strong> Beds</div>
+          <div class="spec"><strong>3</strong> Baths</div>
+          <div class="spec"><strong>2,900</strong> Sqft</div>
+        </div>
+      </div>
+    </div>
+    <div class="listing-card reveal">
+      <div class="listing-photo lp3">Condo<div class="listing-status">For Sale</div></div>
+      <div class="listing-info">
+        <div class="listing-price">$2,100,000</div>
+        <div class="listing-address">430 E 72nd St, Upper East Side</div>
+        <div class="listing-specs">
+          <div class="spec"><strong>3</strong> Beds</div>
+          <div class="spec"><strong>2</strong> Baths</div>
+          <div class="spec"><strong>1,850</strong> Sqft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-text reveal">
+    <p class="eyebrow">Who We Are</p>
+    <h2>Expertise<br/>You Can <em>Trust</em></h2>
+    <p>Meridian was founded on a simple premise: luxury real estate deserves luxury representation. We don't take on every listing — we take on the right ones and represent them with absolute care.</p>
+    <div class="about-stats">
+      <div class="about-stat"><div class="about-stat-num">$2.4B</div><div class="about-stat-label">Total Sales Volume</div></div>
+      <div class="about-stat"><div class="about-stat-num">18+</div><div class="about-stat-label">Years in Market</div></div>
+      <div class="about-stat"><div class="about-stat-num">340+</div><div class="about-stat-label">Properties Sold</div></div>
+      <div class="about-stat"><div class="about-stat-num">98%</div><div class="about-stat-label">Client Retention</div></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="agent-card">
+      <div class="agent-photo">VL</div>
+      <div class="agent-name">Victoria Lane</div>
+      <div class="agent-title">Principal Broker · Founder</div>
+      <p class="agent-bio">18 years representing New York's most discerning buyers and sellers. Known for her market insight, discretion, and record-setting closings in Manhattan and Brooklyn.</p>
+      <div class="agent-certs">
+        <span class="agent-cert">Licensed Broker</span>
+        <span class="agent-cert">CLHMS</span>
+        <span class="agent-cert">ABR Certified</span>
+        <span class="agent-cert">Top 1% NYC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="reveal">
+    <p class="eyebrow">How It Works</p>
+    <h2>Your Path to the<br/><em>Right Property</em></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="process-num">01</div>
+      <h4>Discovery Call</h4>
+      <p>We start by listening. Your lifestyle, goals, and budget inform every decision we make on your behalf.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="process-num">02</div>
+      <h4>Curated Search</h4>
+      <p>We surface properties that match — including off-market opportunities not available elsewhere.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="process-num">03</div>
+      <h4>Expert Guidance</h4>
+      <p>Negotiations, inspections, legal coordination — we manage every detail with precision.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="process-num">04</div>
+      <h4>Seamless Close</h4>
+      <p>From offer to keys, we ensure a smooth, protected, and celebratory closing experience.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <p class="eyebrow reveal">Let's Connect</p>
+  <h2 class="reveal">Your Next Chapter<br/><em>Starts Here</em></h2>
+  <p class="reveal">Whether you're buying, selling, or simply exploring — a conversation costs nothing and could change everything.</p>
+  <div class="cta-btns reveal">
+    <a href="#" class="btn-navy">Schedule a Consultation</a>
+    <a href="#listings" class="btn-outline-navy">Browse Listings</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Meridian<span>.</span></div>
+  <p>© 2024 Meridian Real Estate. All Rights Reserved.</p>
+  <div class="footer-links">
+    <a href="#">Listings</a><a href="#">About</a><a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); io.unobserve(x.target); }}), { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => { nav.style.padding = window.scrollY > 60 ? '1rem 4rem' : '1.5rem 4rem'; });
+</script>
+</body>
+</html>

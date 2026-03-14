@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saint Labs — Digital Solutions Built to Perform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #080810;
+      --bg2: #0c0c18;
+      --card: #111128;
+      --border: rgba(120,100,255,0.12);
+      --border-hover: rgba(120,100,255,0.35);
+      --violet: #7c5cfc;
+      --violet-light: #9d7ffe;
+      --violet-glow: rgba(124,92,252,0.15);
+      --green: #22c55e;
+      --text: #e2e0f0;
+      --muted: #6b6880;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5rem;
+      background: rgba(8,8,16,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .logo span {
+      background: linear-gradient(135deg, var(--violet), var(--violet-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--violet) !important;
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.85rem !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85 !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(124,92,252,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(120,100,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,100,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, black 30%, transparent 80%);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124,92,252,0.1);
+      border: 1px solid rgba(124,92,252,0.25);
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--violet-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--violet-light), #c084fc, var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      max-width: 560px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.55s forwards;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--violet);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(124,92,252,0.3);
+    }
+    .btn-primary:hover { background: var(--violet-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,92,252,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hover);
+    }
+    .btn-outline:hover { border-color: var(--violet-light); color: var(--violet-light); transform: translateY(-2px); }
+    .hero-trust {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.7s forwards;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .trust-icon { color: var(--green); font-size: 0.9rem; }
+    .trust-divider { width: 1px; height: 20px; background: var(--border); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 5rem; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--violet-light);
+      margin-bottom: 1.2rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 2px;
+      background: var(--violet);
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 540px;
+      margin-top: 1rem;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    #services .section-header { text-align: center; margin-bottom: 3.5rem; }
+    #services .section-sub { margin: 1rem auto 0; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violet), var(--violet-light));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .service-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,92,252,0.12); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 46px; height: 46px;
+      background: rgba(124,92,252,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.3rem;
+    }
+    .service-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.3rem;
+    }
+    .service-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: rgba(124,92,252,0.08);
+      color: var(--violet-light);
+      border: 1px solid rgba(124,92,252,0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .service-card.featured { border-color: rgba(124,92,252,0.3); background: linear-gradient(135deg, #111128, #130f2a); }
+    .service-card.featured::before { opacity: 1; }
+    .featured-badge {
+      position: absolute;
+      top: 1.2rem; right: 1.2rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--violet);
+      color: #fff;
+      padding: 0.2rem 0.7rem;
+      border-radius: 4px;
+    }
+
+    /* ── PRICING ── */
+    #pricing { background: var(--bg); text-align: center; }
+    #pricing .section-sub { margin: 1rem auto 3.5rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.2rem;
+      text-align: left;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,92,252,0.1); }
+    .pricing-card.popular {
+      border-color: var(--violet);
+      background: linear-gradient(160deg, #111128, #130f2a);
+      box-shadow: 0 0 40px rgba(124,92,252,0.15);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--violet);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 1rem;
+      border-radius: 2rem;
+      white-space: nowrap;
+    }
+    .plan-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--violet-light);
+      margin-bottom: 1rem;
+    }
+    .plan-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .plan-price span { font-size: 1.3rem; font-weight: 500; color: var(--muted); }
+    .plan-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.8rem; line-height: 1.5; }
+    .plan-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+    .plan-features li .check { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+    .plan-features li .cross { color: var(--muted); flex-shrink: 0; margin-top: 2px; }
+    .plan-features li.muted-feat { color: var(--muted); }
+    .btn-plan {
+      width: 100%;
+      justify-content: center;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hover);
+      font-size: 0.875rem;
+    }
+    .btn-plan:hover { border-color: var(--violet); color: var(--violet-light); }
+    .pricing-card.popular .btn-plan {
+      background: var(--violet);
+      color: #fff;
+      border-color: var(--violet);
+      box-shadow: 0 4px 20px rgba(124,92,252,0.35);
+    }
+    .pricing-card.popular .btn-plan:hover { background: var(--violet-light); }
+
+    /* ── WHY ── */
+    #why {
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .why-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .why-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .why-card:hover { border-color: var(--border-hover); }
+    .why-card.span2 { grid-column: span 2; }
+    .why-icon { font-size: 1.6rem; margin-bottom: 0.8rem; display: block; }
+    .why-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .why-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(124,92,252,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .about-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet), #c084fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+    .about-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .about-title { font-size: 0.82rem; color: var(--violet-light); font-weight: 500; margin-bottom: 1.2rem; }
+    .about-bio { font-size: 0.875rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .cert-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .cert {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      background: rgba(124,92,252,0.1);
+      border: 1px solid rgba(124,92,252,0.2);
+      color: var(--violet-light);
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+    }
+    .cert.active {
+      background: rgba(34,197,94,0.1);
+      border-color: rgba(34,197,94,0.25);
+      color: #4ade80;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .about-stat { text-align: center; }
+    .about-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--violet-light), #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+    /* ── PROCESS ── */
+    #process {
+      background: var(--bg2);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    #process .section-sub { margin: 1rem auto 4rem; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .process-step {
+      background: var(--card);
+      padding: 2.2rem 1.8rem;
+      text-align: left;
+      position: relative;
+    }
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: rgba(124,92,252,0.15);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .process-step h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .process-step p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA ── */
+    #cta {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(124,92,252,0.12), transparent 70%);
+    }
+    #cta h2 { max-width: 620px; margin: 1rem auto; }
+    #cta .section-sub { margin: 1rem auto 2.5rem; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .wa-btn {
+      background: #25d366;
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.25);
+    }
+    .wa-btn:hover { background: #20bc5a; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--violet-light); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 960px) {
+      nav { padding: 1.1rem 1.5rem; }
+      nav ul { display: none; }
+      section { padding: 4.5rem 1.5rem; }
+      .services-grid, .pricing-grid { grid-template-columns: 1fr; }
+      #why, #about { grid-template-columns: 1fr; gap: 3rem; }
+      .why-cards { grid-template-columns: 1fr; }
+      .why-card.span2 { grid-column: span 1; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .hero-trust { flex-direction: column; gap: 0.8rem; }
+      .trust-divider { display: none; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2.6rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Saint<span>Labs</span></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://wa.me/16195096448" target="_blank" class="nav-cta">Get Started →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="badge-dot"></span> Now Accepting New Clients</div>
+  <h1>Digital Solutions<br/>Built to <span class="grad">Perform.</span></h1>
+  <p class="hero-sub">Websites, branding, and digital infrastructure — designed to convert, built secure, delivered fast. No agencies, no fluff.</p>
+  <div class="hero-actions">
+    <a href="https://wa.me/16195096448" target="_blank" class="btn wa-btn">💬 Message on WhatsApp</a>
+    <a href="#pricing" class="btn btn-outline">View Packages ↓</a>
+  </div>
+  <div class="hero-trust">
+    <div class="trust-item"><span class="trust-icon">✓</span> CompTIA Certified</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">✓</span> 48-Hour Turnaround</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Security-First Builds</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">✓</span> No Hidden Fees</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-label">What We Do</div>
+    <h2>Everything Your Business Needs Online</h2>
+    <p class="section-sub">From your first website to your full digital presence — we handle the tech so you can focus on your business.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card featured reveal reveal-delay-1">
+      <span class="featured-badge">Most Popular</span>
+      <div class="service-icon">🌐</div>
+      <h3>Website Design & Dev</h3>
+      <p>Custom-built, fast-loading, mobile-ready websites that look sharp and convert visitors into customers.</p>
+      <div class="service-tags">
+        <span class="service-tag">Responsive</span>
+        <span class="service-tag">SEO-Ready</span>
+        <span class="service-tag">Secure</span>
+        <span class="service-tag">Fast</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🔍</div>
+      <h3>SEO Setup</h3>
+      <p>Get found on Google. We handle on-page SEO, meta tags, site speed, and search indexing from day one.</p>
+      <div class="service-tags">
+        <span class="service-tag">On-Page SEO</span>
+        <span class="service-tag">Google Search</span>
+        <span class="service-tag">Speed Audit</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">📍</div>
+      <h3>Google Business Setup</h3>
+      <p>Get your business on the map — literally. Full Google Business Profile setup, verified and optimized.</p>
+      <div class="service-tags">
+        <span class="service-tag">Google Maps</span>
+        <span class="service-tag">Local SEO</span>
+        <span class="service-tag">Reviews</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🎨</div>
+      <h3>Brand Identity</h3>
+      <p>Logo, color palette, typography, and brand guidelines. Everything you need to look professional and consistent.</p>
+      <div class="service-tags">
+        <span class="service-tag">Logo Design</span>
+        <span class="service-tag">Brand Kit</span>
+        <span class="service-tag">Guidelines</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🔐</div>
+      <h3>Security Hardening</h3>
+      <p>SSL, firewall setup, vulnerability scans, and secure configurations. Your site protected from day one.</p>
+      <div class="service-tags">
+        <span class="service-tag">SSL/HTTPS</span>
+        <span class="service-tag">Firewalls</span>
+        <span class="service-tag">Scans</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">🛠️</div>
+      <h3>Ongoing Maintenance</h3>
+      <p>Monthly updates, backups, uptime monitoring, and unlimited content changes. We keep your site healthy.</p>
+      <div class="service-tags">
+        <span class="service-tag">Monthly</span>
+        <span class="service-tag">Updates</span>
+        <span class="service-tag">Backups</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <div class="section-label">Transparent Pricing</div>
+    <h2>Simple Packages.<br/>No Surprises.</h2>
+    <p class="section-sub">Pick the package that fits. Everything is scoped upfront — you'll always know what you're getting and what you're paying.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal reveal-delay-1">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><span>$</span>499</div>
+      <div class="plan-desc">Perfect for getting online fast. One sharp page, done in 48 hours.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Custom 1-page website</li>
+        <li><span class="check">✓</span> Mobile responsive</li>
+        <li><span class="check">✓</span> Contact form or WhatsApp link</li>
+        <li><span class="check">✓</span> Basic SEO setup</li>
+        <li><span class="check">✓</span> Hosting setup guidance</li>
+        <li class="muted-feat"><span class="cross">✗</span> Multiple pages</li>
+        <li class="muted-feat"><span class="cross">✗</span> Logo design</li>
+      </ul>
+      <a href="https://wa.me/16195096448?text=Hi%2C%20I'm%20interested%20in%20the%20Starter%20package" target="_blank" class="btn btn-plan">Get Started →</a>
+    </div>
+    <div class="pricing-card popular reveal reveal-delay-2">
+      <div class="popular-badge">⭐ Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><span>$</span>999</div>
+      <div class="plan-desc">A full website with everything you need to look established and drive business.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Up to 5 custom pages</li>
+        <li><span class="check">✓</span> Mobile + tablet responsive</li>
+        <li><span class="check">✓</span> Full SEO optimization</li>
+        <li><span class="check">✓</span> Contact form + integrations</li>
+        <li><span class="check">✓</span> Google Business setup</li>
+        <li><span class="check">✓</span> SSL + security hardening</li>
+        <li><span class="check">✓</span> 2 rounds of revisions</li>
+      </ul>
+      <a href="https://wa.me/16195096448?text=Hi%2C%20I'm%20interested%20in%20the%20Pro%20package" target="_blank" class="btn btn-plan">Get Started →</a>
+    </div>
+    <div class="pricing-card reveal reveal-delay-3">
+      <div class="plan-name">Business</div>
+      <div class="plan-price"><span>$</span>1,999</div>
+      <div class="plan-desc">Full brand + web presence. For businesses serious about their digital footprint.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Everything in Pro</li>
+        <li><span class="check">✓</span> Logo + brand identity kit</li>
+        <li><span class="check">✓</span> Up to 10 pages</li>
+        <li><span class="check">✓</span> Blog or portfolio section</li>
+        <li><span class="check">✓</span> Advanced security setup</li>
+        <li><span class="check">✓</span> 1 month free maintenance</li>
+        <li><span class="check">✓</span> Priority turnaround</li>
+      </ul>
+      <a href="https://wa.me/16195096448?text=Hi%2C%20I'm%20interested%20in%20the%20Business%20package" target="_blank" class="btn btn-plan">Get Started →</a>
+    </div>
+  </div>
+  <p class="reveal" style="text-align:center; margin-top: 2rem; font-size: 0.85rem; color: var(--muted);">Need ongoing support? Maintenance plans start at <strong style="color:var(--text)">$149/month</strong>. <a href="https://wa.me/16195096448" target="_blank" style="color:var(--violet-light); text-decoration:none;">Ask us about it →</a></p>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="reveal">
+    <div class="section-label">Why Saint Labs</div>
+    <h2>We're Different<br/>for Real Reasons</h2>
+    <p class="section-sub">Most agencies are slow, expensive, and hand you off to a junior. We're none of those things.</p>
+    <a href="https://wa.me/16195096448" target="_blank" class="btn btn-primary" style="margin-top: 2.5rem; display: inline-flex;">Let's Talk →</a>
+  </div>
+  <div class="why-cards">
+    <div class="why-card span2 reveal">
+      <span class="why-icon">🔐</span>
+      <h4>Security-First, Always</h4>
+      <p>With CompTIA A+, Network+, Security+, CIOS, and CSIS certifications, we're one of the only web studios that actually knows cybersecurity. Your site isn't just beautiful — it's hardened.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <span class="why-icon">⚡</span>
+      <h4>Fast Delivery</h4>
+      <p>Starter sites in 48 hours. No 6-week agency timelines. We move fast without cutting corners.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <span class="why-icon">💬</span>
+      <h4>Direct Access</h4>
+      <p>You talk directly to the person building your site. No account managers, no middlemen.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <span class="why-icon">📐</span>
+      <h4>Custom, Not Templates</h4>
+      <p>Every site is built for your brand. Not a Wix theme with your logo slapped on it.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <span class="why-icon">💰</span>
+      <h4>Honest Pricing</h4>
+      <p>What you see is what you pay. Scoped upfront. No surprise invoices at the end.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-card reveal">
+    <div class="about-avatar">CR</div>
+    <div class="about-name">Clifford Roberts III</div>
+    <div class="about-title">Founder & Lead Developer · Saint Labs</div>
+    <p class="about-bio">A.S. in Software Development & Programming, currently completing a B.S. in Cybersecurity & Information Assurance. I've spent years building at the intersection of software and security — and Saint Labs is how I put that to work for small businesses.</p>
+    <div class="cert-grid">
+      <span class="cert active">CompTIA A+</span>
+      <span class="cert active">Network+</span>
+      <span class="cert active">Security+</span>
+      <span class="cert active">CIOS</span>
+      <span class="cert active">CSIS</span>
+      <span class="cert">BSCSIA (In Progress)</span>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-num">48h</div>
+        <div class="about-stat-label">Avg Delivery</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">5+</div>
+        <div class="about-stat-label">Certs Held</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">100%</div>
+        <div class="about-stat-label">Custom Builds</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="section-label">The Story</div>
+    <h2>Built by Someone<br/>Who Actually<br/>Knows the Tech</h2>
+    <p class="about-text" style="margin-top:1.5rem">
+      <p style="color:var(--muted);line-height:1.85;margin-bottom:1.2rem">Most web agencies hire designers who don't know security, or developers who don't understand business. Saint Labs is different because it comes from someone who built from both sides.</p>
+      <p style="color:var(--muted);line-height:1.85;margin-bottom:1.2rem">With a background in software development and active certifications in networking and cybersecurity, every project is built with performance, security, and real business goals in mind.</p>
+      <p style="color:var(--muted);line-height:1.85">No fluff. No outsourcing. Just solid work delivered fast.</p>
+    </p>
+    <a href="https://wa.me/16195096448" target="_blank" class="btn btn-primary" style="margin-top:2rem;display:inline-flex;">Start a Project →</a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="reveal">
+    <div class="section-label">How It Works</div>
+    <h2>From Idea to Live in Days</h2>
+    <p class="section-sub">No long onboarding. No endless back-and-forth. Here's how we get you from zero to launched.</p>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h4>You Reach Out</h4>
+      <p>Message us on WhatsApp. Tell us what you need. We'll ask a few quick questions to scope it out.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h4>We Scope & Quote</h4>
+      <p>You get a clear, fixed price. No surprises. We agree on scope and timeline before anything starts.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h4>We Build</h4>
+      <p>Work starts immediately. You get updates as we go. Revisions included — we get it right.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h4>You Go Live</h4>
+      <p>We handle hosting setup, domain connection, and launch. Your site is live, secure, and yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-label reveal">Ready?</div>
+  <h2 class="reveal">Let's Build<br/>Something Real</h2>
+  <p class="section-sub reveal">Message directly on WhatsApp — no forms, no waiting. Just a real conversation about what you need.</p>
+  <div class="cta-actions reveal">
+    <a href="https://wa.me/16195096448?text=Hi%2C%20I%20want%20to%20start%20a%20project%20with%20Saint%20Labs" target="_blank" class="btn wa-btn">💬 WhatsApp Us Now</a>
+    <a href="#pricing" class="btn btn-outline">See Packages</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Saint<span>Labs</span></div>
+  <p>© 2025 Saint Labs. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a href="https://wa.me/16195096448" target="_blank">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+
+  // Nav shrink
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.padding = window.scrollY > 60 ? '0.9rem 5rem' : '1.25rem 5rem';
+  });
+</script>
+</body>
+</html>

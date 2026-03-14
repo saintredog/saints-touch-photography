@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alex Monroe — Photographer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --text: #e8e4de;
+      --muted: #5a5550;
+      --accent: #c9b99a;
+      --white: #f5f0e8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,185,154,0.4);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.3s, height 0.3s, border-color 0.3s;
+    }
+    .cursor.hover { width: 14px; height: 14px; background: var(--white); }
+    .cursor-ring.hover { width: 54px; height: 54px; border-color: rgba(201,185,154,0.7); }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #loader.gone { opacity: 0; visibility: hidden; }
+    .loader-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+    .loader-bar-wrap {
+      width: 180px;
+      height: 1px;
+      background: rgba(201,185,154,0.15);
+      overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      animation: loadBar 1.6s ease forwards;
+    }
+    @keyframes loadBar { to { width: 100%; } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.2rem 3.5rem;
+      mix-blend-mode: difference;
+    }
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 3.5rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.8s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 1s 2s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-desc {
+      max-width: 340px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 2.2s forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 1s 2.4s forwards;
+      transition: gap 0.3s;
+    }
+    .hero-cta:hover { gap: 1.5rem; }
+    .hero-cta-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .hero-cta:hover .hero-cta-line { width: 60px; }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      background:
+        linear-gradient(160deg, #1a1510 0%, #0d0c0b 40%, #151210 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-img-inner {
+      width: 100%; height: 100%;
+      background:
+        radial-gradient(ellipse 60% 80% at 60% 40%, rgba(201,185,154,0.06) 0%, transparent 70%),
+        linear-gradient(160deg, #1c1814 0%, #0a0a0a 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-img-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(201,185,154,0.04);
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+    .hero-counter {
+      position: absolute;
+      bottom: 4rem;
+      right: 3rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 1s 2.6s forwards;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp 1s 2.8s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(201,185,154,0.1);
+      border-bottom: 1px solid rgba(201,185,154,0.1);
+      padding: 1.2rem 0;
+      background: var(--bg);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── WORK / GRID ── */
+    #work { padding: 7rem 3.5rem; }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .work-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+    }
+    .work-header h2 em { font-style: italic; color: var(--accent); }
+    .work-header p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      max-width: 260px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 1.2rem;
+    }
+    .grid-item {
+      overflow: hidden;
+      border-radius: 2px;
+      position: relative;
+      cursor: none;
+    }
+    .grid-item:nth-child(1) { grid-column: span 7; grid-row: span 2; aspect-ratio: unset; height: 520px; }
+    .grid-item:nth-child(2) { grid-column: span 5; height: 250px; }
+    .grid-item:nth-child(3) { grid-column: span 5; height: 254px; }
+    .grid-item:nth-child(4) { grid-column: span 4; height: 380px; }
+    .grid-item:nth-child(5) { grid-column: span 4; height: 380px; }
+    .grid-item:nth-child(6) { grid-column: span 4; height: 380px; }
+
+    .grid-img {
+      width: 100%; height: 100%;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .grid-item:hover .grid-img { transform: scale(1.04); }
+
+    /* Photo placeholders using gradients */
+    .p1 { background: linear-gradient(135deg, #1a1612 0%, #2a2018 40%, #1c1a16 100%); }
+    .p2 { background: linear-gradient(160deg, #141820 0%, #1e2430 50%, #12161e 100%); }
+    .p3 { background: linear-gradient(200deg, #1e1812 0%, #28201a 60%, #161210 100%); }
+    .p4 { background: linear-gradient(120deg, #181620 0%, #221e2e 50%, #141218 100%); }
+    .p5 { background: linear-gradient(170deg, #1a1a14 0%, #242418 50%, #141412 100%); }
+    .p6 { background: linear-gradient(140deg, #1e1414 0%, #2a1c1c 50%, #181010 100%); }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.8rem;
+    }
+    .grid-item:hover .grid-overlay { opacity: 1; }
+    .grid-overlay-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .overlay-cat {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--white);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 7rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+      border-top: 1px solid rgba(201,185,154,0.08);
+    }
+    .about-visual {
+      position: relative;
+      height: 580px;
+    }
+    .about-photo-main {
+      width: 75%;
+      height: 100%;
+      background: linear-gradient(160deg, #1c1814 0%, #141210 100%);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .about-photo-main-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      font-style: italic;
+      color: rgba(201,185,154,0.06);
+    }
+    .about-photo-accent {
+      position: absolute;
+      bottom: -2rem;
+      right: 0;
+      width: 45%;
+      height: 260px;
+      background: linear-gradient(160deg, #141a1c 0%, #0e1214 100%);
+      border-radius: 2px;
+      border: 1px solid rgba(201,185,154,0.08);
+    }
+    .about-tag {
+      position: absolute;
+      top: 2.5rem;
+      right: -1rem;
+      background: var(--bg);
+      border: 1px solid rgba(201,185,154,0.15);
+      padding: 1rem 1.3rem;
+      border-radius: 2px;
+    }
+    .about-tag-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .about-tag-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+    .about-eyebrow { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .about-title em { font-style: italic; }
+    .about-body { font-size: 0.875rem; color: var(--muted); line-height: 1.9; margin-bottom: 1.2rem; }
+    .about-services {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2.5rem;
+    }
+    .about-service {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(201,185,154,0.08);
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: none;
+      transition: color 0.2s;
+    }
+    .about-service:hover { color: var(--accent); }
+    .about-service span { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .about-service:hover span { color: var(--accent); }
+
+    /* ── PROCESS ── */
+    #process {
+      padding: 7rem 3.5rem;
+      border-top: 1px solid rgba(201,185,154,0.08);
+    }
+    .process-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+    .process-top h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.05;
+    }
+    .process-top h2 em { font-style: italic; color: var(--accent); }
+    .process-top p { font-size: 0.875rem; color: var(--muted); line-height: 1.85; align-self: flex-end; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(201,185,154,0.06);
+    }
+    .process-step {
+      background: var(--bg);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s;
+    }
+    .process-step:hover { background: #0f0f0f; }
+    .step-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(201,185,154,0.12);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .process-step h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .process-step p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 8rem 3.5rem;
+      border-top: 1px solid rgba(201,185,154,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    #contact .eyebrow { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+    #contact h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+    }
+    #contact h2 em { font-style: italic; color: var(--accent); }
+    #contact p { font-size: 0.875rem; color: var(--muted); line-height: 1.85; margin-top: 1.5rem; max-width: 380px; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(201,185,154,0.15);
+      padding: 0.75rem 0;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { resize: none; height: 80px; }
+    .form-group select { cursor: none; color: var(--muted); }
+    .form-group select option { background: #1a1a1a; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: none;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(201,185,154,0.15);
+      width: 100%;
+      justify-content: space-between;
+      transition: color 0.3s, border-color 0.3s;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .submit-arrow {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,185,154,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .submit-btn:hover .submit-arrow { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3.5rem;
+      border-top: 1px solid rgba(201,185,154,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
+    .footer-socials { display: flex; gap: 2rem; }
+    .footer-socials a {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-socials a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 0 1.5rem 4rem; justify-content: flex-end; min-height: 100vh; }
+      #work, #about, #process, #contact { padding: 5rem 1.5rem; }
+      .work-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .work-header p { text-align: left; max-width: 100%; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .grid-item:nth-child(1) { grid-column: span 2; height: 300px; }
+      .grid-item:nth-child(2),
+      .grid-item:nth-child(3) { grid-column: span 1; height: 200px; }
+      .grid-item:nth-child(4),
+      .grid-item:nth-child(5),
+      .grid-item:nth-child(6) { grid-column: span 2; height: 220px; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { height: 320px; }
+      .process-top { grid-template-columns: 1fr; gap: 1.5rem; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      #contact { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-name">Alex Monroe</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-name">Alex Monroe</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Visual Storyteller · Est. 2018</p>
+    <h1 class="hero-title">Light.<br/>Story.<br/><em>Moment.</em></h1>
+    <p class="hero-desc">Capturing the quiet in-between — portraits, weddings, and editorial photography rooted in emotion and authenticity.</p>
+    <a href="#work" class="hero-cta">
+      <span class="hero-cta-line"></span>
+      View Selected Work
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">
+      <div class="hero-img-inner">
+        <span class="hero-img-text">AM</span>
+      </div>
+    </div>
+    <div class="hero-counter">Selected Works — 2024</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span> Portrait Photography</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Wedding & Elopements</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Editorial & Brand</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Lifestyle Sessions</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Film & Digital</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> NYC & Worldwide</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Portrait Photography</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Wedding & Elopements</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Editorial & Brand</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Lifestyle Sessions</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> Film & Digital</div>
+    <div class="marquee-item"><span class="marquee-dot"></span> NYC & Worldwide</div>
+  </div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-header reveal">
+    <h2>Selected<br/><em>Work</em></h2>
+    <p>A curated collection of portraits, weddings, and editorial sessions from 2022–2024.</p>
+  </div>
+  <div class="grid">
+    <div class="grid-item reveal">
+      <div class="grid-img p1"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Portrait</span>
+          <span class="overlay-title">Golden Hour Series</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item reveal">
+      <div class="grid-img p2"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Wedding</span>
+          <span class="overlay-title">The Reyes Wedding</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item reveal">
+      <div class="grid-img p3"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Editorial</span>
+          <span class="overlay-title">Urban Stillness</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item reveal">
+      <div class="grid-img p4"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Brand</span>
+          <span class="overlay-title">Maison Collective</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item reveal">
+      <div class="grid-img p5"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Portrait</span>
+          <span class="overlay-title">Quiet Hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item reveal">
+      <div class="grid-img p6"></div>
+      <div class="grid-overlay">
+        <div class="grid-overlay-text">
+          <span class="overlay-cat">Lifestyle</span>
+          <span class="overlay-title">The Park Sessions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-photo-main">
+      <div class="about-photo-main-inner">AM</div>
+    </div>
+    <div class="about-photo-accent"></div>
+    <div class="about-tag">
+      <div class="about-tag-num">6+</div>
+      <div class="about-tag-label">Years Shooting</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="about-eyebrow">About</p>
+    <h2 class="about-title">I Photograph<br/>What <em>Feels</em><br/>Real</h2>
+    <p class="about-body">Based in New York, I'm a photographer drawn to the spaces between moments — the breath before a laugh, the glance that says everything. My work blends documentary instinct with a fine-art eye.</p>
+    <p class="about-body">Every shoot is a collaboration. I want you to feel at ease, not performed.</p>
+    <div class="about-services">
+      <div class="about-service">Portrait Sessions <span>From $350</span></div>
+      <div class="about-service">Wedding & Elopements <span>From $2,800</span></div>
+      <div class="about-service">Editorial & Brand <span>From $800</span></div>
+      <div class="about-service">Lifestyle & Family <span>From $450</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-top reveal">
+    <h2>How We<br/>Work <em>Together</em></h2>
+    <p>From first message to final gallery — a simple, human process designed to make the experience feel easy.</p>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-n">01</div>
+      <h4>Reach Out</h4>
+      <p>Fill out the contact form or send a DM. Tell me what you have in mind — no idea is too small.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-n">02</div>
+      <h4>We Connect</h4>
+      <p>A short call or chat to understand your vision, answer questions, and lock in your date.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-n">03</div>
+      <h4>The Shoot</h4>
+      <p>We show up, we create. I guide gently — you just have to be yourself.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-n">04</div>
+      <h4>Your Gallery</h4>
+      <p>Edited images delivered to a private online gallery within 2–3 weeks. Print-ready and yours forever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="eyebrow">Let's Create</p>
+    <h2>Start a<br/><em>Conversation</em></h2>
+    <p>Whether you know exactly what you want or just have a feeling — reach out. I'd love to hear about it.</p>
+  </div>
+  <form class="contact-form reveal" onsubmit="return false;">
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="Jordan"/>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Rivera"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="hello@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Session Type</label>
+      <select>
+        <option value="" disabled selected>Select a session type</option>
+        <option>Portrait Session</option>
+        <option>Wedding / Elopement</option>
+        <option>Editorial & Brand</option>
+        <option>Lifestyle & Family</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tell me more</label>
+      <textarea placeholder="Share your vision, date ideas, or just say hi..."></textarea>
+    </div>
+    <button type="submit" class="submit-btn">
+      <span>Send Message</span>
+      <span class="submit-arrow">→</span>
+    </button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 Alex Monroe Photography — All Rights Reserved</p>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">VSCO</a>
+    <a href="#">Pinterest</a>
+  </div>
+</footer>
+
+<script>
+  // Loader
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('gone');
+    }, 1800);
+  });
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const animRing = () => {
+    rx = lerp(rx, mx, 0.12);
+    ry = lerp(ry, my, 0.12);
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  };
+  animRing();
+
+  document.querySelectorAll('a, button, .grid-item, .about-service').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover');
+      ring.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover');
+      ring.classList.remove('hover');
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

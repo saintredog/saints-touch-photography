@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Velvet Studio — Luxury Hair Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #faf8f5;
+      --bg2: #f2ede6;
+      --card: #ffffff;
+      --rose: #c2856a;
+      --rose-light: #d9a08a;
+      --rose-dim: rgba(194,133,106,0.12);
+      --dark: #1a1410;
+      --text: #3a2e28;
+      --muted: #9a8880;
+      --white: #ffffff;
+      --border: rgba(194,133,106,0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 5rem;
+      background: rgba(250,248,245,0.94); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--dark);
+    }
+    .logo em { font-style: italic; color: var(--rose); }
+    nav ul { list-style: none; display: flex; gap: 2.8rem; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover { color: var(--rose); }
+    .nav-book {
+      background: var(--rose); color: var(--white) !important;
+      padding: 0.55rem 1.6rem; letter-spacing: 0.1em;
+      font-weight: 500 !important; transition: background 0.2s !important;
+    }
+    .nav-book:hover { background: var(--rose-light) !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 5rem 4rem;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose); border: 1px solid var(--rose-light);
+      padding: 0.35rem 1rem; margin-bottom: 2rem; width: fit-content;
+    }
+    .hero-left h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 5vw, 5.5rem);
+      font-weight: 300; line-height: 1.1; color: var(--dark); margin-bottom: 1.5rem;
+    }
+    .hero-left h1 em { font-style: italic; color: var(--rose); }
+    .hero-left p {
+      font-size: 1rem; line-height: 1.8; color: var(--muted);
+      max-width: 440px; margin-bottom: 2.8rem;
+    }
+    .hero-actions { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--dark); color: var(--white);
+      padding: 0.9rem 2.4rem; font-size: 0.82rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; transition: background 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-primary:hover { background: var(--rose); }
+    .btn-secondary {
+      color: var(--text); font-size: 0.82rem;
+      letter-spacing: 0.1em; text-decoration: none;
+      border-bottom: 1px solid var(--rose); padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--rose); }
+    .hero-right {
+      background: var(--bg2);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-img-wrap {
+      width: 78%; aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #e8ddd4 0%, #c9b8ad 60%, #b09080 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-img-label {
+      position: absolute; bottom: 2rem; left: 2rem;
+      background: var(--white); padding: 1.2rem 1.6rem;
+      border-left: 3px solid var(--rose);
+    }
+    .hero-img-label strong { display: block; font-size: 1rem; color: var(--dark); margin-bottom: 0.2rem; }
+    .hero-img-label span { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; }
+    .hero-badge {
+      position: absolute; top: 2.5rem; right: -0.5rem;
+      background: var(--rose); color: var(--white);
+      padding: 1.2rem; text-align: center; width: 90px; height: 90px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border-radius: 50%;
+    }
+    .hero-badge strong { font-size: 1.2rem; font-family: 'Cormorant Garamond', serif; }
+    .hero-badge span { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* MARQUEE */
+    .marquee-bar {
+      background: var(--dark); padding: 1rem 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 0; animation: marquee 22s linear infinite; width: max-content;
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 0 3rem; white-space: nowrap;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .marquee-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); flex-shrink: 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ABOUT */
+    #about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+    .about-visual {
+      background: var(--bg2);
+      display: grid; grid-template-rows: 1fr 1fr; gap: 1rem;
+      padding: 3rem;
+    }
+    .about-img-block {
+      background: linear-gradient(135deg, #ddd0c8 0%, #c0a898 100%);
+      position: relative;
+    }
+    .about-img-block:first-child { margin-left: 3rem; }
+    .about-img-block:last-child { margin-right: 3rem; }
+    .about-content {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem;
+    }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 1.2rem;
+    }
+    .about-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+      font-weight: 300; line-height: 1.2; color: var(--dark); margin-bottom: 1.5rem;
+    }
+    .about-content h2 em { font-style: italic; color: var(--rose); }
+    .about-content p { font-size: 0.95rem; line-height: 1.9; color: var(--muted); margin-bottom: 1rem; max-width: 460px; }
+    .about-stats {
+      display: flex; gap: 3rem; margin-top: 2.5rem;
+      padding-top: 2.5rem; border-top: 1px solid var(--border);
+    }
+    .stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 300; color: var(--rose); line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-lbl { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+    /* SERVICES */
+    #services { padding: 7rem 5rem; background: var(--white); }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .services-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300; color: var(--dark);
+    }
+    .services-header h2 em { font-style: italic; color: var(--rose); }
+    .services-header p { color: var(--muted); font-size: 0.9rem; max-width: 320px; text-align: right; line-height: 1.7; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .service-card {
+      background: var(--bg); padding: 3rem 2.5rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+    .service-card:hover { border-top-color: var(--rose); background: var(--bg2); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300; color: var(--rose-dim);
+      margin-bottom: 1.2rem; line-height: 1;
+      color: rgba(194,133,106,0.3);
+    }
+    .service-card h3 { font-size: 1.1rem; font-weight: 500; color: var(--dark); margin-bottom: 0.8rem; }
+    .service-card p { font-size: 0.88rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.5rem; }
+    .service-price { font-size: 0.78rem; letter-spacing: 0.1em; color: var(--rose); text-transform: uppercase; }
+
+    /* STYLISTS */
+    #stylists { padding: 7rem 5rem; background: var(--bg); }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300; color: var(--dark); margin-bottom: 0.8rem;
+    }
+    .section-header h2 em { font-style: italic; color: var(--rose); }
+    .section-header p { color: var(--muted); font-size: 0.9rem; }
+    .stylists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .stylist-card { background: var(--white); overflow: hidden; }
+    .stylist-img {
+      aspect-ratio: 3/4;
+      background: linear-gradient(150deg, #e0d4cc 0%, #c8b5a8 100%);
+      position: relative;
+    }
+    .stylist-img.v2 { background: linear-gradient(150deg, #d4c8c0 0%, #b8a498 100%); }
+    .stylist-img.v3 { background: linear-gradient(150deg, #c8d4cc 0%, #a8b8b0 100%); }
+    .stylist-info { padding: 1.6rem 1.8rem; }
+    .stylist-info h3 { font-size: 1rem; font-weight: 500; color: var(--dark); margin-bottom: 0.3rem; }
+    .stylist-role { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.8rem; }
+    .stylist-info p { font-size: 0.83rem; line-height: 1.7; color: var(--muted); }
+
+    /* BOOKING CTA */
+    #book {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--dark);
+    }
+    .book-content {
+      padding: 7rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .book-content .section-tag { color: var(--rose); }
+    .book-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+      font-weight: 300; color: var(--white); line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .book-content h2 em { font-style: italic; color: var(--rose); }
+    .book-content p { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.5); max-width: 420px; margin-bottom: 2.5rem; }
+    .book-form { display: flex; flex-direction: column; gap: 1rem; max-width: 420px; }
+    .book-form input, .book-form select {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); padding: 1rem 1.2rem; font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+    .book-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .book-form input:focus, .book-form select:focus { border-color: var(--rose); }
+    .book-form select { color: rgba(255,255,255,0.5); }
+    .book-form select option { background: var(--dark); color: var(--white); }
+    .book-submit {
+      background: var(--rose); color: var(--white); border: none;
+      padding: 1rem; font-size: 0.82rem; letter-spacing: 0.16em;
+      text-transform: uppercase; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      transition: background 0.2s;
+    }
+    .book-submit:hover { background: var(--rose-light); }
+    .book-visual {
+      background: linear-gradient(160deg, #3a2820 0%, #1a100c 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .book-visual-inner {
+      width: 70%; aspect-ratio: 2/3;
+      background: linear-gradient(150deg, #c0a090 0%, #907060 100%);
+      position: relative;
+    }
+    .book-visual-badge {
+      position: absolute; bottom: -1rem; left: -1rem;
+      background: var(--rose); color: var(--white);
+      padding: 1.5rem 2rem;
+    }
+    .book-visual-badge strong { display: block; font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; }
+    .book-visual-badge span { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; }
+
+    /* TESTIMONIALS */
+    #testimonials { padding: 7rem 5rem; background: var(--bg2); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+    .testimonial-card { background: var(--white); padding: 2.5rem; }
+    .stars { color: var(--rose); font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .testimonial-card p { font-size: 0.92rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+    .author-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-dim), var(--rose-light));
+    }
+    .author-name { font-size: 0.88rem; font-weight: 500; color: var(--dark); }
+    .author-meta { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,0.45);
+      padding: 4rem 5rem; display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem;
+    }
+    .footer-brand .logo { font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.8; max-width: 260px; }
+    footer h4 { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 1.2rem; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 0.7rem; }
+    footer ul a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    footer ul a:hover { color: var(--rose); }
+    .footer-bottom {
+      background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5rem 5rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom span { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+    .footer-bottom a { font-size: 0.75rem; color: var(--rose); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      nav ul { gap: 1.5rem; }
+      #hero, #about, #book { grid-template-columns: 1fr; }
+      .hero-right, .about-visual, .book-visual { display: none; }
+      .hero-left, .about-content, .book-content { padding: 4rem 2rem; }
+      #services, #stylists, #testimonials { padding: 4rem 2rem; }
+      .services-grid, .stylists-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 3rem 2rem; }
+      .footer-bottom { padding: 1.2rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .services-header p { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Velvet <em>Studio</em></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#stylists">Our Team</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#book" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">✦ Luxury Hair Studio</div>
+    <h1>Where <em>Beauty</em><br>Becomes<br>Art</h1>
+    <p>Expert color, cuts, and styling tailored to you. Velvet Studio is where self-care meets craftsmanship — in an atmosphere designed to make you feel as good as you look.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">Book Your Visit</a>
+      <a href="#services" class="btn-secondary">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <div class="hero-badge">
+        <strong>5★</strong>
+        <span>Rated</span>
+      </div>
+      <div class="hero-img-label">
+        <strong>Premium Experience</strong>
+        <span>From cut to color, we've got you</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="dot"></span> Precision Cuts</div>
+    <div class="marquee-item"><span class="dot"></span> Balayage & Color</div>
+    <div class="marquee-item"><span class="dot"></span> Keratin Treatments</div>
+    <div class="marquee-item"><span class="dot"></span> Bridal Styling</div>
+    <div class="marquee-item"><span class="dot"></span> Natural Textures</div>
+    <div class="marquee-item"><span class="dot"></span> Scalp Treatments</div>
+    <div class="marquee-item"><span class="dot"></span> Extensions</div>
+    <div class="marquee-item"><span class="dot"></span> Precision Cuts</div>
+    <div class="marquee-item"><span class="dot"></span> Balayage & Color</div>
+    <div class="marquee-item"><span class="dot"></span> Keratin Treatments</div>
+    <div class="marquee-item"><span class="dot"></span> Bridal Styling</div>
+    <div class="marquee-item"><span class="dot"></span> Natural Textures</div>
+    <div class="marquee-item"><span class="dot"></span> Scalp Treatments</div>
+    <div class="marquee-item"><span class="dot"></span> Extensions</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-img-block"></div>
+    <div class="about-img-block"></div>
+  </div>
+  <div class="about-content">
+    <div class="section-tag">✦ Our Story</div>
+    <h2>More Than a Salon —<br>A <em>Sanctuary</em></h2>
+    <p>Velvet Studio was founded with one belief: every client deserves a personalized, elevated experience. We've built a team of passionate stylists who treat your hair as their canvas.</p>
+    <p>From the moment you walk in, you're greeted with intentional service — no rushing, no cookie-cutter cuts. Just genuine artistry and care.</p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-val">8+</div>
+        <div class="stat-lbl">Years Open</div>
+      </div>
+      <div>
+        <div class="stat-val">3k+</div>
+        <div class="stat-lbl">Happy Clients</div>
+      </div>
+      <div>
+        <div class="stat-val">12</div>
+        <div class="stat-lbl">Expert Stylists</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <h2>What We <em>Offer</em></h2>
+    <p>From everyday cuts to full transformations — every service is delivered with intention.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Precision Cuts</h3>
+      <p>Tailored to your face shape, texture, and lifestyle. We cut with purpose so your style works for you every day.</p>
+      <div class="service-price">Starting at $65</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Color & Balayage</h3>
+      <p>Sun-kissed, dimensional, or bold — our color specialists blend technique and artistry for results that last.</p>
+      <div class="service-price">Starting at $120</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Blowouts & Styling</h3>
+      <p>Whether it's a special occasion or you just deserve it — leave looking polished and feeling confident.</p>
+      <div class="service-price">Starting at $55</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Keratin Treatments</h3>
+      <p>Smooth frizz and boost shine with a professional keratin treatment that keeps hair manageable for months.</p>
+      <div class="service-price">Starting at $180</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3>Bridal & Events</h3>
+      <p>Trial runs, day-of glam, and party packages. We make sure you and your crew look stunning for the big moments.</p>
+      <div class="service-price">Packages from $200</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3>Natural Textures</h3>
+      <p>Curl definition, loc maintenance, protective styles — we specialize in all natural hair types with care and skill.</p>
+      <div class="service-price">Starting at $75</div>
+    </div>
+  </div>
+</section>
+
+<!-- STYLISTS -->
+<section id="stylists">
+  <div class="section-header">
+    <div class="section-tag">✦ The Team</div>
+    <h2>Meet Our <em>Stylists</em></h2>
+    <p>Trained, passionate, and ready to make you feel amazing.</p>
+  </div>
+  <div class="stylists-grid">
+    <div class="stylist-card">
+      <div class="stylist-img"></div>
+      <div class="stylist-info">
+        <h3>Naomi Carter</h3>
+        <div class="stylist-role">Senior Colorist</div>
+        <p>8 years mastering balayage, highlights, and creative color. Her work speaks for itself.</p>
+      </div>
+    </div>
+    <div class="stylist-card">
+      <div class="stylist-img v2"></div>
+      <div class="stylist-info">
+        <h3>Jade Williams</h3>
+        <div class="stylist-role">Texture Specialist</div>
+        <p>Natural hair advocate and curl expert. Jade treats every coil with intention and love.</p>
+      </div>
+    </div>
+    <div class="stylist-card">
+      <div class="stylist-img v3"></div>
+      <div class="stylist-info">
+        <h3>Marcus Reid</h3>
+        <div class="stylist-role">Precision Cut Artist</div>
+        <p>Trained in London, based here — Marcus brings a sharp eye and flawless technique to every cut.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="book-content">
+    <div class="section-tag">✦ Reservations</div>
+    <h2>Ready for Your<br><em>Transformation?</em></h2>
+    <p>Book your appointment online in minutes. Select your service, pick your stylist, and we'll handle the rest.</p>
+    <form class="book-form" onsubmit="return false;">
+      <input type="text" placeholder="Your Name"/>
+      <input type="tel" placeholder="Phone Number"/>
+      <input type="email" placeholder="Email Address"/>
+      <select>
+        <option value="" disabled selected>Select a Service</option>
+        <option>Precision Cut — from $65</option>
+        <option>Color & Balayage — from $120</option>
+        <option>Blowout & Styling — from $55</option>
+        <option>Keratin Treatment — from $180</option>
+        <option>Bridal & Events — from $200</option>
+        <option>Natural Textures — from $75</option>
+      </select>
+      <select>
+        <option value="" disabled selected>Choose a Stylist</option>
+        <option>Naomi Carter</option>
+        <option>Jade Williams</option>
+        <option>Marcus Reid</option>
+        <option>No preference</option>
+      </select>
+      <button type="submit" class="book-submit">Request Appointment</button>
+    </form>
+  </div>
+  <div class="book-visual">
+    <div class="book-visual-inner">
+      <div class="book-visual-badge">
+        <strong>Velvet</strong>
+        <span>Book Today</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <div class="section-tag">✦ Kind Words</div>
+    <h2>What Clients <em>Say</em></h2>
+    <p>Don't take our word for it — hear it from the people who know.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Naomi did my balayage and I've never felt more like myself. The whole experience was so relaxed and intentional — I'll never go anywhere else."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">Brianna T.</div>
+          <div class="author-meta">Regular Client · Google Review</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Jade truly understands natural hair. She took her time, explained everything, and my curls have never looked this defined. Absolutely worth it."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">Aaliyah M.</div>
+          <div class="author-meta">Regular Client · Yelp Review</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Marcus cut my hair exactly how I wanted — even better, honestly. The vibe in this salon is unlike any other. Always leaving happy and confident."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar"></div>
+        <div>
+          <div class="author-name">Devon K.</div>
+          <div class="author-meta">New Client · Instagram DM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">Velvet <em>Studio</em></div>
+    <p>A luxury hair salon experience built around you. Precision, artistry, and genuine care — every visit.</p>
+  </div>
+  <div>
+    <h4>Services</h4>
+    <ul>
+      <li><a href="#services">Precision Cuts</a></li>
+      <li><a href="#services">Color & Balayage</a></li>
+      <li><a href="#services">Blowouts</a></li>
+      <li><a href="#services">Keratin</a></li>
+      <li><a href="#services">Bridal</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Studio</h4>
+    <ul>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#stylists">The Team</a></li>
+      <li><a href="#book">Book Online</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">(555) 820-4411</a></li>
+      <li><a href="#">hello@velvetstudio.com</a></li>
+      <li><a href="#">123 Bloom Ave, Suite 4</a></li>
+      <li><a href="#">@velvetstudio</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 Velvet Studio. All rights reserved.</span>
+  <a href="#">Site by Saint Labs</a>
+</div>
+
+</body>
+</html>

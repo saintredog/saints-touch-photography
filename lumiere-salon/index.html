@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumière Salon & Spa — Virginia Beach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:       #080706;
+      --bg2:      #0e0c0b;
+      --card:     #141210;
+      --rose:     #c4846a;
+      --rose-lt:  #dda58c;
+      --rose-dim: rgba(196,132,106,0.12);
+      --text:     #ede5dc;
+      --muted:    #7a6d64;
+      --cream:    #f5ede4;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 4rem;
+      background: rgba(8,7,6,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(196,132,106,0.1);
+      transition: padding 0.3s;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 300; letter-spacing: 0.18em;
+      color: var(--cream); text-transform: uppercase;
+    }
+    .logo em { font-style: italic; color: var(--rose); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover { color: var(--rose); }
+    .nav-book {
+      background: transparent !important; border: 1px solid var(--rose) !important;
+      color: var(--rose) !important; padding: 0.5rem 1.5rem;
+    }
+    .nav-book:hover { background: var(--rose) !important; color: #000 !important; }
+
+    /* HERO */
+    #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 4rem 4rem;
+      background: var(--bg2);
+      border-right: 1px solid rgba(196,132,106,0.08);
+      position: relative; overflow: hidden;
+    }
+    .hero-left::before {
+      content: 'LUMIÈRE';
+      position: absolute; bottom: -3rem; left: -2rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 14rem; font-weight: 600;
+      color: rgba(196,132,106,0.03); line-height: 1;
+      pointer-events: none; white-space: nowrap; letter-spacing: 0.05em;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--rose);
+      margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.9s 0.3s forwards;
+    }
+    .hero-line { width: 36px; height: 1px; background: var(--rose); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(4.5rem, 8vw, 8rem);
+      line-height: 0.95; letter-spacing: 0.02em; color: var(--cream);
+      opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+    }
+    h1 em { font-style: italic; color: var(--rose); display: block; }
+    .hero-sub {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.9; max-width: 380px;
+      margin-top: 2.2rem; opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; margin-top: 3rem;
+      opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+    }
+    .btn-rose {
+      background: var(--rose); color: #000; padding: 1rem 2.4rem;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s; border: 1px solid var(--rose);
+    }
+    .btn-rose:hover { background: var(--rose-lt); border-color: var(--rose-lt); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid rgba(196,132,106,0.3); color: var(--text);
+      padding: 1rem 2.4rem; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--rose); color: var(--rose); }
+    .hero-right { display: grid; grid-template-rows: 1fr auto; background: var(--bg); }
+    .hero-visual {
+      background: linear-gradient(150deg, #1a1210 0%, #0c0a09 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual-inner {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 5rem; color: rgba(196,132,106,0.07); letter-spacing: 0.1em;
+      line-height: 1.2; user-select: none;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(196,132,106,0.06) 0%, transparent 65%);
+    }
+    .hero-badges {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid rgba(196,132,106,0.08);
+    }
+    .hero-badge {
+      padding: 2rem 1.5rem; border-right: 1px solid rgba(196,132,106,0.08);
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .hero-badge:last-child { border-right: none; }
+    .badge-n {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600;
+      color: var(--rose); line-height: 1;
+    }
+    .badge-l { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+    /* SERVICES */
+    #services { padding: 7rem 4rem; background: var(--bg2); border-top: 1px solid rgba(196,132,106,0.07); }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+    .eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.7rem; }
+    h2 {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2.8rem, 5vw, 4.5rem); color: var(--cream); line-height: 1;
+    }
+    h2 em { font-style: italic; color: var(--rose); }
+    .section-note { font-size: 0.85rem; color: var(--muted); max-width: 260px; line-height: 1.75; text-align: right; }
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(196,132,106,0.07); }
+    .service-card {
+      background: var(--bg); padding: 2.5rem 2rem;
+      transition: background 0.25s;
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--rose); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .service-card:hover { background: #100e0c; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .svc-icon { font-size: 1.8rem; margin-bottom: 1.5rem; opacity: 0.7; }
+    .svc-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400;
+      color: var(--cream); letter-spacing: 0.02em; margin-bottom: 0.5rem;
+    }
+    .svc-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .svc-from { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); }
+
+    /* TEAM */
+    #team { padding: 7rem 4rem; background: var(--bg); border-top: 1px solid rgba(196,132,106,0.07); }
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .team-card {
+      background: var(--card); border: 1px solid rgba(196,132,106,0.08);
+      transition: border-color 0.2s, transform 0.25s;
+    }
+    .team-card:hover { border-color: rgba(196,132,106,0.3); transform: translateY(-5px); }
+    .team-photo {
+      height: 280px;
+      background: linear-gradient(150deg, #1c1410 0%, #0e0b09 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 4rem; color: rgba(196,132,106,0.07);
+      border-bottom: 1px solid rgba(196,132,106,0.08);
+    }
+    .team-info { padding: 1.5rem; }
+    .team-name {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400;
+      color: var(--cream);
+    }
+    .team-role { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); margin: 0.35rem 0 0.8rem; }
+    .team-bio { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* BOOKING */
+    #booking {
+      padding: 7rem 4rem; background: var(--bg2);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+      border-top: 1px solid rgba(196,132,106,0.07);
+    }
+    .booking-info p { color: var(--muted); line-height: 1.9; margin-top: 1.2rem; font-size: 0.9rem; }
+    .hours { margin-top: 2.5rem; }
+    .hour-row {
+      display: flex; justify-content: space-between;
+      padding: 0.9rem 0; border-bottom: 1px solid rgba(196,132,106,0.06);
+      font-size: 0.85rem;
+    }
+    .hour-row .day { color: var(--text); }
+    .hour-row .time { color: var(--muted); }
+    .hour-row.open .day { color: var(--rose); }
+    .booking-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--card); border: 1px solid rgba(196,132,106,0.12);
+      padding: 0.9rem 1rem; color: var(--text); font-family: 'Inter', sans-serif;
+      font-size: 0.875rem; outline: none; transition: border-color 0.2s; appearance: none; resize: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--rose); }
+    .form-group select option { background: #1a1210; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* GALLERY STRIP */
+    #gallery {
+      display: grid; grid-template-columns: repeat(5,1fr); gap: 2px;
+      border-top: 1px solid rgba(196,132,106,0.07);
+    }
+    .gallery-cell {
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #1a1210 0%, #0c0a09 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 2.5rem; color: rgba(196,132,106,0.06);
+      overflow: hidden; position: relative; transition: opacity 0.3s;
+    }
+    .gallery-cell:hover { opacity: 0.85; }
+
+    /* CTA */
+    #cta {
+      padding: 8rem 4rem; text-align: center; background: var(--bg);
+      border-top: 1px solid rgba(196,132,106,0.08);
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: 'BEAUTY';
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-family: 'Cormorant Garamond', serif; font-size: 20rem; font-weight: 600;
+      color: rgba(196,132,106,0.02); white-space: nowrap; pointer-events: none;
+    }
+    #cta h2 { font-size: clamp(3rem, 7vw, 6.5rem); }
+    #cta p { color: var(--muted); margin: 1.5rem auto 3rem; max-width: 480px; font-size: 0.95rem; line-height: 1.8; }
+
+    footer {
+      background: #060504; padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(196,132,106,0.07);
+    }
+    footer p { font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--rose); }
+
+    @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform: translateY(24px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { display: none; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 1.5rem 4rem; }
+      #services, #team, #booking, #cta { padding: 5rem 1.5rem; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .section-note { text-align: left; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      #booking { grid-template-columns: 1fr; gap: 3rem; }
+      #gallery { grid-template-columns: repeat(3,1fr); }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Lumi<em>ère</em></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#booking" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag"><span class="hero-line"></span>Est. 2018 · Virginia Beach, VA</div>
+    <h1>Where<br/>Beauty<br/><em>Begins.</em></h1>
+    <p class="hero-sub">A full-service luxury salon and spa in the heart of Virginia Beach. Hair, nails, lashes, and skin — all under one roof, all done right.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-rose">Book Your Visit</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-visual-inner">Salon<br/>&amp; Spa</div>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="badge-n">7+</span><span class="badge-l">Years Open</span></div>
+      <div class="hero-badge"><span class="badge-n">5★</span><span class="badge-l">Avg Rating</span></div>
+      <div class="hero-badge"><span class="badge-n">1.2K+</span><span class="badge-l">Happy Clients</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-head reveal">
+    <div>
+      <p class="eyebrow">What We Offer</p>
+      <h2>Our <em>Services</em></h2>
+    </div>
+    <p class="section-note">Every service is customized to you. We don't do cookie-cutter — we do you, elevated.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="svc-icon">✂️</div>
+      <div class="svc-name">Hair Cuts & Style</div>
+      <p class="svc-desc">Precision cuts, blowouts, and styling tailored to your face shape and lifestyle. Women's, men's, and kids' cuts available.</p>
+      <span class="svc-from">From $55</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">🎨</div>
+      <div class="svc-name">Color & Balayage</div>
+      <p class="svc-desc">Full color, highlights, balayage, and color correction. We use premium products to protect your hair while delivering brilliant results.</p>
+      <span class="svc-from">From $120</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">💅</div>
+      <div class="svc-name">Nails & Gel Sets</div>
+      <p class="svc-desc">Manicures, pedicures, gel-x, acrylics, and nail art. SNS dip powder and builder gel available for long-lasting wear.</p>
+      <span class="svc-from">From $45</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">👁️</div>
+      <div class="svc-name">Lash Extensions</div>
+      <p class="svc-desc">Classic, hybrid, and mega-volume lash sets applied by certified lash artists. Wake up ready.</p>
+      <span class="svc-from">From $95</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">✨</div>
+      <div class="svc-name">Facials & Skincare</div>
+      <p class="svc-desc">Deep-cleansing, anti-aging, and brightening facials. Dermaplaning and microdermabrasion also available.</p>
+      <span class="svc-from">From $80</span>
+    </div>
+    <div class="service-card">
+      <div class="svc-icon">💍</div>
+      <div class="svc-name">Bridal Package</div>
+      <p class="svc-desc">Full glam for your big day — hair, makeup, nails, lashes, and a pre-wedding trial. Groups welcome.</p>
+      <span class="svc-from">From $350</span>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="reveal">
+    <p class="eyebrow">The Talent</p>
+    <h2>Meet <em>Your Stylists</em></h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-photo">NL</div>
+      <div class="team-info">
+        <div class="team-name">Naomi Laurent</div>
+        <div class="team-role">Master Colorist · 10 Years</div>
+        <p class="team-bio">Specializes in balayage, color correction, and lived-in color. Naomi's clients travel from all over Hampton Roads for her work.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo">JS</div>
+      <div class="team-info">
+        <div class="team-name">Jade Simone</div>
+        <div class="team-role">Lash Artist & Esthetician · 6 Years</div>
+        <p class="team-bio">Certified lash artist and licensed esthetician. Known for her natural-looking mega-volume sets and flawless skin treatments.</p>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo">TC</div>
+      <div class="team-info">
+        <div class="team-name">Taylor Cross</div>
+        <div class="team-role">Senior Stylist & Nail Tech · 8 Years</div>
+        <p class="team-bio">Precision cuts, textured hair specialist, and nail artist. Taylor does it all — and does it beautifully.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="gallery-cell">Hair</div>
+  <div class="gallery-cell">Color</div>
+  <div class="gallery-cell">Nails</div>
+  <div class="gallery-cell">Lashes</div>
+  <div class="gallery-cell">Glow</div>
+</section>
+
+<section id="booking">
+  <div class="booking-info reveal">
+    <p class="eyebrow">Visit Us</p>
+    <h2>Hours &amp;<br/><em>Location</em></h2>
+    <p>Walk-ins welcome when we have availability. Booking ahead guarantees your preferred stylist and time slot.</p>
+    <div class="hours">
+      <div class="hour-row"><span class="day">Monday</span><span class="time">Closed</span></div>
+      <div class="hour-row open"><span class="day">Tuesday – Friday</span><span class="time">9AM – 7PM</span></div>
+      <div class="hour-row open"><span class="day">Saturday</span><span class="time">9AM – 6PM</span></div>
+      <div class="hour-row open"><span class="day">Sunday</span><span class="time">11AM – 4PM</span></div>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--muted);">📍 1812 Laskin Rd, Suite 204, Virginia Beach, VA 23454</p>
+    <p style="margin-top:0.6rem; font-size:0.82rem; color:var(--muted);">📞 (757) 555-0194</p>
+  </div>
+  <div class="reveal">
+    <p class="eyebrow">Reserve Your Spot</p>
+    <h2>Book <em>Online</em></h2>
+    <div class="booking-form" style="margin-top:2rem;">
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Jasmine"/></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Williams"/></div>
+      </div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+1 (757) 555-0000"/></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jasmine@email.com"/></div>
+      <div class="form-group">
+        <label>Service</label>
+        <select>
+          <option disabled selected>Select a service</option>
+          <option>Hair Cut & Style</option>
+          <option>Color & Balayage</option>
+          <option>Nails & Gel Set</option>
+          <option>Lash Extensions</option>
+          <option>Facial & Skincare</option>
+          <option>Bridal Package</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Stylist</label>
+        <select>
+          <option disabled selected>Any available stylist</option>
+          <option>Naomi Laurent</option>
+          <option>Jade Simone</option>
+          <option>Taylor Cross</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Preferred Date</label><input type="date"/></div>
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <textarea rows="3" placeholder="Any special requests, inspo photos, allergies..."></textarea>
+      </div>
+      <a href="#" class="btn-rose" style="text-align:center; margin-top:0.5rem;">Confirm Booking</a>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <p class="eyebrow reveal">Ready?</p>
+  <h2 class="reveal">You Deserve<br/><em>to Glow.</em></h2>
+  <p class="reveal">Book your appointment today and leave looking — and feeling — like the best version of yourself.</p>
+  <a href="#booking" class="btn-rose reveal">Book Your Visit →</a>
+</section>
+
+<footer>
+  <div class="logo">Lumi<em>ère</em></div>
+  <p>© 2025 Lumière Salon & Spa · Virginia Beach, VA</p>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Book Online</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(e => e.forEach(x => {
+    if (x.isIntersecting) { x.target.classList.add('visible'); io.unobserve(x.target); }
+  }), { threshold: 0.07 });
+  reveals.forEach(el => io.observe(el));
+
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.padding = window.scrollY > 60 ? '1rem 4rem' : '1.6rem 4rem';
+  });
+</script>
+</body>
+</html>
