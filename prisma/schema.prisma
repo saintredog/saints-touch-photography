@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "turso"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String     @id @default(cuid())
+  email String     @unique
+  name  String?
+  displayName String?
+
+  // Copyright metadata fields
+  copyrightArtist   String?
+  copyrightYear    String?
+  copyrightHolder  String?
+  copyrightEmail   String?
+
+  images  Image[]
+  reviews Review[]
+  alerts  Alert[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Image {
+  id    String     @id @default(cuid())
+  userId String
+  user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Image details
+  title       String?
+  description String?
+  blobUrl     String? // URL to image in Vercel Blob
+  blobKey     String? // Key/path in Vercel Blob storage
+  width       Int?
+  height      Int?
+  mimeType    String?
+  size        Int?
+
+  // Metadata stored as JSON
+  metadata    Json? // Stores EXIF/IPTC data
+
+  // S3/Blob info
+  uploadedAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([uploadedAt])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text      String
+  rating    Int
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Alert {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([status])
+}
