@@ -1,0 +1,21 @@
+# Copy these into GitHub Search — look for leaked keys/secrets
+
+https://github.com/search?q=zomato+AWS_SECRET_ACCESS_KEY&type=code
+https://github.com/search?q=zomato+AWS_ACCESS_KEY_ID&type=code
+https://github.com/search?q=zomato+api_key&type=code
+https://github.com/search?q=zomato+password&type=code
+https://github.com/search?q=zomato+secret_key&type=code
+https://github.com/search?q=blinkit+AWS_SECRET&type=code
+https://github.com/search?q=blinkit+api_key&type=code
+https://github.com/search?q=grofers+AWS_SECRET&type=code
+https://github.com/search?q=grofers+database_password&type=code
+https://github.com/search?q=hyperpure+secret&type=code
+https://github.com/search?q=hyperpure+api_key&type=code
+https://github.com/search?q=zomans.com+password&type=code
+https://github.com/search?q=zomans.com+secret&type=code
+https://github.com/search?q=runnr.in+api_key&type=code
+https://github.com/search?q=eternal.com+AWS_SECRET&type=code
+https://github.com/search?q=zomato+filename:.env&type=code
+https://github.com/search?q=blinkit+filename:.env&type=code
+https://github.com/search?q=zomato+filename:config.yml&type=code
+https://github.com/search?q=zomato+filename:docker-compose.yml&type=code

@@ -1,0 +1,56 @@
+=== accred.insider.in — Tue Mar 17 20:51:57 EDT 2026 ===
+=== Full response headers + body ===
+HTTP/2 302 
+content-type: text/html; charset=UTF-8
+location: http://accred.insider.in/login
+date: Wed, 18 Mar 2026 00:51:58 GMT
+set-cookie: XSRF-TOKEN=eyJpdiI6IitqVitQWDJcL2REKzFBQnFSR1VDVlVnPT0iLCJ2YWx1ZSI6InEydE4rQ3J4ZGUzUHRoTTN1WE8yTHRDR0N0OUtmUG1NWVl2R1Q2UVB5SUZ4VGhockRLU3NaVjhGUzNwTnpEbmQiLCJtYWMiOiIxNTAzYWRkMDAxMDg5MGE1YmM0NTk4MDVhY2M3MzczYTYxOTFkNTc3OTMxYWQ2M2RhMjQ3MDg0YzkxMzhiMmQwIn0%3D; expires=Wed, 18-Mar-2026 12:51:58 GMT; Max-Age=43200; path=/
+set-cookie: laravel_session=eyJpdiI6InN3MGI2engxb1ErcHV6alFKaEh2a3c9PSIsInZhbHVlIjoiNEVPUGF4WGNHU3FhNDFVSjRUbjVnTkpMZjhNUjFkYk00TFAwVXNVNEZLUm9KRlNzV1o2NFZ1dXpNS3kycW4rSyIsIm1hYyI6ImRkNjk3OTY1MDNjNmJjMDY4MWU2YTQ1ZWZkNTgxNmIwZGE4ODZhMWJhY2NhNjIwN2Q5MTBmOWEzZDY1NGVhMjEifQ%3D%3D; expires=Wed, 18-Mar-2026 12:51:58 GMT; Max-Age=43200; path=/; httponly
+host: accred.insider.in
+x-powered-by: PHP/7.2.34
+cache-control: no-cache, private
+x-cache: Miss from cloudfront
+via: 1.1 6225fd23298b677711e0721417a30ae2.cloudfront.net (CloudFront)
+x-amz-cf-pop: IAD61-P10
+x-amz-cf-id: jxK4JYsicJrFS783UVRFKskQ4fgqA1a831B0qz_LuJEmkGlUq-meVQ==
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="refresh" content="0;url='http://accred.insider.in/login'" />
+
+        <title>Redirecting to http://accred.insider.in/login</title>
+    </head>
+    <body>
+        Redirecting to <a href="http://accred.insider.in/login">http://accred.insider.in/login</a>.
+    </body>
+</html>=== Headers only ===
+HTTP/2 302 
+content-type: text/html; charset=UTF-8
+location: http://accred.insider.in/login
+date: Wed, 18 Mar 2026 00:51:58 GMT
+set-cookie: XSRF-TOKEN=eyJpdiI6IkZWK3hqcFJ3YVVlbDlKaTVqam1KdHc9PSIsInZhbHVlIjoibnlqa200NFc2WTIwakxvSFFleVlcL25mXC9YNnY0U2xqM01iMU80VUlkNFdETG5waGRkbTRNNDZuMXJGUVZ6ckVaIiwibWFjIjoiMWY0ODQ1ZTUxYzM0NmZjZWExYmQ5NmEzNWI0M2Y1ZTk2YjUyNTk4NzhjNjRmODQyNTU2NDc5YjlmNzI2NTkwMiJ9; expires=Wed, 18-Mar-2026 12:51:58 GMT; Max-Age=43200; path=/
+set-cookie: laravel_session=eyJpdiI6IlM2bHFtUmFmdWltS0JmbjdlZFMzOUE9PSIsInZhbHVlIjoiMktremJHMUFoN1hWVTF3UWhpMkVcLzcxUDlmZEFNU0pBTkh0RHlIZk5UVEh1NWp3UmlUUk5LSTVlQmtHSnp0cXEiLCJtYWMiOiI1MWNhODU4NjZlNDg2YjNlMDkyMGNkMzljZTQ1ZWI0MDU2YzE2MWI0ZjA0MjI4ZGY3OWMxOWYwYTkxYWQ0MDI0In0%3D; expires=Wed, 18-Mar-2026 12:51:58 GMT; Max-Age=43200; path=/; httponly
+host: accred.insider.in
+x-powered-by: PHP/7.2.34
+cache-control: no-cache, private
+x-cache: Miss from cloudfront
+via: 1.1 bc862a5bfbcccce5fea70670be9c092a.cloudfront.net (CloudFront)
+x-amz-cf-pop: IAD61-P10
+x-amz-cf-id: L0Iet6Dr9DYVfV5HeaY0mCw1wn6XkewdjERh_YzCI1HVsqPyuJw1iQ==
+
+=== Laravel path probe ===
+200 /login
+403 /.env
+404 /storage/logs/laravel.log
+302 /phpinfo.php
+302 /admin
+302 /api
+404 /api/v1
+302 /_debugbar
+302 /telescope
+302 /horizon
+200 /robots.txt
+302 /web.config
+=== Done — /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/accred_results.txt ===

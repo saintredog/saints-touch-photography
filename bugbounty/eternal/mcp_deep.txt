@@ -1,0 +1,15 @@
+=== mcp-server.zomato.com deep probe — Tue Mar 17 20:49:03 EDT 2026 ===
+=== /health full body ===
+HTTP/2 200 
+content-type: application/json
+content-length: 20
+server: uvicorn
+expires: Wed, 18 Mar 2026 00:49:03 GMT
+cache-control: max-age=0, no-cache, no-store
+pragma: no-cache
+date: Wed, 18 Mar 2026 00:49:03 GMT
+strict-transport-security: max-age=31536000
+set-cookie: _abck=7A58B8E67BAE581722E56EAA726C442B~-1~YAAQisgwF6c0uvicAQAAE+Nq/g+uROLEdLACJDbyfrLRTBBeI6oLfreqVIDrKEZdAbCjBHU6mLD3TytqRTYxVqtST130RazuL5MWqLsHUUoERqeAWezUfdr1Fu9PFTqdftbqYgxC7aoQQp4VC2qRmEFgLyYORrd7Ia1JCwVCVyDpxOlD50S1J2Xc9nQloNPH1Gm2Jg/tuVxz306sh0BPShDUxKin2pHX0ledFxOXswcBaiu3UOAA0hPulDTx3ez2XTWyTNH2aNCo/1AhxD6Jejweaze+L2csGxBjKCdkV6LTdpEjRFRVxSM6S0K0Iu3jnrmqx4acZ59BqZQMlWXmsNW6Wh8HYXLvw6ReUOiW5il7x7QwTTMsl9c0WO1EN+9ikSWXR/GEU38L0ii4D+uHdBMb02LLgedlGt/MqZnQ4zwtJBGduSoi5y+foMlA4DP3fudoFVM=~-1~-1~-1~-1~-1; Domain=.zomato.com; Path=/; Expires=Thu, 18 Mar 2027 00:49:03 GMT; Max-Age=31536000; Secure
+set-cookie: bm_sz=75AADF8348E8D68BA4B55180D5AF9FF4~YAAQisgwF6g0uvicAQAAE+Nq/h84eqA++JQio5T4ihZgPCPuDqAMPPbXivlaOHDLhKtcEqGnuxQ7jGog5mt0q11zkSR1qzok1i8UDE28u0RDSnnWObIhNEQjaC5WYCnqLJjJGxJqXQXi8HAQycpW4HN5Sr3I5/hL3jXcOo1J2NbR7X+VwnbU7XCI3gzIq2AJzkYWDSnQ9B9Q+yOK87IXkK2gwXebifY8Lfxu/B0aTmON4ftWVjsBojmzmgmWrE6qKbiMl9QToGlyvUcJfX3/sldIHDpGYEjDLubZv/+hvh+PIvGh6WMVRvEovcMc4IIefQfwXd/AuM1JNkBvX0o9RgkmskFxI57l0hsbbIDOTlyHAGOoAG0lUQ==~4408374~4469554; Domain=.zomato.com; Path=/; Expires=Wed, 18 Mar 2026 04:49:03 GMT; Max-Age=14400
+
+{"status":"healthy"}=== FastAPI auto-docs probe ===

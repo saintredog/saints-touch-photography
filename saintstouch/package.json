@@ -1,0 +1,21 @@
+{
+  "name": "saintstouch-photography",
+  "version": "2.0.0",
+  "description": "Premium photography portfolio for Saint's Touch Photography",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "optimize-images": "node scripts/optimize-images.mjs"
+  },
+  "dependencies": {
+    "astro": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "sharp": "^0.33.0"
+  }
+}

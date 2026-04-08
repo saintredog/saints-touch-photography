@@ -1,0 +1,45 @@
+=== Pivot Recon — Tue Mar 17 20:37:52 EDT 2026 ===
+=== [1] Grofers Dashboard Cluster ===
+403  redash-queries.grofers.com  []
+403  bidashboard.grofers.com  []
+403  merchandising.grofers.com  []
+000  obelix-dashboard.grofers.com  []
+000  obelix-react-ui.grofers.com  []
+000  searchdashboard.grofers.com  []
+403  logistics-queue.grofers.com  []
+403  logistics.grofers.com  []
+403  cms.grofers.com  []
+403  cmsapp.grofers.com  []
+000  internal.grofers.com  []
+000  vendorportal.grofers.com  []
+403  grafana.grofers.com  []
+000  data-catalog.grofer.io  []
+200  reports.grofer.io  []
+000  helpdesk.grofers.com  []
+--- Redash API check (unauthenticated queries) ---
+=== [2] EEAM — external-signup.zomans.com ===
+--- /access endpoint ---
+  <title>EEAM || Eternal External Access Manager</title>
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="I5uPVZFTMkKIDJe0A2XdhnSrAj3HktQChnHvjGCfT_MqJTPiRVLystF7nZXP0vWYOSq-Aj5XYuTVXfHKvG7MAA" />
+  <form action="/access/appeal" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="eON0Xw9J38jn_JdVTjNAtoiVPV5XDEtcV_zwurF7LO_H4sIw6skp2TTXDQVvOa6BQYqJ4OsHAPiPbAOO-a1uyg" autocomplete="off" />
+    <div class="form-floating mb-3">
+        <input class="form-control form-control-lg rounded-3 fs-3" placeholder="name@example.com" required="required" disabled="disabled" type="email" name="email" id="email" />
+   <div class="form-group d-flex align-items-center justify-content-center"
+</form>
+--- Headers ---
+server: nginx/1.25.1
+x-frame-options: SAMEORIGIN
+set-cookie: _external_access_manager_session=HbFVmF5lwhJs2yt98jUgbDJmJ4yfGVDAgjuMA%2ByQb4NonlablAloDhMRRUwxeXYKqATzqq5n1lWlkR0C5zY3jdbrbmDMvtJ9b8SkL7jZmCbXtoRr6uIdpJ6WE%2Bhw9VPMfr3E8vThPtje1Pj0PKO%2BKmyC4ZR3sK19PLtVPtCY%2FdiLNaPnpZSqRX1SR5GMwWVotKdGgU%2BdSymGiRYkAZvMia8qW4RI2kjsMog1xj8yeYWFBW%2Fnb7krIekC1qDFr30op8yNr5Vpd%2F99AMgUoa3fPvgCw6B2gt%2B4m36b%2ByOzyS5sdI2SME9OwA%3D%3D--WAHLgBJF6W7NW4vD--0H3lq4wlIN1CYjF30Wh5jQ%3D%3D; path=/; HttpOnly; SameSite=Lax
+--- Rails path probe ---
+404  /users
+404  /users/sign_in
+404  /users/sign_up
+404  /admin
+404  /admin/users
+404  /api/v1/users
+200  /health
+404  /status
+200  /robots.txt
+404  /rails/info/properties
+=== Done — /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/pivot_results.txt ===

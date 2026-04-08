@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenClaw Security Configuration — Saint Labs / Closer Agent</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #1a1a2e;
+      background: #fff;
+      padding: 48px 56px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      border-bottom: 3px solid #4f46e5;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      line-height: 1.2;
+    }
+    .header .subtitle {
+      font-size: 13px;
+      color: #6366f1;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    .meta {
+      text-align: right;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .meta strong { color: #374151; }
+
+    /* Sections */
+    section {
+      margin-bottom: 28px;
+    }
+    section h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4f46e5;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    /* Summary callout */
+    .callout {
+      background: #f0fdf4;
+      border-left: 4px solid #22c55e;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 28px;
+      font-size: 12.5px;
+      color: #166534;
+      line-height: 1.6;
+    }
+    .callout strong { font-weight: 600; }
+
+    /* Config table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-bottom: 12px;
+    }
+    thead tr {
+      background: #4f46e5;
+      color: #fff;
+    }
+    thead th {
+      text-align: left;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.04em;
+    }
+    tbody tr:nth-child(odd) { background: #f9fafb; }
+    tbody tr:nth-child(even) { background: #fff; }
+    tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tbody td:first-child { font-weight: 600; color: #374151; white-space: nowrap; }
+    .tag-before {
+      display: inline-block;
+      background: #fee2e2;
+      color: #991b1b;
+      font-size: 10.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+    .tag-after {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 10.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      background: #f1f5f9;
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #334155;
+    }
+
+    /* Tool restrictions */
+    .pill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .pill-allow { background: #dcfce7; color: #166534; }
+    .pill-deny  { background: #fee2e2; color: #991b1b; }
+
+    /* Restore steps */
+    ol {
+      padding-left: 18px;
+      line-height: 2;
+      font-size: 12.5px;
+      color: #374151;
+    }
+    ol li code { font-size: 11px; }
+
+    /* Footer */
+    .footer {
+      margin-top: 36px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 12px;
+      font-size: 11px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      body { padding: 32px 40px; }
+      .header { page-break-after: avoid; }
+      section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>OpenClaw Security Configuration</h1>
+        <div class="subtitle">Closer Agent · WhatsApp Channel · Saint Labs</div>
+      </div>
+      <div class="meta">
+        <strong>Generated:</strong> Sun, March 15 2026<br>
+        <strong>Config version:</strong> 2026.3.8<br>
+        <strong>Host:</strong> Clifford's MacBook Pro<br>
+        <strong>File:</strong> ~/.openclaw/openclaw.json
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Purpose:</strong> This document captures all security and cost-protection settings applied to the OpenClaw Closer Agent as of March 15, 2026. Keep this on file so you can restore settings quickly if OpenClaw is reset, reinstalled, or reconfigured.
+  </div>
+
+  <!-- SECTION 1 -->
+  <section>
+    <h2>1 · WhatsApp Channel Security</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Before</th>
+          <th>After (Current)</th>
+          <th>Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>dmPolicy</td>
+          <td><span class="tag-before">open</span></td>
+          <td><span class="tag-after">allowlist</span></td>
+          <td>Only numbers in <code>allowFrom</code> can trigger the agent. Everyone else is silently dropped — zero LLM calls.</td>
+        </tr>
+        <tr>
+          <td>allowFrom</td>
+          <td><span class="tag-before">["*"]</span></td>
+          <td><span class="tag-after">["+1", "+973"]</span></td>
+          <td>Restricts to US/Canada (+1) and Bahrain (+973) country codes. Blocks spam from random international numbers.</td>
+        </tr>
+        <tr>
+          <td>debounceMs</td>
+          <td><span class="tag-before">0</span></td>
+          <td><span class="tag-after">3000</span></td>
+          <td>Batches rapid consecutive messages from the same sender into a 3-second window → one LLM call per burst, not one per message.</td>
+        </tr>
+        <tr>
+          <td>groupPolicy</td>
+          <td><span class="tag-after">allowlist</span></td>
+          <td><span class="tag-after">allowlist</span></td>
+          <td>Agent does not respond in group chats unless the group is explicitly whitelisted. (Was already secure.)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section>
+    <h2>2 · Agent Routing (Bindings)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Channel</th>
+          <th>Account</th>
+          <th>Routes To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Marketing / Closer</td>
+          <td>whatsapp</td>
+          <td><code>default</code> (Saint Labs WA)</td>
+          <td><code>photo_marketing_agent</code></td>
+        </tr>
+        <tr>
+          <td>Owner (Cliff)</td>
+          <td>whatsapp</td>
+          <td><code>+16195096448</code></td>
+          <td><code>main</code> (full agent)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px;color:#6b7280;margin-top:6px;">The owner binding ensures Cliff's personal number always routes to the main agent, not the marketing agent.</p>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section>
+    <h2>3 · photo_marketing_agent Tool Restrictions</h2>
+    <p style="font-size:12px;color:#374151;margin-bottom:10px;">The Closer agent (<code>photo_marketing_agent</code>) runs with a minimal toolset. This limits damage if the agent is manipulated by a malicious prompt.</p>
+    <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+      <div>
+        <p style="font-size:11px;font-weight:600;color:#166534;margin-bottom:6px;">✅ ALLOWED</p>
+        <div class="pill-list" style="max-width:200px;">
+          <span class="pill pill-allow">message</span>
+          <span class="pill pill-allow">memory_search</span>
+          <span class="pill pill-allow">memory_get</span>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:11px;font-weight:600;color:#991b1b;margin-bottom:6px;">🚫 DENIED</p>
+        <div class="pill-list" style="max-width:480px;">
+          <span class="pill pill-deny">exec</span>
+          <span class="pill pill-deny">gateway</span>
+          <span class="pill pill-deny">write</span>
+          <span class="pill pill-deny">edit</span>
+          <span class="pill pill-deny">read</span>
+          <span class="pill pill-deny">process</span>
+          <span class="pill pill-deny">nodes</span>
+          <span class="pill pill-deny">cron</span>
+          <span class="pill pill-deny">sessions_spawn</span>
+          <span class="pill pill-deny">sessions_send</span>
+          <span class="pill pill-deny">sessions_list</span>
+          <span class="pill pill-deny">sessions_history</span>
+          <span class="pill pill-deny">subagents</span>
+          <span class="pill pill-deny">session_status</span>
+          <span class="pill pill-deny">agents_list</span>
+          <span class="pill pill-deny">browser</span>
+          <span class="pill pill-deny">canvas</span>
+          <span class="pill pill-deny">whatsapp_login</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section>
+    <h2>4 · How to Restore These Settings</h2>
+    <p style="font-size:12px;color:#374151;margin-bottom:10px;">If you ever need to re-apply these settings from scratch (reinstall, new machine, etc.):</p>
+    <ol>
+      <li>Open the OpenClaw TUI and ask Claw to apply the WhatsApp security config.</li>
+      <li>Or run: <code>openclaw config edit</code> and paste the values from Section 1 manually.</li>
+      <li>Set <code>channels.whatsapp.dmPolicy</code> → <code>"allowlist"</code></li>
+      <li>Set <code>channels.whatsapp.allowFrom</code> → <code>["+1", "+973"]</code></li>
+      <li>Set <code>channels.whatsapp.debounceMs</code> → <code>3000</code></li>
+      <li>Confirm <code>channels.whatsapp.groupPolicy</code> is <code>"allowlist"</code></li>
+      <li>Confirm the two bindings in Section 2 are present.</li>
+      <li>Confirm <code>photo_marketing_agent</code> tool allow/deny list matches Section 3.</li>
+      <li>Restart the gateway: <code>openclaw gateway restart</code></li>
+    </ol>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section>
+    <h2>5 · Future Recommendations (Not Yet Applied)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Recommendation</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Downgrade Closer model to Haiku</td>
+          <td>Haiku is ~20× cheaper than Sonnet. For scripted lead intake, quality difference is minimal.</td>
+        </tr>
+        <tr>
+          <td>Monthly token budget cap</td>
+          <td>Hard ceiling on API spend for the marketing agent. Stops runaway cost even if other filters fail.</td>
+        </tr>
+        <tr>
+          <td>Trigger keyword gate</td>
+          <td>Pre-filter messages with a static keyword check before hitting the LLM (e.g., only respond to messages containing "book" or "shoot").</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="footer">
+    <span>Clifford Roberts · OpenClaw Security Config · March 2026</span>
+    <span>saintstouch.photography · saintlabs.io</span>
+  </div>
+
+</body>
+</html>

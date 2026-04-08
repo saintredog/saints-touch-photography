@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magnus Strategic Advisory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0A1628;
+      --navy-mid: #12223F;
+      --charcoal: #1E2535;
+      --slate: #4A5568;
+      --slate-light: #718096;
+      --white: #F8FAFC;
+      --off-white: #EDF2F7;
+      --gold: #C9A84C;
+      --gold-light: #E6C97A;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+      background: rgba(10, 22, 40, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s;
+    }
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 1.25rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--white);
+      cursor: pointer;
+    }
+    .logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(248,250,252,.65);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .55rem 1.4rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+    /* ─── PAGE SYSTEM ─── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--navy) 0%, #0F1F3A 50%, #091420 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-grid-line {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+      background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,.04) 100%);
+      border-left: 1px solid rgba(201,168,76,.12);
+    }
+    .hero-content { position: relative; max-width: 720px; }
+    .hero-eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--gold);
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero p {
+      font-size: 1.1rem; font-weight: 300;
+      color: rgba(248,250,252,.7);
+      max-width: 560px; margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      background: var(--gold);
+      color: var(--navy);
+      border: none; cursor: pointer;
+      transition: all .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ghost {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(248,250,252,.25);
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--white); }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      background: var(--charcoal);
+      padding: 2.5rem 5%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .trust-bar-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--slate-light);
+      text-align: center; margin-bottom: 1.75rem;
+    }
+    .partner-logos {
+      display: flex; align-items: center; justify-content: center;
+      gap: 3.5rem; flex-wrap: wrap;
+    }
+    .partner-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .9rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(248,250,252,.25);
+      filter: grayscale(100%);
+      transition: color .2s;
+    }
+    .partner-logo:hover { color: rgba(248,250,252,.5); }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1.15;
+      letter-spacing: -.02em;
+      margin-bottom: 1.25rem;
+    }
+    .section-subtitle {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(248,250,252,.6);
+      max-width: 560px; line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── SERVICE CARDS ─── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5px;
+      background: var(--border);
+    }
+    .service-card {
+      background: var(--charcoal);
+      padding: 2.5rem 2rem;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .service-card:hover { background: #252D3D; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .card-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .15em;
+      color: var(--gold); opacity: .6;
+      margin-bottom: 1.5rem;
+    }
+    .card-icon {
+      font-size: 1.75rem; margin-bottom: 1.25rem;
+      display: block;
+    }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      letter-spacing: -.01em;
+      margin-bottom: .75rem;
+    }
+    .card-desc {
+      font-size: .875rem; font-weight: 300;
+      color: rgba(248,250,252,.6);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .card-link {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex; align-items: center; gap: .5rem;
+      cursor: pointer;
+    }
+    .card-link::after { content: '→'; transition: transform .2s; }
+    .card-link:hover::after { transform: translateX(4px); }
+
+    /* ─── DIVIDER ─── */
+    .divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+    /* ─── GLOBAL HOOK ─── */
+    .global-hook {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #0F1F3A 0%, var(--navy) 100%);
+      position: relative; overflow: hidden;
+    }
+    .global-hook::after {
+      content: 'GLOBAL';
+      position: absolute; right: -2rem; top: 50%; transform: translateY(-50%);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12rem; font-weight: 900;
+      color: rgba(255,255,255,.02);
+      line-height: 1; pointer-events: none;
+    }
+    .global-hook-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center;
+    }
+    .stat-row { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+    .stat { display: flex; align-items: flex-start; gap: 1.5rem; }
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      color: var(--gold); line-height: 1;
+      min-width: 80px;
+    }
+    .stat-label { font-size: .875rem; color: rgba(248,250,252,.6); line-height: 1.6; }
+
+    /* ─── LEADERSHIP TEASER ─── */
+    .leadership-teaser {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem;
+      align-items: center;
+    }
+    .leader-card {
+      background: var(--charcoal);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .leader-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%; background: var(--gold);
+    }
+    .leader-avatar {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--gold), #8B6914);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+    .leader-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: .25rem;
+    }
+    .leader-title {
+      font-size: .8rem; color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600; letter-spacing: .08em;
+      margin-bottom: 1.25rem;
+    }
+    .leader-bio {
+      font-size: .875rem; color: rgba(248,250,252,.6);
+      line-height: 1.7;
+    }
+
+    /* ─── FULL PAGE SECTIONS ─── */
+    .page-hero {
+      padding: 140px 5% 80px;
+      background: linear-gradient(135deg, var(--navy) 0%, #0F1F3A 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero .hero-eyebrow { margin-bottom: 1rem; }
+    .page-body { padding: 80px 5%; }
+
+    /* ─── FEATURE LIST ─── */
+    .feature-list { display: flex; flex-direction: column; gap: 1px; margin-top: 3rem; }
+    .feature-item {
+      background: var(--charcoal);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: flex-start; gap: 2rem;
+      border-left: 3px solid transparent;
+      transition: border-color .2s, background .2s;
+    }
+    .feature-item:hover { border-left-color: var(--gold); background: #252D3D; }
+    .feature-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      color: var(--gold); min-width: 32px; margin-top: .2rem;
+      letter-spacing: .1em;
+    }
+    .feature-content h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .feature-content p {
+      font-size: .875rem; color: rgba(248,250,252,.6);
+      line-height: 1.7;
+    }
+
+    /* ─── TWO-COL LAYOUT ─── */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .two-col-narrow { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start; }
+    @media (max-width: 768px) {
+      .two-col, .two-col-narrow, .global-hook-inner, .leadership-teaser {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .global-hook::after { display: none; }
+    }
+
+    /* ─── AUDIT BOX ─── */
+    .audit-box {
+      background: var(--gold);
+      padding: 2.5rem;
+      color: var(--navy);
+    }
+    .audit-box h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem; font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .audit-box p { font-size: .9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .audit-box ul { list-style: none; margin-bottom: 1.5rem; }
+    .audit-box ul li {
+      font-size: .875rem; font-weight: 500;
+      padding: .4rem 0;
+      border-bottom: 1px solid rgba(10,22,40,.15);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .audit-box ul li::before { content: '✓'; font-weight: 700; }
+
+    /* ─── ABOUT PAGE ─── */
+    .credentials { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
+    .credential-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .5rem 1rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+    .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+    .timeline-item {
+      display: flex; gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .timeline-year {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem; font-weight: 700;
+      color: var(--gold); min-width: 60px; letter-spacing: .05em;
+      padding-top: .2rem;
+    }
+    .timeline-content h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .95rem; font-weight: 700;
+      margin-bottom: .4rem;
+    }
+    .timeline-content p {
+      font-size: .875rem; color: rgba(248,250,252,.6);
+      line-height: 1.6;
+    }
+
+    /* ─── CONTACT / FORM ─── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .5rem;
+    }
+    .contact-item p { font-size: .9rem; color: rgba(248,250,252,.7); }
+
+    /* ─── HEALTH CHECK FORM ─── */
+    .form-card {
+      background: var(--charcoal);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+    }
+    .form-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .form-subtitle {
+      font-size: .875rem; color: rgba(248,250,252,.6);
+      margin-bottom: 2rem; line-height: 1.6;
+    }
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(248,250,252,.7);
+      margin-bottom: .6rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: .85rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: var(--charcoal); }
+    .path-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .path-option {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      cursor: pointer; text-align: center;
+      transition: all .2s;
+    }
+    .path-option:hover, .path-option.selected {
+      border-color: var(--gold);
+      background: rgba(201,168,76,.08);
+    }
+    .path-option .path-icon { font-size: 1.5rem; margin-bottom: .75rem; display: block; }
+    .path-option .path-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .85rem; font-weight: 700;
+      margin-bottom: .4rem;
+    }
+    .path-option .path-desc { font-size: .75rem; color: rgba(248,250,252,.55); }
+    .checkbox-group { display: flex; flex-direction: column; gap: .75rem; }
+    .checkbox-label {
+      display: flex; align-items: center; gap: .75rem;
+      cursor: pointer;
+      font-size: .875rem; color: rgba(248,250,252,.75);
+    }
+    .checkbox-label input { width: auto; display: none; }
+    .checkbox-box {
+      width: 18px; height: 18px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .checkbox-label input:checked + .checkbox-box {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .checkbox-label input:checked + .checkbox-box::after { content: '✓'; font-size: .7rem; color: var(--navy); font-weight: 700; }
+    .form-progress {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: 2rem;
+    }
+    .progress-step {
+      display: flex; align-items: center; gap: .5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(248,250,252,.35);
+    }
+    .progress-step.active { color: var(--gold); }
+    .progress-step.done { color: rgba(248,250,252,.6); }
+    .progress-dot {
+      width: 24px; height: 24px;
+      border: 1px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700;
+      border-radius: 50%;
+    }
+    .progress-line { flex: 1; height: 1px; background: var(--border); }
+    .form-nav { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
+    .form-success { display: none; text-align: center; padding: 2rem 0; }
+    .form-success.show { display: block; }
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .success-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: .75rem;
+    }
+    .success-msg { font-size: .9rem; color: rgba(248,250,252,.65); line-height: 1.7; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060E1A;
+      padding: 4rem 5% 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2rem; }
+    }
+    .footer-brand p {
+      font-size: .875rem; color: rgba(248,250,252,.5);
+      margin-top: .75rem; max-width: 300px; line-height: 1.7;
+    }
+    .footer-col h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--slate-light); margin-bottom: 1.25rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col ul li a {
+      font-size: .85rem; color: rgba(248,250,252,.5);
+      text-decoration: none; transition: color .2s; cursor: pointer;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: .75rem; color: rgba(248,250,252,.3); }
+
+    /* ─── INLINE HIGHLIGHT BOX ─── */
+    .highlight-box {
+      background: var(--charcoal);
+      border-left: 3px solid var(--gold);
+      padding: 1.75rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .highlight-box p {
+      font-size: .95rem; color: rgba(248,250,252,.8);
+      font-style: italic; line-height: 1.7;
+    }
+    .highlight-box cite {
+      display: block; margin-top: .75rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .1em; color: var(--gold);
+    }
+
+    /* scroll padding for nav */
+    .scroll-target { scroll-margin-top: 72px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<nav>
+  <div class="logo" onclick="showPage('home')">Magnus<span>.</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active" href="#">Home</a></li>
+    <li><a onclick="showPage('global')" id="nav-global" href="#">Global Bridge</a></li>
+    <li><a onclick="showPage('pandl')" id="nav-pandl" href="#">P&L Diagnostic</a></li>
+    <li><a onclick="showPage('sales')" id="nav-sales" href="#">Sales Governance</a></li>
+    <li><a onclick="showPage('about')" id="nav-about" href="#">Leadership</a></li>
+  </ul>
+  <a class="nav-cta" onclick="showPage('contact')" href="#">Strategic Health Check →</a>
+</nav>
+
+
+<!-- ═══════════════════════════ HOME ═══════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-line"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Magnus Strategic Advisory</div>
+      <h1>Where C-Suite Ambition Meets <em>Operational Reality</em></h1>
+      <p>We work alongside CEOs, boards, and executive teams to transform strategic vision into measurable revenue growth — across markets, borders, and cycles.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" onclick="showPage('contact')" href="#">Begin Your Diagnostic</a>
+        <a class="btn-ghost" onclick="showPage('about')" href="#">Meet the Founder</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-label">Trusted by leaders at</div>
+    <div class="partner-logos">
+      <span class="partner-logo">NCR</span>
+      <span class="partner-logo">Glory</span>
+      <span class="partner-logo">Diebold Nixdorf</span>
+      <span class="partner-logo">De La Rue</span>
+      <span class="partner-logo">Hitachi</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section style="padding: 100px 5% 0;">
+    <div class="section-label">Core Services</div>
+    <h2 class="section-title">Four Levers of<br/>Executive Transformation</h2>
+    <p class="section-subtitle">Each engagement is scoped, not scaled. We go deep on the problems that actually matter to your P&L.</p>
+  </section>
+  <div class="services-grid" style="margin: 0 5%; padding-bottom: 100px;">
+    <div class="service-card" onclick="showPage('global')">
+      <div class="card-number">01</div>
+      <span class="card-icon">🌐</span>
+      <div class="card-title">Global Market Bridge</div>
+      <p class="card-desc">Systematic expansion from the U.S. into EMEA, Asia, and Europe — with proven entry frameworks, local partner networks, and regulatory navigation.</p>
+      <span class="card-link">Explore</span>
+    </div>
+    <div class="service-card" onclick="showPage('pandl')">
+      <div class="card-number">02</div>
+      <span class="card-icon">📊</span>
+      <div class="card-title">P&L Diagnostic & Turnaround</div>
+      <p class="card-desc">A 14-day forensic audit of your revenue engine. Identify the margin leaks, operational drag, and structural inefficiencies holding you back.</p>
+      <span class="card-link">Explore</span>
+    </div>
+    <div class="service-card" onclick="showPage('sales')">
+      <div class="card-number">03</div>
+      <span class="card-icon">⚡</span>
+      <div class="card-title">Sales & Commercial Governance</div>
+      <p class="card-desc">Miller Heiman methodology, Strategic Account Management, and revenue architecture — built for enterprise sales cycles and complex B2B deals.</p>
+      <span class="card-link">Explore</span>
+    </div>
+    <div class="service-card" onclick="showPage('contact')">
+      <div class="card-number">04</div>
+      <span class="card-icon">🎯</span>
+      <div class="card-title">Strategic Health Check</div>
+      <p class="card-desc">A structured diagnostic conversation designed to surface your most pressing strategic challenge — and outline a clear path forward in 48 hours.</p>
+      <span class="card-link">Start Now</span>
+    </div>
+  </div>
+
+  <!-- GLOBAL HOOK -->
+  <div class="global-hook">
+    <div class="global-hook-inner">
+      <div>
+        <div class="section-label">Global Bridge</div>
+        <h2 class="section-title">Your domestic market is a floor, not a ceiling.</h2>
+        <p class="section-subtitle" style="margin-bottom: 2rem;">The firms that dominate the next decade aren't waiting for global growth to come to them. We've built the bridge — from U.S. headquarters to active revenue in EMEA and Asia.</p>
+        <a class="btn-primary" onclick="showPage('global')" href="#">View Global Services</a>
+      </div>
+      <div>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label"><strong>Major Global Regions</strong><br/>EMEA, Asia-Pacific, and South Asia — active partner networks in each</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">14</div>
+            <div class="stat-label"><strong>Days to P&L Clarity</strong><br/>From kickoff to actionable audit findings</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">25+</div>
+            <div class="stat-label"><strong>Years of Enterprise Experience</strong><br/>Across FinTech, Currency, and Industrial sectors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP TEASER -->
+  <section>
+    <div class="leadership-teaser">
+      <div class="leader-card">
+        <div class="leader-avatar">TS</div>
+        <div class="leader-name">Talha Syed</div>
+        <div class="leader-title">Founder & Managing Principal</div>
+        <p class="leader-bio">A globally recognized operator with a 25-year record of building commercial engines at NCR, Diebold-Nixdorf, and Hitachi. Talha has led P&L turnarounds, cross-border market entries, and enterprise sales transformations across four continents.</p>
+        <br/>
+        <a class="card-link" onclick="showPage('about')" href="#">Full Profile</a>
+      </div>
+      <div>
+        <div class="section-label">Leadership</div>
+        <h2 class="section-title">Advisory without distance.</h2>
+        <p style="color: rgba(248,250,252,.65); line-height: 1.8; margin-bottom: 2rem;">Magnus is not a firm of junior analysts presenting decks. When you engage Magnus, you get Talha — directly. That means faster decisions, deeper context, and accountability at the top.</p>
+        <div class="highlight-box">
+          <p>"The gap between a good strategy and a great outcome is almost always execution. That's where I live."</p>
+          <cite>— Talha Syed, Founder</cite>
+        </div>
+        <a class="btn-ghost" onclick="showPage('contact')" href="#">Schedule a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Magnus<span>.</span></div>
+        <p>C-suite advisory for firms that are ready to move from good to great — and from domestic to global.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('global')">Global Market Bridge</a></li>
+          <li><a onclick="showPage('pandl')">P&L Diagnostic</a></li>
+          <li><a onclick="showPage('sales')">Sales Governance</a></li>
+          <li><a onclick="showPage('contact')">Health Check</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="showPage('about')">About Magnus</a></li>
+          <li><a onclick="showPage('about')">Leadership</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Magnus Strategic Advisory. All rights reserved.</p>
+      <p>www.magnus.company</p>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ GLOBAL BRIDGE ═══════════════════════════ -->
+<div id="page-global" class="page">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Service — 01</div>
+    <h1 class="section-title" style="font-size: clamp(2rem,4vw,3.2rem);">The Global Market Bridge</h1>
+    <p style="color:rgba(248,250,252,.65); max-width:580px; line-height:1.8; font-size:1.05rem; margin-top:1rem;">Systematic international expansion for U.S. technology firms entering EMEA, Asia, and Europe. Not theory — operational entry.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="two-col-narrow">
+      <div>
+        <div class="section-label">Who This Is For</div>
+        <h2 class="section-title" style="font-size:1.9rem;">You've proven the model at home. Now scale it across borders.</h2>
+        <p style="color:rgba(248,250,252,.65); line-height:1.8; margin-bottom:2rem;">International expansion fails when U.S. firms assume their domestic playbook travels. Culture, regulation, buyer behavior, and partner dynamics are fundamentally different. Magnus bridges that gap.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-number">01</div>
+            <div class="feature-content">
+              <h3>Market Entry Architecture</h3>
+              <p>Country-specific entry roadmaps — including regulatory landscape, competitive mapping, and go-to-market sequencing for EMEA, India, and Asia-Pacific.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">02</div>
+            <div class="feature-content">
+              <h3>Partner & Channel Development</h3>
+              <p>Active networks across the UK, UAE, India, and Southeast Asia. We identify, vet, and onboard distribution partners so you aren't starting cold.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">03</div>
+            <div class="feature-content">
+              <h3>Executive Relationship Building</h3>
+              <p>C-suite relationships are currency in international markets. We activate ours to open doors that take most firms years to find.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">04</div>
+            <div class="feature-content">
+              <h3>Revenue-Stage Milestones</h3>
+              <p>Every engagement is milestone-anchored: first meeting, first proposal, first deal. Not just "market presence" — revenue.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="audit-box" style="background: var(--charcoal); border: 1px solid var(--border);">
+          <div class="section-label">Regions We Operate In</div>
+          <div style="display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem;">
+            <div style="padding:1.25rem; border-left:2px solid var(--gold); background:rgba(201,168,76,.05);">
+              <div style="font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem;">EUROPE & UK</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.65);line-height:1.6;">Financial technology, currency management, and enterprise software sectors. Strong partner networks in London, Frankfurt, and Amsterdam.</p>
+            </div>
+            <div style="padding:1.25rem; border-left:2px solid var(--gold); background:rgba(201,168,76,.05);">
+              <div style="font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem;">MIDDLE EAST & AFRICA</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.65);line-height:1.6;">High-growth banking and payments infrastructure in UAE, KSA, and East Africa. Regulatory and sovereign relationship expertise.</p>
+            </div>
+            <div style="padding:1.25rem; border-left:2px solid var(--gold); background:rgba(201,168,76,.05);">
+              <div style="font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem;">INDIA & ASIA-PACIFIC</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.65);line-height:1.6;">Largest addressable markets for B2B enterprise expansion. Deep channels in Mumbai, Singapore, and Tokyo financial districts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem;">
+          <a class="btn-primary" onclick="showPage('contact')" href="#">Start Your Global Expansion</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:1.5rem 0 0;">
+      <p>© 2024 Magnus Strategic Advisory</p>
+      <a class="card-link" onclick="showPage('home')" href="#">Back to Home</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ P&L DIAGNOSTIC ═══════════════════════════ -->
+<div id="page-pandl" class="page">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Service — 02</div>
+    <h1 class="section-title" style="font-size: clamp(2rem,4vw,3.2rem);">P&L Diagnostic & Turnaround</h1>
+    <p style="color:rgba(248,250,252,.65); max-width:600px; line-height:1.8; font-size:1.05rem; margin-top:1rem;">A forensic 14-day audit of your revenue engine. We find the margin leaks you've stopped seeing — and build the fix plan.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div class="section-label">The Problem</div>
+        <h2 class="section-title" style="font-size:1.9rem;">The business looks fine on the surface. It isn't.</h2>
+        <p style="color:rgba(248,250,252,.65); line-height:1.8; margin-bottom:1.75rem;">Most P&L problems aren't accounting failures — they're strategy failures that show up in the numbers. Pricing erosion. Customer concentration. Sales inefficiency. Cost creep normalized over years. These don't fix themselves.</p>
+
+        <div class="highlight-box">
+          <p>"Every business I've walked into had at least two or three structural issues the leadership team had learned to live with. They're not unsolvable. They're just invisible from the inside."</p>
+          <cite>— Talha Syed</cite>
+        </div>
+
+        <p style="color:rgba(248,250,252,.65); line-height:1.8;">The 14-Day Audit is deliberately time-compressed. Speed forces clarity. By Day 14, you will have a complete picture of your commercial performance gaps — and a ranked list of the highest-ROI interventions.</p>
+      </div>
+
+      <div>
+        <div class="audit-box">
+          <h3>The 14-Day Audit</h3>
+          <p>Structured engagement. Hard findings. Actionable output.</p>
+          <ul>
+            <li>Revenue segmentation by customer, product, and channel</li>
+            <li>Gross margin analysis by SKU and segment</li>
+            <li>Sales cycle efficiency and deal-velocity mapping</li>
+            <li>Pricing model and discount policy review</li>
+            <li>Customer retention and expansion economics</li>
+            <li>Overhead structure vs. revenue trajectory</li>
+            <li>Top-5 intervention priorities with ROI estimates</li>
+          </ul>
+          <a class="btn-primary" onclick="showPage('contact')" href="#" style="display:inline-block;">Request the Audit</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-list" style="margin-top:4rem;">
+      <div style="padding:1.5rem 0; border-bottom:1px solid var(--border);">
+        <div class="section-label">How It Works</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-number">Day 1–3</div>
+        <div class="feature-content"><h3>Data Ingestion & Stakeholder Interviews</h3><p>We review your financial statements, CRM data, and pricing models. We interview your CFO, CRO, and top-three account managers.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-number">Day 4–9</div>
+        <div class="feature-content"><h3>Diagnostic Analysis</h3><p>Pattern identification across revenue, margin, customer, and cost dimensions. We build the complete picture of your commercial engine.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-number">Day 10–12</div>
+        <div class="feature-content"><h3>Intervention Design</h3><p>We design the fix — not just identify the problem. Each intervention includes ownership, timeline, and ROI projection.</p></div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-number">Day 13–14</div>
+        <div class="feature-content"><h3>Executive Readout</h3><p>Full findings presented to your board or leadership team. Findings document and 90-day execution roadmap delivered.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:1.5rem 0 0;">
+      <p>© 2024 Magnus Strategic Advisory</p>
+      <a class="card-link" onclick="showPage('home')" href="#">Back to Home</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ SALES GOVERNANCE ═══════════════════════════ -->
+<div id="page-sales" class="page">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Service — 03</div>
+    <h1 class="section-title" style="font-size: clamp(2rem,4vw,3.2rem);">Sales & Commercial Governance</h1>
+    <p style="color:rgba(248,250,252,.65); max-width:620px; line-height:1.8; font-size:1.05rem; margin-top:1rem;">Enterprise revenue architecture using Miller Heiman methodology and Strategic Account Management frameworks — designed for complex, high-value B2B sales environments.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="two-col-narrow">
+      <div>
+        <div class="section-label">The Challenge</div>
+        <h2 class="section-title" style="font-size:1.9rem;">Enterprise deals don't close. They're won — systematically.</h2>
+        <p style="color:rgba(248,250,252,.65); line-height:1.8; margin-bottom:2rem;">Most enterprise sales organizations have talented people operating without a governing framework. Deals slip. Forecasts miss. Key accounts stagnate. The problem isn't effort — it's structure.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-number">MH</div>
+            <div class="feature-content">
+              <h3>Miller Heiman Implementation</h3>
+              <p>Full deployment of the Strategic Selling® and Large Account Management Process (LAMP®) methodologies — including training, playbooks, and CRM integration.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">SAM</div>
+            <div class="feature-content">
+              <h3>Strategic Account Management</h3>
+              <p>Account segmentation, tiering, and individualized growth plans for your top-20% accounts that generate 80% of revenue.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">CG</div>
+            <div class="feature-content">
+              <h3>Commercial Governance</h3>
+              <p>Deal-review cadences, pipeline governance, forecasting discipline, and pricing authority frameworks that hold through leadership transitions.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-number">EN</div>
+            <div class="feature-content">
+              <h3>Revenue Enablement</h3>
+              <p>Sales leadership coaching, comp plan design, and quota architecture aligned to your strategic objectives — not last year's numbers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:var(--charcoal); border:1px solid var(--border); padding:2.5rem;">
+          <div class="section-label">Who This Serves</div>
+          <div style="display:flex; flex-direction:column; gap:1.5rem; margin-top:1.5rem;">
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.5rem;">Chief Revenue Officers</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.6);line-height:1.6;">Building or rebuilding a revenue organization. Needs a proven system that scales without you touching every deal.</p>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:1.5rem;">
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.5rem;">CEOs & Boards</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.6);line-height:1.6;">Sales performance is consistently below plan. You need an outside view and a structural fix, not another pipeline review.</p>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:1.5rem;">
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.5rem;">Private Equity Portfolio Companies</div>
+              <p style="font-size:.875rem;color:rgba(248,250,252,.6);line-height:1.6;">Post-acquisition commercial transformation. 90 days to a governance framework the next leadership team can inherit.</p>
+            </div>
+          </div>
+          <div style="margin-top:2rem;">
+            <a class="btn-primary" onclick="showPage('contact')" href="#" style="display:inline-block;">Request a Consultation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:1.5rem 0 0;">
+      <p>© 2024 Magnus Strategic Advisory</p>
+      <a class="card-link" onclick="showPage('home')" href="#">Back to Home</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <div class="hero-eyebrow">About Magnus</div>
+    <h1 class="section-title" style="font-size: clamp(2rem,4vw,3.2rem);">Leadership & Advisory Philosophy</h1>
+    <p style="color:rgba(248,250,252,.65); max-width:580px; line-height:1.8; font-size:1.05rem; margin-top:1rem;">Magnus is built on one principle: senior expertise, directly applied. No delegation to junior teams. No slide-deck strategy without operational follow-through.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="two-col">
+      <div>
+        <div style="display:flex; align-items:flex-start; gap:2rem; margin-bottom:2.5rem;">
+          <div class="leader-avatar" style="width:96px;height:96px;font-size:1.75rem;flex-shrink:0;">TS</div>
+          <div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;">Talha Syed</div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:600;color:var(--gold);letter-spacing:.08em;margin:.3rem 0 1rem;">Founder & Managing Principal, Magnus Strategic Advisory</div>
+            <div class="credentials">
+              <span class="credential-tag">P&L Leadership</span>
+              <span class="credential-tag">International Expansion</span>
+              <span class="credential-tag">Miller Heiman</span>
+              <span class="credential-tag">Board Advisory</span>
+              <span class="credential-tag">FinTech</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="color:rgba(248,250,252,.75);line-height:1.85;margin-bottom:1.5rem;">Talha Syed brings over 25 years of operational leadership across the global financial technology, currency management, and enterprise software industries. His career has been defined by taking complex commercial challenges — revenue stagnation, market entry risk, organizational misalignment — and building the structures that resolve them permanently.</p>
+
+        <p style="color:rgba(248,250,252,.65);line-height:1.85;margin-bottom:1.5rem;">At NCR, Diebold-Nixdorf, Glory, Hitachi, and De La Rue, Talha led large-scale P&L functions, built international sales organizations, and drove cross-border expansion into markets across Europe, the Middle East, India, and Asia-Pacific. He has worked directly with C-suites, boards, and government institutions across four continents.</p>
+
+        <p style="color:rgba(248,250,252,.65);line-height:1.85;">Magnus was founded on the conviction that the most valuable strategic advisory happens at the intersection of operational depth and executive perspective — and that too many firms settle for consultants who have never actually run the business they're advising on.</p>
+
+        <div class="highlight-box" style="margin-top:2.5rem;">
+          <p>"Strategy without accountability is just analysis. I engage where the work meets the revenue — and I stay until it's done."</p>
+          <cite>— Talha Syed</cite>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Career Trajectory</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2022+</div>
+            <div class="timeline-content">
+              <h4>Founder — Magnus Strategic Advisory</h4>
+              <p>Launched independent advisory practice focused on C-suite commercial transformation, P&L optimization, and global market expansion for U.S. and international technology firms.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2018–22</div>
+            <div class="timeline-content">
+              <h4>Senior VP, Commercial — Hitachi / Diebold-Nixdorf</h4>
+              <p>Led EMEA and Asia commercial operations across banking technology and cash management divisions. P&L accountability exceeding $400M.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2012–18</div>
+            <div class="timeline-content">
+              <h4>VP Sales & Market Development — NCR Corporation</h4>
+              <p>Built international distribution channels across 12 markets. Delivered 3-year CAGR of 18% in new geographies.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2006–12</div>
+            <div class="timeline-content">
+              <h4>Director of Global Accounts — De La Rue / Glory</h4>
+              <p>Managed strategic accounts across central banks, sovereign wealth funds, and Tier-1 financial institutions in EMEA and South Asia.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1998–06</div>
+            <div class="timeline-content">
+              <h4>Commercial Management — Early Career</h4>
+              <p>Progressive commercial roles in enterprise technology, building the operational and analytical foundations of a 25-year leadership career.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:1.5rem 0 0;">
+      <p>© 2024 Magnus Strategic Advisory</p>
+      <a class="card-link" onclick="showPage('home')" href="#">Back to Home</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════ CONTACT / HEALTH CHECK ═══════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Strategic Health Check</div>
+    <h1 class="section-title" style="font-size: clamp(2rem,4vw,3rem);">Let's Diagnose the Real Problem</h1>
+    <p style="color:rgba(248,250,252,.65); max-width:580px; line-height:1.8; font-size:1.05rem; margin-top:1rem;">Complete the 2-part diagnostic below. Talha reviews every submission personally and responds within 48 hours with a structured perspective on your situation.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div>
+          <div class="section-label">Why The Health Check</div>
+          <h2 class="section-title" style="font-size:1.7rem;">Before any engagement, we need to understand your actual situation.</h2>
+          <p style="color:rgba(248,250,252,.65);line-height:1.8;margin-top:1rem;">Most advisory relationships fail because the wrong problem gets solved. The Health Check surfaces the real constraint — not the presenting symptom.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+          <div class="contact-item">
+            <h4>Response Time</h4>
+            <p>Personal response from Talha within 48 business hours</p>
+          </div>
+          <div class="contact-item">
+            <h4>No Obligation</h4>
+            <p>This is a diagnostic conversation, not a sales call</p>
+          </div>
+          <div class="contact-item">
+            <h4>Confidential</h4>
+            <p>All information shared is held in strict confidence</p>
+          </div>
+          <div class="contact-item">
+            <h4>Direct Contact</h4>
+            <p>magnus.company · Alpharetta, Georgia, USA</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <!-- Progress -->
+        <div class="form-progress" id="form-progress">
+          <div class="progress-step active" id="prog-1">
+            <div class="progress-dot">1</div> Your Path
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" id="prog-2">
+            <div class="progress-dot">2</div> Your Situation
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" id="prog-3">
+            <div class="progress-dot">3</div> Contact
+          </div>
+        </div>
+
+        <!-- Form Wrapper -->
+        <div id="form-wrapper">
+          <!-- Step 1: Path -->
+          <div class="form-step active" id="step-1">
+            <div class="form-title">Choose Your Primary Objective</div>
+            <div class="form-subtitle">This shapes the diagnostic questions we'll ask in the next step.</div>
+            <div class="path-selector">
+              <div class="path-option" id="path-global" onclick="selectPath('global')">
+                <span class="path-icon">🌐</span>
+                <div class="path-title">Scale Globally</div>
+                <div class="path-desc">Expand into new international markets or regions</div>
+              </div>
+              <div class="path-option" id="path-optimize" onclick="selectPath('optimize')">
+                <span class="path-icon">⚡</span>
+                <div class="path-title">Good to Great</div>
+                <div class="path-desc">Optimize performance, margins, and commercial engine</div>
+              </div>
+            </div>
+            <div class="form-nav">
+              <button class="btn-primary" onclick="nextStep(1)" id="step1-next" disabled style="opacity:.4;cursor:not-allowed;">Continue →</button>
+            </div>
+          </div>
+
+          <!-- Step 2a: Global Questions -->
+          <div class="form-step" id="step-2a">
+            <div class="form-title">Your Global Expansion Situation</div>
+            <div class="form-subtitle">Tell us where you are and where you want to go.</div>
+            <div class="form-group">
+              <label>Which regions are you targeting?</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Europe / UK</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Middle East & Africa</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>India</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Asia-Pacific (Singapore, Japan, SE Asia)</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Multiple / Not sure yet</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Current stage of international expansion</label>
+              <select>
+                <option value="">Select one...</option>
+                <option>Pre-launch — exploring markets</option>
+                <option>Launched but below target revenue</option>
+                <option>Active in 1–2 markets, looking to expand further</option>
+                <option>Restructuring a failed market entry</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>What's your 12-month global revenue target?</label>
+              <input type="text" placeholder="e.g., $5M in new international ARR" />
+            </div>
+            <div class="form-nav">
+              <button class="btn-ghost" onclick="prevStep(2)" style="padding:.75rem 1.5rem;">← Back</button>
+              <button class="btn-primary" onclick="nextStep(2)">Continue →</button>
+            </div>
+          </div>
+
+          <!-- Step 2b: Optimize Questions -->
+          <div class="form-step" id="step-2b">
+            <div class="form-title">Your Commercial Performance Situation</div>
+            <div class="form-subtitle">Help us understand where the pressure points are.</div>
+            <div class="form-group">
+              <label>Where are you feeling the most pain? (select all that apply)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Revenue growth is below target</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Margins are compressing</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Sales team underperforming</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Forecasting is unreliable</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Key accounts stagnating</label>
+                <label class="checkbox-label"><input type="checkbox" /><span class="checkbox-box"></span>Cost structure out of alignment</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>What's your current annual revenue range?</label>
+              <select>
+                <option value="">Select one...</option>
+                <option>Under $5M</option>
+                <option>$5M – $25M</option>
+                <option>$25M – $100M</option>
+                <option>$100M – $500M</option>
+                <option>$500M+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>The 2:00 AM headache — what's the one thing keeping you up at night?</label>
+              <textarea rows="4" placeholder="Be direct. This is confidential and goes directly to Talha."></textarea>
+            </div>
+            <div class="form-nav">
+              <button class="btn-ghost" onclick="prevStep(2)" style="padding:.75rem 1.5rem;">← Back</button>
+              <button class="btn-primary" onclick="nextStep(2)">Continue →</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Contact -->
+          <div class="form-step" id="step-3">
+            <div class="form-title">How to Reach You</div>
+            <div class="form-subtitle">Talha reviews all submissions personally and responds within 48 hours.</div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label>Title & Company</label>
+              <input type="text" placeholder="e.g., CEO, Acme Corp" />
+            </div>
+            <div class="form-group">
+              <label>Business Email</label>
+              <input type="email" placeholder="you@company.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone (optional)</label>
+              <input type="tel" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label>Preferred contact method</label>
+              <select>
+                <option>Email</option>
+                <option>Phone / Video call</option>
+                <option>WhatsApp</option>
+              </select>
+            </div>
+            <div class="form-nav">
+              <button class="btn-ghost" onclick="prevStep(3)" style="padding:.75rem 1.5rem;">← Back</button>
+              <button class="btn-primary" onclick="submitForm()">Submit Diagnostic →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="form-success" id="form-success">
+          <span class="success-icon">✓</span>
+          <div class="success-title">Diagnostic Received</div>
+          <p class="success-msg">Thank you. Talha will review your submission personally and reach out within 48 business hours with a structured perspective on your situation.<br/><br/>In the meantime, explore the service pages to understand how Magnus approaches your specific challenge.</p>
+          <div style="margin-top:2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <a class="btn-ghost" onclick="showPage('pandl')" href="#" style="padding:.75rem 1.5rem;">View P&L Diagnostic</a>
+            <a class="btn-primary" onclick="showPage('home')" href="#">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border-top:1px solid var(--border);padding:1.5rem 0 0;">
+      <p>© 2024 Magnus Strategic Advisory</p>
+      <a class="card-link" onclick="showPage('home')" href="#">Back to Home</a>
+    </div>
+  </footer>
+</div>
+
+
+<script>
+  const pages = ['home','global','pandl','sales','about','contact'];
+  let selectedPath = null;
+
+  function showPage(name) {
+    pages.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      const nav = document.getElementById('nav-' + p);
+      if (el) el.classList.toggle('active', p === name);
+      if (nav) nav.classList.toggle('active', p === name);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function selectPath(path) {
+    selectedPath = path;
+    document.getElementById('path-global').classList.toggle('selected', path === 'global');
+    document.getElementById('path-optimize').classList.toggle('selected', path === 'optimize');
+    const btn = document.getElementById('step1-next');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+
+  function nextStep(from) {
+    if (from === 1) {
+      document.getElementById('step-1').classList.remove('active');
+      if (selectedPath === 'global') {
+        document.getElementById('step-2a').classList.add('active');
+      } else {
+        document.getElementById('step-2b').classList.add('active');
+      }
+      setProgress(2);
+    } else if (from === 2) {
+      document.getElementById('step-2a').classList.remove('active');
+      document.getElementById('step-2b').classList.remove('active');
+      document.getElementById('step-3').classList.add('active');
+      setProgress(3);
+    }
+  }
+
+  function prevStep(from) {
+    if (from === 2) {
+      document.getElementById('step-2a').classList.remove('active');
+      document.getElementById('step-2b').classList.remove('active');
+      document.getElementById('step-1').classList.add('active');
+      setProgress(1);
+    } else if (from === 3) {
+      document.getElementById('step-3').classList.remove('active');
+      if (selectedPath === 'global') {
+        document.getElementById('step-2a').classList.add('active');
+      } else {
+        document.getElementById('step-2b').classList.add('active');
+      }
+      setProgress(2);
+    }
+  }
+
+  function setProgress(step) {
+    for (let i = 1; i <= 3; i++) {
+      const el = document.getElementById('prog-' + i);
+      el.classList.remove('active','done');
+      if (i === step) el.classList.add('active');
+      else if (i < step) el.classList.add('done');
+    }
+  }
+
+  function submitForm() {
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('form-progress').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  }
+
+  // Checkbox visual handling
+  document.querySelectorAll('.checkbox-label input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.nextElementSibling.style.borderColor = this.checked ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>

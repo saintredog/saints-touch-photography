@@ -1,0 +1,46 @@
+=== Follow-up — Tue Mar 17 20:30:12 EDT 2026 ===
+=== [1] S3 curl-based check (no aws CLI needed) ===
+EXISTS (locked 403): zomato-prod
+not found: zomato-staging
+EXISTS (locked 403): zomato-dev
+EXISTS (locked 403): zomato-backup
+EXISTS (locked 403): zomato-logs
+EXISTS (locked 403): zomato-data
+not found: hyperpure-prod
+not found: hyperpure-staging
+not found: hyperpure-backup
+not found: grofers-prod
+not found: grofers-staging
+not found: grofers-backup
+not found: runnr-prod
+not found: runnr-staging
+not found: runnr-backup
+EXISTS (locked 403): zomato-images
+not found: zomato-uploads
+not found: zomato-exports
+not found: zomato-reports
+not found: blinkit-prod
+not found: blinkit-staging
+EXISTS (locked 403): blinkit-data
+not found: blinkit-uploads
+=== [2] securitywebhook.zomans.com probe ===
+--- POST test ---
+HTTP/2 200 
+server: awselb/2.0
+content-type: text/plain; charset=utf-8
+content-length: 4
+date: Wed, 18 Mar 2026 00:30:22 GMT
+
+Okay--- Path exploration ---
+200  /
+200  /health
+200  /status
+200  /webhook
+200  /api
+200  /events
+200  /alerts
+=== [3] Redash commit check ===
+Cloning into 'zomato-redash'...
+-    <img title="Build Status" src='https://circleci.com/gh/getredash/redash.png?circle-token=8a695aa5ec2cbfa89b48c275aea298318016f040'/>
++[![Datree](https://s3.amazonaws.com/catalog.static.datree.io/datree-badge-20px.svg)](https://datree.io/?src=badge)
++![Build Status](https://circleci.com/gh/getredash/redash.png?circle-token=8a695aa5ec2cbfa89b48c275aea298318016f040)

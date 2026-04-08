@@ -1,0 +1,19 @@
+=== Sentry DSN Verify — Tue Mar 17 20:33:30 EDT 2026 ===
+=== [1] Sentry instance live check ===
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:33:31 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N%2B2LIs54W09kUYmhJLRY%2FhO5dIjvWonKv2W2xjXjbAPKynUjzXeKlkqC%2FkEsSkdO5f%2F09L%2FNcAyrbhs%2BvTwUW8fASspPDdPYt%2BIuqtTnDwmEm7HQviQyyVTsvaBytfmuPHTtSIOn91ko%2BakwDR1eDIEe%2BM9BMX%2FTmCqsS8IIhJxVXS7MmwEyTySJ6YBLeXWLua9YWWDmVGMPloiWEG0b224CpVep8xJdctF2ztFPBUBdylpxGjrJ9xFhyZx0DYCthPNB0XbwD7E4CzH8GawNxjcW6BeokJ%2FwsFmOeZhJWZHjlwEB%2FHThuoiFjr30%2BvkmoJxfnJewE4RhnGeOAKVnHCxt1EuZ2WrcLWT8N5akIInGu9M1hbOs8YurnrugLfJP3LfeoSMlcQUx4ZlMrAaYYuY%3D
+X-Ray-Error: 302
+X-Ray-Id: 8809552937739243092
+Strict-Transport-Security: max-age=15552000
+=== [2] DSN project endpoint (400=live, 404=dead) ===
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:33:32 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+=== [3] Sentry API projects (unauthenticated) ===

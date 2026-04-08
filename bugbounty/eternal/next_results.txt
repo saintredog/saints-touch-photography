@@ -1,0 +1,91 @@
+=== Next Commands — Tue Mar 17 20:28:15 EDT 2026 ===
+=== [1] Follow 302s + Grafana default creds + Jenkins anon ===
+airflow.zomans.com  ->  https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N2otgfpc67V9g9HQKFC%2BSN33IEafdxIgt5vDQtgTFAixns8zg%2FV53e8%2BLUZJUSoR2byy30YE7LosqPU8pJHn8rJEGLKQa%2B6IAjvweVrU8rPErYVxbPHFJXjY3k28OyzINh1uiaSOCyUU7mETOlPtEJ96kUJh4IYJwS4mebJ1QvR2xhg50EAKu%2FRUUdHfdhrc7E0fIGbezH7ElyTDuVplQ8DfCcDIPXjqsl%2FjBBqOM1ZT2R9TCsKNzikuD07VtitM%2ByQ%2Fn48HLTKP3yz9cQ9lK0D%2BcFQ1XiBYOSFuj1EK8cFY0mRe3Ixg7nxOJHUF61ZnVAmX1aVV0PBI48nNiSZRoRzRL1EwE%2FPsSw5mNVmtgaA%2B4SMg0gem71B37xCuW2XxDz70Pu5HHOKrP03uGYq%2FMow%3D
+redash.zomans.com  ->  https://internal-access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N1XzfFfgkIVAuZhBvZ6Ek54XLnoOHt5DoVJj5uBxTfbuiuSw7%2B9S%2FZ0Us82sfP5l3QMPp7LHK7AQOIz0vBWlBa58fNe3KH1TtcM48Say%2FeTr6I7XAAv5AmtOF4gWPyqftqcdhBIMS77Trad4tijvMVF70yQ8H90CEec17jaNotbbC1v5E3BZ7BOMf8CO8WSMZBpCSH%2F4LSVZDwA5wqxWP0GyRNi8DpOQidXI3yEWy%2BEoBS5Uh3W5gVhcG4SL8vCgEN8hp%2BQ5Shc68MP%2Bx5OlkRHrm1zNAQ38KVQuqaZR6J7ayd6Me8JsE%2B%2BTCNukDUKFSvuXwSmx9PQECquEs3ZxAXwm7j2j%2BCklOrXspt1C8PUj3SzJUV%2BZe2%2BAZXVLkVF8cHgMP5Q%2BmDab%2B33IQD8x4VE%3D
+kibana.zomans.com  ->  https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6NyMW899lVkirChR7a9pa3mVEWuUO%2BsgbnWyTvp2lcJ6x6HEAPr2ND8wsuORjJjqEfU6%2BuX64cFL0su1D7vMaT2AKNSbLToZcW73PL6dBwO2mH4cn2wdhpf4UJ8vCJiIjh%2FuvBx0XSDyOE8LV7jgACDvVEU0C2mYpulCHG7AKLJm1ov9NDcDbBrSe%2F9%2FufbOZnpVRRb3x1LaJX%2F%2Be7Gzn2y2vp71mYaajVAzQzN9vC%2F6CcgoyCx1FVr35NVR%2FmA5R1QYXNJLKODMklff4UgklTeb2pQp7jhEHBrg8urfV4QgPJQsgTNK6PO6NBe%2Fr0CliEEeZk0d8cUwFEABVX6vzlUJ4ePZigO9bCdHvSYN5r4WRqR0hTFrWMTzNB0axcZ34qUKngvvsClEYpL1u4EoaTy8%3D
+grafana.zomans.com  ->  https://eaa-client.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N11qnBwCp4Ozis%2FNTJABaS1sN%2FXdfbNU8AEXCf310h71mYB9z7%2FiEzZna9QON%2FwgYyxf5YVA%2Bj4jtYxm%2FxI39U5fZeFGcBSRUjHYKW0KdP%2BBSBZh6caNV2zBBReQiZJ4memGA%2B43NO%2FDc31ewJfqvZgQmexugkkktv%2BGQtWDZfJ2mQqG0Nsltf3Eood4OAw%2FT7QIyha457Lh9yR%2FluBGWwSOCLs2I40oKKqszG8pG60%2FBnWti%2Fld5UN6mcc7uZGfjmHqWAd35aOJJOFbnnKaYdJTN7kVuD7N97oiXeIOeQ%2FdIGp00o0Wc3miWcM%2BUiusBPraoU%2B2O6pHom54GUiW11gyvBoZoC1X5A2t3wOR%2BTHOHdEcSpppy8FB%2FgbN335AKxSJya7abW%2FtB9TWwQlOsYM%3D
+jenkins.zomans.com  ->  https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N6QvhyTHegwQcjx%2ByFKiIbbhvNnV%2FFZ5pVeXtM2BCYjj91NQRshw6%2BfNZDAMTm9UROcoY7GqrFcxfqJOp%2F%2BtdeYTJdKAxjg6xQzgNTsM1Eq2O%2FSRHnjfFeBvL4eIfdAlEOTq6UAcOqTkyYlNgnT9whnXobgEjg0PZZDW9QzmRyhOWf0W%2BtQAzXpv9CPGFrZp1FOtFiDTZqNL8CRAy2D%2BcGhBcGxNipmEokonRR4ScKwngeTnJhCl6RTejY0ErdbtI4g3ScANi8jW4fmWI5F3H0sogaOaUW%2BMGZIVKEF5w56IVJgXCJjos%2F8oVDwZ0DEnRwS8pYG2c1%2BMHb0aJSQ6JrqGSHddv4wFDtFVcpeieZBYv%2BmDSIg4CTSkMIm16TP0AC3DxyoJ2WXwsuObD43qL5c%3D
+sentry.zomans.com  ->  https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N55YVPhAS0hPa8g8AefiIO%2B7h%2FJkNOEd03ZosY6YkY1O%2FR35KBsHpM5%2BFqfmZ6hBdQ%2BlvCmehuqFlyZzGAyH34kx3PH9ddriHG5pIdFp5yHaVn9fmYOeUqZ1oJviW4nDspnyx03C7L1dDB2WpFvZt5PExSbNghi1J%2FNKhYKaZNKEcXCj8qtY7H4UOJshQauwIgQY8IXgIadTBTpv8BkfqnCziPiahcSiQZdt6xjszW5RDjBPXcTRcsOe7QYAEk1p7HPCXqJGZMN0dThXNZZWG7BH7gKGMk19P9IDT0Olfyo%2BHnJPLfHoD0aK1IPvyV8WSCq7%2BpaVu5k3Yp%2F0DDD6pjvrsN5bRChHNiHp6DMCJcULyp4f%2FI0ns%2BnlHMyNNrtdGc6Kfs3i0qPM1alvNGNDI6s%3D
+--- Grafana default creds ---
+--- Jenkins anon access ---
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>8207373213432115462</p></div></td>
+</tr>
+</table>
+</center>
+=== [2] Investigate 200s ===
+--- securitywebhook.zomans.com ---
+Okay--- ops.runnr.in headers ---
+set-cookie: _CartHero_Session_production=6f7941588eaa771a80dea00ca134d13b; domain=.runnr.in; path=/; HttpOnly
+server: Zomato
+x-powered-by: Zomato
+--- external-signup.zomans.com ---
+<html><body>You are being <a href="https://external-signup.zomans.com/access">redirected</a>.</body></html>=== [3] S3 deeper permutations ===
+ACCESSIBLE: zomato-prod
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-staging
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-dev
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-backup
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-logs
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-data
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: hyperpure-prod
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: hyperpure-staging
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: hyperpure-backup
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: hyperpure-data
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: grofers-prod
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: grofers-staging
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: grofers-backup
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: grofers-data
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: runnr-prod
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: runnr-staging
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: runnr-backup
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: runnr-data
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-images
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-uploads
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-exports
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: zomato-reports
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: blinkit-prod
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: blinkit-staging
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: blinkit-data
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+ACCESSIBLE: blinkit-uploads
+/Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/scripts/next.sh: line 43: aws: command not found
+=== [4] Redash git commit check ===

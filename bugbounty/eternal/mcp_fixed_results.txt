@@ -1,0 +1,294 @@
+=== MCP Fixed Probe — Tue Mar 17 20:50:06 EDT 2026 ===
+=== FastAPI docs probe ===
+404 /docs
+404 /redoc
+404 /openapi.json
+404 /api/openapi.json
+404 /v1/openapi.json
+=== /openapi.json body ===
+HTTP/2 404 
+content-type: text/plain; charset=utf-8
+content-length: 9
+server: uvicorn
+expires: Wed, 18 Mar 2026 00:50:08 GMT
+cache-control: max-age=0, no-cache, no-store
+pragma: no-cache
+date: Wed, 18 Mar 2026 00:50:08 GMT
+strict-transport-security: max-age=31536000
+set-cookie: _abck=A0104E106946D122ABC6036B312E273B~-1~YAAQisgwF0FKuvicAQAAEOFr/g9ee4/+ucaqXcQKFBWrrFDgyP2JC7fQpgxBbnu9w4ySDJQL3yjqn2jrZjllDVC7q9NnBA1fT8e3LQRaaPXA7gUIFCqO8pJn+Iu7Q8Z3WctD1tNd0Hl+NJHoO6cStzZTVzrp0G3aiFB8MrydBQwDjN7kImoAiaq04sB/KJ8vCary0aVtihuf9K2MwyKNkIcD+ghxem1yhbq6cvCehPi7MC0//xqmzPSBjIRU0kz5HDrKUZvskGU2z4ks949ZgknpaVATXckRIdS6DQmkdzLQuLtd3kS/DUCxtN31ZLSSu81eLTHuhD37ykbbFpZsN+Pn8SrjACezLWBgR/8/A7cu9rfG3k12QiWgeTg1Z1g93IQEkdbEeU30gAo7KLBUdSJoLaefQRGCmP9hTS72RnfkVbv9rLb5AH4gDGO5Ut2rBD+qdZg=~-1~-1~-1~-1~-1; Domain=.zomato.com; Path=/; Expires=Thu, 18 Mar 2027 00:50:08 GMT; Max-Age=31536000; Secure
+set-cookie: bm_sz=6BFBDF7AFD2A18970E104BDEF31C2ED5~YAAQisgwF0JKuvicAQAAEOFr/h9zthkjSbeXuRR+27uUFdpdan26YF33Ep6JwOYt51mTlZI5grUd53T0x2OgJXeGIfwQnCAqgKqVf4N8k6rAlgUOg9o4N1wy7NphvB0ZAoR6iUa71PaHt2nbzlsDpVQUhREqPG6kB3XrEqZLSbTgiMW+xRMcK7ZpYOZJIZzPioCsknZ6t1Kd+3nakSuqDUaXpFdf3m7Y/liJbQ0cnX/k4F7vDKv7dwtU/ICJWIPZBhr86P2qnPoZt19Yn6RHE9+CVyoKz9jA2XbfKHDW+TobkBf44vr9kVzvh7k7AfwBHzZHkGKP61KKjDbrWtPC9UQCfToxaKD2DPr9HtI682+1cfZRajGxhw==~3163462~4473912; Domain=.zomato.com; Path=/; Expires=Wed, 18 Mar 2026 04:50:08 GMT; Max-Age=14400
+
+Not Found=== /docs body ===
+HTTP/2 404 
+content-type: text/plain; charset=utf-8
+content-length: 9
+server: uvicorn
+expires: Wed, 18 Mar 2026 00:50:09 GMT
+cache-control: max-age=0, no-cache, no-store
+pragma: no-cache
+date: Wed, 18 Mar 2026 00:50:09 GMT
+strict-transport-security: max-age=31536000
+set-cookie: _abck=78E1780A00A93AAA814495D9831D01F9~-1~YAAQisgwF1dKuvicAQAApuJr/g+Iq82fv10an2F8kIZ/yKd1HCh3iag08x0qQL78CNiKab4rUFQcUPbXV224JAkD3qrgdmYEPT+ikGxb8bJaY2+c6Cf4/J9I9JH27WTewhNy/Flw7u0j6zT1CPfxWpMT4s78uRxCs9RFCHnfzqn12CrgDWk488P2xkdB8U7oPvr7Gx12ponsVInRXQQmpRRO9Y0mLXeps7Nd38Z5UA2hr72NdfQVd+6Bk3Y+qUSfX/z3wmfUJT2zOr7D/3clvX8iSZpwW9U8Xlt7XdhFml9pBLJQOKg8F73zgbRPe1MeEfd17W9MZUtxW8Oti+o3golgyPHhB0Z1rHtlYvSvcZIIMCExuH0mKV9tyHYYSHRBkM0VahEBDi3elY7BLl4BDoYuNv8AYa7B/eMdvgqya75wd89AV9NdhIZHKAKV/UXRgFlv3L4=~-1~-1~-1~-1~-1; Domain=.zomato.com; Path=/; Expires=Thu, 18 Mar 2027 00:50:09 GMT; Max-Age=31536000; Secure
+set-cookie: bm_sz=1D48A469079853243C175A1C9CD501B9~YAAQisgwF1hKuvicAQAApuJr/h+sZKFlVsIOyKns0zIpV1SQ/fZVjlIoIL28RKnnyS6/79ONkCUMOwcQIaoPXtL0gtbvl36QdwiTsajkraq7HKKY4do9wdb0rvYen4dbqNlUXQrstS18R1OEnpkHpsVsXHGm5xti4KcdHeVKBsQt0DzhCMbsoakdkWCmCzts9TXHa41NLKcs9KbsXIa+k6PjIPsVe8UTWiG6c5m/zu52YyCzZN3dqiWtqHECCmpwWgxKNIcuCq5jHlMmqcxhJUYJTokx7BRsVvfzGMnK5v3kzvv82uHEmN71A8eBlKghbEoUx+6EBAUmQTzZHSRVRgfwStQJ2urEih4Tv38uiWwW8JDQ6A6MJg==~3163462~4473912; Domain=.zomato.com; Path=/; Expires=Wed, 18 Mar 2026 04:50:08 GMT; Max-Age=14399
+
+Not Found=== MCP POST /mcp ===
+HTTP/2 401 
+content-type: application/json
+content-length: 74
+server: uvicorn
+www-authenticate: Bearer error="invalid_token", error_description="Authentication required"
+expires: Wed, 18 Mar 2026 00:50:09 GMT
+cache-control: max-age=0, no-cache, no-store
+pragma: no-cache
+date: Wed, 18 Mar 2026 00:50:09 GMT
+strict-transport-security: max-age=31536000
+set-cookie: _abck=671AB86FB331534F7A09DCEEDB2B6549~-1~YAAQicgwF+J8JvecAQAAiuRr/g8QVHmXxCtLR2rCYqyvyuc3o3GbsehARF8+Zul0N6xdx0hDVg1jeBX06XDdk0oA5MEmrt2Sf2kgG6KGraP5VZVC/ww+rYZY4h1r/0Wa8TaZ3zH5KA9aHIv5/3mMu4hd4W1LlDSI5/vM2czWR0cob71NX6GPtwrFjo4wgYro5GHZv+6kXokAQimCetdemimhGipl+2cQ4VbQC5/T8iep//rXXGscCWhbww5n40E7n2YaQU6/9KzP83t4Pe5xiozzn4Q+yMzpuV78UG3bdQtSriEy9vLBeViFAdDlCi0fIcrEeaUqdzfRCEb/TpfiuC+TaAP3CL1Mcv1R9jyRY3YQQS2B1oJLVDIrEnftrrbN4MK5lGSba5Zx9ChwkY0mLbhyBg/1hXezGNougGELtMQFq2vMFjUCKtkX74xfXND1j0e8rdo=~-1~-1~-1~-1~-1; Domain=.zomato.com; Path=/; Expires=Thu, 18 Mar 2027 00:50:09 GMT; Max-Age=31536000; Secure
+set-cookie: bm_sz=07204FCA03EC864F45600D45161A52EC~YAAQicgwF+N8JvecAQAAiuRr/h/TUy0VzLeOMSU1UMNrBk+ohnmpnqr6crKAsE8nBCPEhxRjSWWc8MZ5sO5nkEplbTZu2DBuGphAct0LCP808guhqqZsjyjgfrt3IglxrNAztf81XOaFTrnW3n0+ZoXvcVEm60utQPmCHn+xgHGj7XmHPRn3qkc9c1Js1SJfsI3Ei8Yhdn0TZ9TlyqKdp2u/qxjXEHJyuaIT8maCF08HdqNOZdYZfcmP6FKIAcdI20kB9fZPFFNKCfSJ2okD3UF04eYBxxAwzn2uhoACqXrSrlERgvIXYqBRe26iz4UNHiz1d5DPH+P+R3mXlgQgtC4OFO3R3Ma8+TLZJ58wjkQMbCBxJ2zQZw==~3425073~3160121; Domain=.zomato.com; Path=/; Expires=Wed, 18 Mar 2026 04:50:09 GMT; Max-Age=14400
+
+{"error": "invalid_token", "error_description": "Authentication required"}=== reports.grofer.io content probe ===
+--- / ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:11 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N0TLIkHpEKfDiSgmzXXcEUssdCrqdO4JmpUQQ9zkgep17yjYeD%2FJQ%2B3d3KsFRHFLkn0b%2FNy9M5KJ2csm4N0bti3BjL6fpAoyjUrh6z7HJO9xSNa%2FFwESlUTm1FaGTbcBbabHuKMp4nN%2FcvVQBNVPrLZN144MOWOJutPzaM3aDH%2BAZGtMESaw3C%2FsuxBBveLmhpcohgZvZueQgrWHSzCu%2BmjilqwAlj2qhZaV0USyc7mVZ8dQWoMbtaudz3j26U50mA0Dax6u%2BZtd4fMDC2teAwEL8rTyeAy1akor3%2Fu2%2FJe1bcuCXHz1856GV7bs9uvYDT8PXl08G21wWoyrkBomDBFaiZ9WBOxSlBFtvAk2t9XGChCmvSCKbyMfttNK2IERf3JgyUN6MmUJkq3PKlH0EyY%3D
+X-Ray-Error: 302
+X-Ray-Id: 16130003804653923097
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>16130003804653923097</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /health ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:12 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N%2FY93YI9LB6%2F3SLPT7OvIseszOK7447IsyN%2Fwpu06yl0wFDEGTRtce%2FnqOVvCsYrZz4h8gNeWRZpaf1m6pYjCYyBdv00EXVFUo8FrCiuvzLmOiELeLtdnfDYEg2PitjEbiqqk5CYS7%2FZmDQPWqilEhekS05p8oUFxLSMP7s4lJ0AOfij3f9hx7xwU3vOGq0dtRn3JhxtD1u%2B%2FtSEo1Mld585mNnS1EA%2BBzKrmV2MRM5a%2BHPxYffDG9uj6tEpAqTFTdECw3i71DgvzbhwO0vD1x2ZaSTZpwjmwREYT7brf%2FyAw3QKB8hJVKSzd5bFMjaHedivpfD0jK0CDwAPT0HhJhlCegblA35Nk9Mh2Q0TQ19K3nsZH0KcSBth38KNIzWl7Yg9lvZrEc9x7t9CHb8Ty9g%3D
+X-Ray-Error: 302
+X-Ray-Id: 5958910844391085389
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>5958910844391085389</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /api ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:13 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N3zlj3r%2BMlp8Zz0v1KLH45smRTAOV0ZWZuR1zBVL%2B8pVfsZMl9lhr461jyLB%2FZ3vvOcVEDju%2BzIr2VNJjhueMDwSOtH1xzI7MDouN%2Fy7pTA7hlAAVfBR5KW2YLRPpQtnDKmSpE%2FzfZorjHNiN548Arw7Op7dAwVXTCcb8njsAvWMcXIdlLh3hUzxzyXs21bkJRjfa7MkTKjMBC7SAtw2cPiRSAP6uqRzmV8licyCfvKSn7Tw%2F13SOv2lMCsH1W1Pba2nVk3Di9ytQZHJVS8CDGKjlSznazcidJsIJLSCjtp5%2Bo6R6pzQ7ALhBTL0S2O9bapncPEDKa7S%2FcxtWTCPT1stazgf8kDgNo4ZzqYvQ1J9R9a2ZyATLPIqDXi3TjvIGHQS0BsdJTFSoxPTGfi20mY%3D
+X-Ray-Error: 302
+X-Ray-Id: 1218919155085404961
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>1218919155085404961</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /api/v1 ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:15 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N8QMsPlFsUOtKCy5wiS8gfsX0c43ZdGKPp05g44SpfuX56kWQhtNuSrSAGHD67tK9JraZ7DfnG%2FW7QXqjMS8B8Mh8uWCgm3opTDHDre93bF6PbmNytD%2F0oW8T9z3TH6obniw9Ykap%2BggKU%2Fd5AnW9QeqN%2B2z7X5JhuFJ3%2FwN7IRCzMhgE6SepgT9n%2FOLE0qRTYCRslRUfXuO34PtsNdueEBvt6P5VVLT8a63v6%2FupwFJfqvmCRJqdscN5ifyw3KduQYI02G06VlFwhnT4VS6TsDBkGv%2BoRsSXA5D3EBokTFohLjnrnKLhl9OEJabE2zCkh7Bg8LPdCgm94tE2e2w2lhqy7IBzR3r5cJRtx3ckhiLymYHvurNZAjeqHlzWxj%2FO9J7zumXJqaTfRNwcBntMZU%3D
+X-Ray-Error: 302
+X-Ray-Id: 17934321620760951632
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>17934321620760951632</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /api/v1/queries ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:16 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6NxAlEPLmS5OfNgZpvT9Qdj7R1FJKQjl4jxNa7gT9pWs9UdtR5b47%2FiBJA1LWORa%2FCZytg0YIzQgmmiHsOgRlKG70%2FkEKatlxQUSouCZcBX3klazPXpJoC70IBYl6RubYGB4lv5xbuvWR%2F%2FhYBkS6WERLRPDki%2B4I%2FnqQNKEBqmGGRkb0BT9QIg4ZM2YtgracZXIcOvAXmUIrMvrKSPUhW7TwnPDGcVhAohqRvpTTwwGZhwJNbPA0dUT1gEX2QnEToKRRhvTNW7FtjTCMb%2BtViWUXA95Xsc7WT2hOrzYh0i0TYg1y5TiJTKJPgAdT5RU7gRZZclTdJcOGwJRnXQlqhTSaatYOyMfo0Hv%2BydtKAnLetsPsRrLIiRyxpOXccO%2FIuU6tdfDq5u792wST%2BTxlQG%2BAqNzrIjVtg6Ske4MZ6B2Y
+X-Ray-Error: 302
+X-Ray-Id: 2194525634426911382
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>2194525634426911382</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /api/v1/dashboards ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:17 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N%2BN5AYzmObthoNitr6DgNL7%2BiteNCqtZ0YSOjncJCcZeska%2B6dFJeKIB0%2BTJBbnIPJzJJwVZwt8sklrenV%2Bah9SvM7i5RjZ9RYq64mQr1IUtkhb2k%2F1RJxN4P8kDkS%2FlvFhKe39xdQKglDzkxLn5AS6FE6Hg3LF9wSJRrdRPi9NNRZRxq26CIiUmyCFWVtXojdI9BLMv8dvojpik3PevJG8yBUNzZY2iZoGfo9P%2FexO8bRryDct5qacrLPm%2FGUhg9Dc4YJHS8gl2PulV1kgSgR8ZaGS7HIwp5SzLsVlo%2FTuGrqv6G1mCBdKCT63amWkIZXoP6Z%2BzSyJ0R8FEOlW%2Beq9sNw6GEz8l0x1cim1S4LDhc7LCCcufqyw4igCygp6jK%2FrnnerhljxtweDYljjVjsNj9MXffxGzgylwfso%2Bf8hc
+X-Ray-Error: 302
+X-Ray-Id: 3223548028252213837
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>3223548028252213837</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+--- /api/v1/data_sources ---
+HTTP/1.1 302 Moved Temporarily
+Server: akamai/nginx
+Date: Wed, 18 Mar 2026 00:50:18 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://access.zomans.com/route?BubbleRequest=9Cbe%2F9MqtvdgmjGDk4r6N3rCE5pTj95n8uYUEq%2BoYk0y%2BHeXMFu4CEeFqCwRd0LIPnlShVibp5THhdf%2BP5xPut1FCHc%2FRkhDj4F3EPJ6C3fNRAk1qRc8BTnwl8mmT73BLin6TVubVvwlX6GIU3fZet8KKMKVGH6xy7J6KH9lFq87BLkemnD1dCajGsyxRAc3nM%2Fp53Fx2YmCsoc5ru6y8D4vsvttsMStn1vjWrihsfG42s5z0uabeDkTOiDpMz6UFOcIXQDa8gITktDL6NcoA12xdVCMJdn7NqoQNcOCt%2BpAKuex71tvkmA3%2BG3c8hx%2F%2Bf98G0Wqd%2FzH2Pz2bNvWDsSMlo4CZ1sQpZEDv%2BtDdRp3GrUwPMVYnndFurvYKwB6%2FSKw8ooMLxhiBOGJktJOYRWBnHZPwzXzBDbMHUIH%2B0YE5L3gH2v066c01yVxqQvT%2FxOIyGCP0907XgrpN%2B%2FF8Q%3D%3D
+X-Ray-Error: 302
+X-Ray-Id: 180588711441303882
+Strict-Transport-Security: max-age=15552000
+
+<html>
+<head>
+<title>302 Found</title>
+</head>
+<body bgcolor="white">
+<center>
+<div id="error"><h1>302 Found</h1></div>
+<hr><center>akamai/nginx</center><br><br>
+<table border="1">
+<col width="100">
+<col width="350">
+<td><p>Info</p></td>
+<td><div id="xinfo"><p>-</p></div></td>
+</tr>
+<tr>
+<td><p>Id</p></td>
+<td><div id="xid"><p>180588711441303882</p></div></td>
+</tr>
+</table>
+</center>
+</body>
+</html>
+
+=== Done — /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/mcp_fixed_results.txt ===

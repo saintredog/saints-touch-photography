@@ -1,0 +1,81 @@
+============================================
+ Eternal Bug Bounty Recon — Tue Mar 17 20:11:17 EDT 2026
+============================================
+
+[*] STEP 1: Subdomain Enumeration
+--------------------------------------------
+[+] Running subfinder on zomato.com...
+    Found:      177 subdomains
+[+] Running subfinder on zomans.com...
+    Found:      387 subdomains
+[+] Running subfinder on runnr.in...
+    Found:       76 subdomains
+[+] Running subfinder on blinkit.com...
+    Found:       28 subdomains
+[+] Running subfinder on hyperpure.com...
+    Found:       26 subdomains
+[+] Running subfinder on grofers.com...
+    Found:       82 subdomains
+[+] Running subfinder on grofer.io...
+    Found:       81 subdomains
+[+] Running subfinder on district.in...
+    Found:       22 subdomains
+[+] Running subfinder on insider.in...
+    Found:      161 subdomains
+[+] Running subfinder on ticketnew.com...
+    Found:       49 subdomains
+[+] Running subfinder on eternal.com...
+    Found:       10 subdomains
+[+] Running subfinder on edition.in...
+    Found:       22 subdomains
+
+[✓] Total unique subdomains:      620
+
+[*] STEP 2: Probing Live Hosts
+--------------------------------------------
+[✓] Live hosts found:       93
+
+[*] STEP 3: Subdomain Takeover Detection
+--------------------------------------------
+[+] Running nuclei takeover templates...
+[✓] Potential takeovers:        0
+
+[*] STEP 4: S3 Bucket Enumeration (Cloud Campaign)
+--------------------------------------------
+[!] BUCKET HIT: zomato (HTTP 403)
+[!] BUCKET HIT: hyperpure (HTTP 403)
+[!] BUCKET HIT: grofers (HTTP 403)
+[!] BUCKET HIT: runnr (HTTP 403)
+[✓] S3 bucket hits:        4
+
+[*] STEP 5: JS File Extraction
+--------------------------------------------
+[✓] JS files found:        0
+
+[*] STEP 6: Nuclei Cloud Misconfiguration Scan
+--------------------------------------------
+[✓] Nuclei cloud findings:        0
+
+[*] STEP 7: GitHub Dork URLs (open in browser)
+--------------------------------------------
+[✓] GitHub dork URLs saved to: notes/github_dorks.txt
+
+============================================
+ RECON COMPLETE — Tue Mar 17 20:26:29 EDT 2026
+============================================
+
+📁 Output directory: /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/recon
+📄 Log: /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/logs/recon-20260317-201117.log
+
+📊 Summary:
+  Subdomains:      620
+  Live hosts:      93
+  S3 bucket hits:  4
+  JS files found:  0
+
+🔥 Next Steps:
+  1. Review /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/recon/alive/takeovers.txt for subdomain takeovers
+  2. Review /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/recon/cloud/s3_buckets.txt for public buckets
+  3. Run gitleaks on JS files: scripts/scan_secrets.sh
+  4. Open notes/github_dorks.txt and run each dork manually
+  5. Review /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/recon/cloud/nuclei_cloud.txt for misconfigs

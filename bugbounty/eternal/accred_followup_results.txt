@@ -1,0 +1,65 @@
+=== accred follow-up — Tue Mar 17 20:54:33 EDT 2026 ===
+=== robots.txt ===
+User-agent: *
+Disallow:
+=== telescope redirect target ===
+location: https://accred.insider.in/login
+=== horizon redirect target ===
+location: https://accred.insider.in/login
+=== _debugbar redirect target ===
+location: https://accred.insider.in/login
+=== telescope/requests follow redirect ===
+HTTP/2 404 
+content-type: text/html; charset=UTF-8
+date: Wed, 18 Mar 2026 00:54:37 GMT
+x-powered-by: PHP/7.2.34
+cache-control: no-cache, private
+host: accred.insider.in
+x-cache: Error from cloudfront
+via: 1.1 ea9784182c7536f5ce15ec71cf0089d6.cloudfront.net (CloudFront)
+x-amz-cf-pop: IAD61-P10
+x-amz-cf-id: kSebg96priFZVKQJa4UwnkD1BYrIyI7bdwIvHm2u1rquQSkqGRVxug==
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-2NS8W0WL61"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-2NS8W0WL61');
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+	<meta name="csrf-token" content="">
+	<title>Login | Insider Accreditation</title>
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://insider.in/assets/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://insider.in/assets/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://insider.in/assets/img/favicons/apple-touch-icon-72x72.png" />
+=== HTTP direct (no TLS redirect) ===
+HTTP/1.1 301 Moved Permanently
+Server: CloudFront
+Date: Wed, 18 Mar 2026 00:54:38 GMT
+Content-Type: text/html
+Content-Length: 167
+Connection: keep-alive
+Location: https://accred.insider.in/login
+X-Cache: Redirect from cloudfront
+Via: 1.1 4c6791f6512d8ae3b564d0ef4751f078.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: IAD61-P10
+X-Amz-Cf-Id: nQV9E1KwT2c_eA6lEmiTIbeyX7ypfn5jNYWhZzvfU5FjQaaCFtbWkw==
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>CloudFront</center>
+</body>
+</html>
+=== .env alternate methods ===
+403 POST /.env
+302 X-Original-URL: /.env
+=== Done — /Users/cliffordroberts/.openclaw/workspace/bugbounty/eternal/accred_followup_results.txt ===
