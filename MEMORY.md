@@ -39,6 +39,8 @@ Local files: `~/.openclaw/workspace/{saint-labs,photo-portfolio,ember-coffee,cro
 - Saint Labs launched 2026-03-14 via IG story
 - Strategy: organic first → testimonial → paid boost
 - Hosting: Vercel (demos), Cloudflare Pages (paid clients)
+- saintstouch.photography: hosted on Cloudflare Pages, domain on Namecheap, repo: github.com/saintredog/saints-touch-photography
+- frameclaim.io: hosted on Vercel, domain on Namecheap
 - WA dmPolicy: open, all DMs → photo_marketing_agent
 
 ## Photography Lead Intake — Required Info
@@ -68,7 +70,7 @@ Portfolio link: https://www.saintstouch.photography/portfolio
 - **Database**: Turso — `https://shieldshot-saintredog.aws-us-east-1.turso.io`
   - TURSO_DATABASE_URL must use `https://` not `libsql://`; always `printf 'value' | vercel env add`
 - **Admin logins**: `saintstouch.photography@gmail.com` | `cliff@shieldshot.io` / `Cliff2026!`
-- **Stripe webhook**: `https://frameclaim.io/api/webhooks/stripe` — `[ROTATED]`
+- **Stripe webhook**: `https://frameclaim.io/api/webhooks/stripe` — secret stored in Vercel env as STRIPE_WEBHOOK_SECRET (rotated 2026-04-10)
 - **Stripe prices**: monthly `price_1TEFkz3oNH3Ff6rwln0woIAJ` | yearly `price_1TEbOa3oNH3Ff6rwZrAumiEh`
 - **Resend**: domain verified, alerts from `alerts@frameclaim.io`
 - **Checkout**: uses raw fetch to Stripe REST API (SDK v20 has Vercel connectivity issues)
