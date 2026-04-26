@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "logo": "Saint's Touch",
+    "work": "Work",
+    "services": "Services",
+    "about": "About",
+    "gallery": "Gallery Guide",
+    "contact": "Contact",
+    "instagram": "Instagram",
+    "whatsapp": "WhatsApp"
+  },
+  "hero": {
+    "eyebrow": "Virginia Beach · Worldwide",
+    "headline": "Where light meets",
+    "headlineEmphasis": "authentic emotion.",
+    "subtitle": "Cinematic Portraiture & Visual Storytelling",
+    "cta": "Book a Session"
+  },
+  "marquee": {
+    "items": ["Portrait", "Events", "Fashion", "Boudoir", "Maternity", "Weddings", "Virginia Beach"]
+  },
+  "portfolio": {
+    "label": "Recent Work",
+    "title": "Featured",
+    "titleEmphasis": "Portfolio",
+    "cta": "View Full Portfolio"
+  },
+  "services": {
+    "label": "Investment",
+    "title": "Services & ",
+    "titleEmphasis": "Pricing",
+    "hint": "Select a service to explore pricing options",
+    "viewAll": "View All Services"
+  },
+  "process": {
+    "label": "How It Works",
+    "title": "The ",
+    "titleEmphasis": "Process",
+    "steps": [
+      {
+        "title": "Consultation",
+        "description": "We start with you. Your vision, your story, your goals. Through WhatsApp or a call, we design the perfect session."
+      },
+      {
+        "title": "Session",
+        "description": "Professional direction, premium gear, and cinematic lighting. You relax — we handle the artistry."
+      },
+      {
+        "title": "Editing",
+        "description": "Meticulous post-production. Color grading, retouching, and artistic direction — pure cinema."
+      },
+      {
+        "title": "Delivery",
+        "description": "Full-resolution images, prints, or digital files. Your photos, ready for the world."
+      }
+    ]
+  },
+  "about": {
+    "label": "About",
+    "title": "Meet ",
+    "titleEmphasis": "Cliff",
+    "intro": "I'm Clifford Roberts III, a visual storyteller based in Virginia Beach with a passion for cinematic photography.",
+    "body": "For the past several years, I've dedicated myself to capturing the raw emotion and authentic moments that define life's most important stories. Whether it's a maternity session celebrating new beginnings, a fashion editorial pushing creative boundaries, or an intimate couples moment — I approach every frame with intentionality and artistry.\n\nMy style blends technical mastery with genuine human connection. I don't just take photos; I create visual narratives that resonate. Each session is a collaboration, and every image tells part of your story.\n\nWhen I'm not shooting, you'll find me exploring light, pushing creative boundaries, or investing in my growth — both as a photographer and as a person.",
+    "cta": "Work Together"
+  },
+  "contact": {
+    "label": "Get In Touch",
+    "title": "Let's Create ",
+    "titleEmphasis": "Something",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "phone": "Phone (Optional)",
+      "service": "Service Interested In",
+      "message": "Tell Me About Your Vision",
+      "selectService": "Select a service",
+      "submit": "Send Inquiry",
+      "directText": "Prefer to reach out directly?"
+    },
+    "serviceOptions": {
+      "portraits": "Portraits",
+      "maternity": "Maternity",
+      "fashion": "Fashion",
+      "couples": "Couples & Engagements",
+      "events": "Events",
+      "commercial": "Commercial / Hospitality",
+      "other": "Other"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Saint's Touch Photography. All rights reserved.",
+    "links": {
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "contact": "Contact"
+    }
+  },
+  "portfolio_page": {
+    "hero": {
+      "label": "Full Collection",
+      "title": "Complete ",
+      "titleEmphasis": "Portfolio"
+    },
+    "description": "Explore the complete collection of work across all categories."
+  },
+  "services_page": {
+    "hero": {
+      "label": "Complete Offering",
+      "title": "Services & ",
+      "titleEmphasis": "Pricing"
+    },
+    "description": "Explore all photography services with detailed pricing tiers tailored to your vision and budget."
+  },
+  "categories": {
+    "portraits": "Portraits",
+    "events": "Events",
+    "fashion": "Fashion",
+    "couples": "Couples",
+    "hospitality": "Hospitality"
+  }
+}

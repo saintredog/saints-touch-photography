@@ -1,0 +1,162 @@
+---
+import BaseLayoutI18n from '@layouts/BaseLayoutI18n.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { services } from '@data/portfolio';
+import { t } from '@i18n/utils';
+import type { Locale } from '@i18n/utils';
+
+const locale: Locale = 'es';
+---
+
+<BaseLayoutI18n
+  title={`${t(locale, 'services_page.hero.title')}${t(locale, 'services_page.hero.titleEmphasis')} — Saint's Touch Photography`}
+  description={t(locale, 'services_page.description')}
+  locale={locale}
+>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-title">Saint's Touch Photography</div>
+    <div class="loader-sub">by Clifford Roberts III</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/es/">{t(locale, 'nav.work')}</a>
+    <a href="/es/portfolio">Portfolio</a>
+    <a href="/es/services">{t(locale, 'nav.services')}</a>
+    <a href="/es/#about">{t(locale, 'nav.about')}</a>
+    <a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a>
+    <a href="/es/#contact">{t(locale, 'nav.contact')}</a>
+    <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="/es/" class="nav-logo">Saint's <span>Touch</span></a>
+    <ul class="nav-links">
+      <li><a href="/es/">{t(locale, 'nav.work')}</a></li>
+      <li><a href="/es/portfolio">Portfolio</a></li>
+      <li><a href="/es/services">{t(locale, 'nav.services')}</a></li>
+      <li><a href="/es/#about">{t(locale, 'nav.about')}</a></li>
+      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
+    </ul>
+    <LanguageSwitcher locale={locale} />
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section id="services-hero" style="padding: 120px 20px 60px; text-align: center; border-bottom: 1px solid rgba(201,168,124,0.1);">
+    <div class="section-label reveal">{t(locale, 'services_page.hero.label')}</div>
+    <h1 class="section-title reveal reveal-delay-1">{t(locale, 'services_page.hero.title')}<em>{t(locale, 'services_page.hero.titleEmphasis')}</em></h1>
+    <p style="color: rgba(232,221,208,0.8); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      {t(locale, 'services_page.description')}
+    </p>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="padding: 80px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <p class="services-hint reveal" style="text-align: center; margin-bottom: 60px;">{t(locale, 'services.hint')}</p>
+
+      <div class="services-accordion">
+        {services.map((service, i) => (
+          <div class={`svc-row reveal reveal-delay-${Math.min(i % 4, 3)}`} data-id={service.id}>
+            <button class="svc-header" aria-expanded="false" aria-controls={`tiers-${service.id}`}>
+              <div class="svc-header-left">
+                <span class="svc-icon">{service.icon}</span>
+                <div>
+                  <div class="svc-name">{service.name}</div>
+                  <div class="svc-desc">{service.description}</div>
+                </div>
+              </div>
+              <div class="svc-header-right">
+                <span class="svc-price-range">{service.priceRange}</span>
+                <span class="svc-chevron">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </button>
+            <div class="svc-tiers" id={`tiers-${service.id}`} aria-hidden="true">
+              {service.tiers.length > 0 ? (
+                <div class="tiers-wrap">
+                  {service.tiers.map((tier) => (
+                    <div class={`tier-card${tier.featured ? ' featured' : ''}`}>
+                      {tier.badge && <div class="tier-badge">{tier.badge}</div>}
+                      <div class="tier-label">Tier {tier.num}</div>
+                      <div class="tier-name">{tier.name}</div>
+                      <div class="tier-price"><sup>$</sup>{tier.price.replace('$', '')}{tier.priceSuffix && <span class="tier-price-suffix">{tier.priceSuffix}</span>}</div>
+                      <div class="tier-price-note">{tier.tagline}</div>
+                      <div class="tier-divider"></div>
+                      <div class="tier-includes">Includes</div>
+                      <ul class="tier-features">{tier.features.map((f) => <li>{f}</li>)}</ul>
+                      <a href="/es/#contact" class={`tier-cta ${tier.featured ? 'solid' : 'outline'}`}>{t(locale, 'hero.cta')}</a>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div class="svc-contact-prompt">
+                  <p>Pricing for this service is tailored to your specific vision and needs.</p>
+                  <a href="/es/#contact" class="tier-cta outline" style="display:inline-block;margin-top:16px;">{t(locale, 'about.cta')}</a>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+        <div class="svc-cta-row reveal">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--dim);">Not sure which fits?</span>
+          <a href="https://wa.me/16562310109" target="_blank" class="btn-primary">Let's Talk →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">{t(locale, 'footer.links.instagram')}</a>
+      <a href="https://wa.me/16562310109" target="_blank">{t(locale, 'footer.links.whatsapp')}</a>
+      <a href="/es/#contact">{t(locale, 'footer.links.contact')}</a>
+    </div>
+    <p>{t(locale, 'footer.copyright', { year: new Date().getFullYear() })}</p>
+  </footer>
+
+  <script is:inline>
+    window.addEventListener('load', () => { const loader = document.getElementById('loader'); setTimeout(() => loader.classList.add('hidden'), 3000); });
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (menuOpen) { spans[0].style.transform='translateY(6px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-6px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+    });
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+    document.querySelectorAll('.svc-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.svc-row');
+        const panel = btn.nextElementSibling;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.svc-row.open').forEach(openRow => {
+          if (openRow !== row) { openRow.classList.remove('open'); openRow.querySelector('.svc-header').setAttribute('aria-expanded','false'); const op=openRow.querySelector('.svc-tiers'); op.setAttribute('aria-hidden','true'); op.style.maxHeight='0'; }
+        });
+        if (isOpen) { row.classList.remove('open'); btn.setAttribute('aria-expanded','false'); panel.setAttribute('aria-hidden','true'); panel.style.maxHeight='0'; }
+        else { row.classList.add('open'); btn.setAttribute('aria-expanded','true'); panel.setAttribute('aria-hidden','false'); panel.style.maxHeight=panel.scrollHeight+'px'; setTimeout(() => row.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50); }
+      });
+    });
+  </script>
+</BaseLayoutI18n>

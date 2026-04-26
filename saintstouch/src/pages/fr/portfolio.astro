@@ -1,0 +1,208 @@
+---
+import BaseLayoutI18n from '@layouts/BaseLayoutI18n.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+import { t } from '@i18n/utils';
+import type { Locale } from '@i18n/utils';
+
+const locale: Locale = 'fr';
+
+function loadCategory(category: string) {
+  const dir = join(process.cwd(), 'src/content', category);
+  try {
+    return readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .map(f => ({ ...JSON.parse(readFileSync(join(dir, f), 'utf8')), category }))
+      .sort((a: any, b: any) => a.id.localeCompare(b.id));
+  } catch { return []; }
+}
+
+function loadBulkUploads() {
+  const dir = join(process.cwd(), 'src/content/bulk');
+  try {
+    const result: any[] = [];
+    readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .forEach(f => {
+        const data = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+        (data.photos ?? []).forEach((photo: any, i: number) => {
+          result.push({ ...photo, id: `bulk-${data.session}-${i}`, category: data.category });
+        });
+      });
+    return result;
+  } catch { return []; }
+}
+
+const portfolioItems = [
+  ...loadCategory('portraits'),
+  ...loadCategory('events'),
+  ...loadCategory('fashion'),
+  ...loadCategory('couples'),
+  ...loadCategory('hospitality'),
+  ...loadBulkUploads(),
+];
+---
+
+<BaseLayoutI18n
+  title={`${t(locale, 'portfolio_page.hero.title')}${t(locale, 'portfolio_page.hero.titleEmphasis')} — Saint's Touch Photography`}
+  description={t(locale, 'portfolio_page.description')}
+  locale={locale}
+>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-title">Saint's Touch Photography</div>
+    <div class="loader-sub">by Clifford Roberts III</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/fr/">{t(locale, 'nav.work')}</a>
+    <a href="/services">{t(locale, 'nav.services')}</a>
+    <a href="/fr/#about">{t(locale, 'nav.about')}</a>
+    <a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a>
+    <a href="/fr/#contact">{t(locale, 'nav.contact')}</a>
+    <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="/fr/" class="nav-logo">Saint's <span>Touch</span></a>
+    <ul class="nav-links">
+      <li><a href="/fr/">{t(locale, 'nav.work')}</a></li>
+      <li><a href="/fr/portfolio">{t(locale, 'portfolio_page.hero.titleEmphasis')}</a></li>
+      <li><a href="/services">{t(locale, 'nav.services')}</a></li>
+      <li><a href="/fr/#about">{t(locale, 'nav.about')}</a></li>
+      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
+    </ul>
+    <LanguageSwitcher locale={locale} />
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section id="portfolio-hero" style="padding: 120px 20px 60px; text-align: center; border-bottom: 1px solid rgba(201,168,124,0.1);">
+    <div class="section-label reveal">{t(locale, 'portfolio_page.hero.label')}</div>
+    <h1 class="section-title reveal reveal-delay-1">{t(locale, 'portfolio_page.hero.title')}<em>{t(locale, 'portfolio_page.hero.titleEmphasis')}</em></h1>
+    <p style="color: rgba(232,221,208,0.8); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      {t(locale, 'portfolio_page.description')}
+    </p>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section id="portfolio" style="padding: 80px 20px;">
+    <div class="work-header" style="max-width: 1400px; margin: 0 auto 60px;">
+      <div class="filter-bar reveal reveal-delay-2" id="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="portraits">{t(locale, 'categories.portraits')}</button>
+        <button class="filter-btn" data-filter="events">{t(locale, 'categories.events')}</button>
+        <button class="filter-btn" data-filter="fashion">{t(locale, 'categories.fashion')}</button>
+        <button class="filter-btn" data-filter="couples">{t(locale, 'categories.couples')}</button>
+        <button class="filter-btn" data-filter="hospitality">{t(locale, 'categories.hospitality')}</button>
+      </div>
+    </div>
+
+    <div class="gallery-grid reveal" id="gallery" style="max-width: 1400px; margin: 0 auto;">
+      {portfolioItems.map((item) => (
+        <div
+          class="gallery-item"
+          data-category={item.category}
+          data-featured={item.featured}
+          data-src={item.src}
+        >
+          <img src={item.src} alt={item.alt} loading="lazy" />
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-label">
+              {t(locale, `categories.${item.category}`)}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lightbox-close">&#x2715;</button>
+    <button id="lightbox-prev">&#8249;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <button id="lightbox-next">&#8250;</button>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <section id="portfolio-cta" style="padding: 80px 20px; text-align: center; border-top: 1px solid rgba(201,168,124,0.1);">
+    <div class="section-label reveal">{t(locale, 'contact.label')}</div>
+    <h2 class="section-title reveal reveal-delay-1">{t(locale, 'about.cta')}</h2>
+    <a href="/fr/#contact" class="hero-cta reveal reveal-delay-2">{t(locale, 'hero.cta')}</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">{t(locale, 'footer.links.instagram')}</a>
+      <a href="https://wa.me/16562310109" target="_blank">{t(locale, 'footer.links.whatsapp')}</a>
+      <a href="/fr/#contact">{t(locale, 'footer.links.contact')}</a>
+    </div>
+    <p>{t(locale, 'footer.copyright', { year: new Date().getFullYear() })}</p>
+  </footer>
+
+  <script is:inline>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => loader.classList.add('hidden'), 3000);
+    });
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (menuOpen) { spans[0].style.transform='translateY(6px) rotate(45deg)'; spans[1].style.opacity='0'; spans[2].style.transform='translateY(-6px) rotate(-45deg)'; }
+      else { spans.forEach(s => { s.style.transform=''; s.style.opacity=''; }); }
+    });
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    let visibleItems = [], lbIndex = 0;
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) item.classList.remove('hidden');
+          else item.classList.add('hidden');
+        });
+      });
+    });
+    function getVisibleItems() { return [...document.querySelectorAll('.gallery-item:not(.hidden)')]; }
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => { visibleItems = getVisibleItems(); lbIndex = visibleItems.indexOf(item); openLightbox(lbIndex); });
+    });
+    function openLightbox(idx) { lbImg.src = visibleItems[idx].dataset.src; lightbox.classList.add('open'); document.body.style.overflow='hidden'; }
+    function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow=''; }
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.getElementById('lightbox-prev').addEventListener('click', () => { lbIndex=(lbIndex-1+visibleItems.length)%visibleItems.length; openLightbox(lbIndex); });
+    document.getElementById('lightbox-next').addEventListener('click', () => { lbIndex=(lbIndex+1)%visibleItems.length; openLightbox(lbIndex); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key==='Escape') closeLightbox();
+      if (e.key==='ArrowLeft') { lbIndex=(lbIndex-1+visibleItems.length)%visibleItems.length; openLightbox(lbIndex); }
+      if (e.key==='ArrowRight') { lbIndex=(lbIndex+1)%visibleItems.length; openLightbox(lbIndex); }
+    });
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</BaseLayoutI18n>

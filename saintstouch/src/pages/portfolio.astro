@@ -1,0 +1,286 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+
+// Load portfolio items from content JSON files (managed by Decap CMS admin)
+function loadCategory(category: string) {
+  const dir = join(process.cwd(), 'src/content', category);
+  try {
+    return readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .map(f => ({ ...JSON.parse(readFileSync(join(dir, f), 'utf8')), category }))
+      .sort((a: any, b: any) => a.id.localeCompare(b.id));
+  } catch { return []; }
+}
+
+// Load bulk uploads and expand them into individual items per category
+function loadBulkUploads() {
+  const dir = join(process.cwd(), 'src/content/bulk');
+  try {
+    const result: any[] = [];
+    readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .forEach(f => {
+        const data = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+        (data.photos ?? []).forEach((photo: any, i: number) => {
+          result.push({ ...photo, id: `bulk-${data.session}-${i}`, category: data.category });
+        });
+      });
+    return result;
+  } catch { return []; }
+}
+
+const portfolioItems = [
+  ...loadCategory('portraits'),
+  ...loadCategory('events'),
+  ...loadCategory('fashion'),
+  ...loadCategory('couples'),
+  ...loadCategory('hospitality'),
+  ...loadBulkUploads(),
+];
+
+const description = "Complete photography portfolio by Clifford Roberts III. Portraits, fashion, events, boudoir, maternity & weddings. Based in Virginia Beach, VA.";
+---
+
+<BaseLayout
+  title="Portfolio — Saint's Touch Photography"
+  description={description}
+>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-title">Saint's Touch Photography</div>
+    <div class="loader-sub">by Clifford Roberts III</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/">Home</a>
+    <a href="/portfolio">Portfolio</a>
+    <a href="/services">Services</a>
+    <a href="/#about">About</a>
+    <a href="/gallery-guide.html">Gallery Guide</a>
+    <a href="/#contact">Contact</a>
+    <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="/" class="nav-logo">Saint's <span>Touch</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/portfolio">Portfolio</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/gallery-guide.html">Gallery Guide</a></li>
+      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
+    </ul>
+    <LanguageSwitcher locale="en" />
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section id="portfolio-hero" style="padding: 120px 20px 60px; text-align: center; border-bottom: 1px solid rgba(201,168,124,0.1);">
+    <div class="section-label reveal">Full Collection</div>
+    <h1 class="section-title reveal reveal-delay-1">Complete <em>Portfolio</em></h1>
+    <p style="color: rgba(232,221,208,0.8); margin-top: 24px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      Explore the complete collection of work across all categories.
+    </p>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section id="portfolio" style="padding: 80px 20px;">
+    <div class="work-header" style="max-width: 1400px; margin: 0 auto 60px;">
+      <div class="filter-bar reveal reveal-delay-2" id="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="portraits">Portraits</button>
+        <button class="filter-btn" data-filter="events">Events</button>
+        <button class="filter-btn" data-filter="fashion">Fashion</button>
+        <button class="filter-btn" data-filter="couples">Couples</button>
+        <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+      </div>
+    </div>
+
+    <div class="gallery-grid reveal" id="gallery" style="max-width: 1400px; margin: 0 auto;">
+      {portfolioItems.map((item) => (
+        <div
+          class="gallery-item"
+          data-category={item.category}
+          data-featured={item.featured}
+          data-src={item.src}
+        >
+          <img src={item.src} alt={item.alt} loading="lazy" />
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-label">
+              {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lightbox-close">&#x2715;</button>
+    <button id="lightbox-prev">&#8249;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <button id="lightbox-next">&#8250;</button>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <section id="portfolio-cta" style="padding: 80px 20px; text-align: center; border-top: 1px solid rgba(201,168,124,0.1);">
+    <div class="section-label reveal">Ready to create?</div>
+    <h2 class="section-title reveal reveal-delay-1">Let's <em>Collaborate</em></h2>
+    <a href="/#contact" class="hero-cta reveal reveal-delay-2">Book a Session</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a>
+      <a href="https://wa.me/16562310109" target="_blank">WhatsApp</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <p>&copy; {new Date().getFullYear()} Saint's Touch Photography. All rights reserved.</p>
+  </footer>
+
+  <script is:inline>
+    // LOADER
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 3000);
+    });
+
+    // NAV SCROLL
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // MOBILE NAV
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+    let menuOpen = false;
+
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (menuOpen) {
+        spans[0].style.transform = 'translateY(6px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+
+    window.closeMobileNav = function() {
+      menuOpen = false;
+      mobileNav.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    };
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (link.getAttribute('href').startsWith('#') || link.getAttribute('href').startsWith('/')) {
+          window.closeMobileNav();
+        }
+      });
+    });
+
+    // PORTFOLIO FILTER & LIGHTBOX
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbClose = document.getElementById('lightbox-close');
+    const lbPrev = document.getElementById('lightbox-prev');
+    const lbNext = document.getElementById('lightbox-next');
+    let visibleItems = [];
+    let lbIndex = 0;
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        galleryItems.forEach(item => {
+          const show = filter === 'all'
+            ? true
+            : item.dataset.category === filter;
+          if (show) {
+            item.classList.remove('hidden');
+            item.style.animation = 'none';
+            item.offsetHeight;
+            item.style.animation = '';
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Init: show all on load (All tab = everything)
+    // items already visible by default
+
+    function getVisibleItems() {
+      return [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+    }
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        visibleItems = getVisibleItems();
+        lbIndex = visibleItems.indexOf(item);
+        openLightbox(lbIndex);
+      });
+    });
+
+    function openLightbox(idx) {
+      lbImg.src = visibleItems[idx].dataset.src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    lbPrev.addEventListener('click', () => { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); });
+    lbNext.addEventListener('click', () => { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); }
+      if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); }
+    });
+
+    // SCROLL REVEAL
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</BaseLayout>

@@ -1,0 +1,21 @@
+{
+  "photos": [
+    {
+      "alt": "Photo",
+      "featured": false,
+      "src": "/images/_e9a3421.jpg"
+    },
+    {
+      "alt": "Photo",
+      "featured": true,
+      "src": "/images/_e9a3346.jpg"
+    },
+    {
+      "alt": "Photo",
+      "featured": false,
+      "src": "/images/_e9a3293.jpg"
+    }
+  ],
+  "category": "portraits",
+  "session": "Len"
+}

@@ -1,14 +1,65 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import { portfolioItems, services, processSteps } from '@data/portfolio';
+import { getCollection } from 'astro:content';
+import BaseLayoutI18n from '@layouts/BaseLayoutI18n.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { services, processSteps } from '@data/portfolio';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+import { t } from '@i18n/utils';
+import type { Locale } from '@i18n/utils';
 
-const featuredPortfolio = portfolioItems.filter(item => item.featured);
+// Default locale for English homepage
+const locale: Locale = 'en';
+
+// Load portfolio items from content JSON files
+function loadCategory(category: string) {
+  const dir = join(process.cwd(), 'src/content', category);
+  try {
+    return readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .map(f => ({ ...JSON.parse(readFileSync(join(dir, f), 'utf8')), category }))
+      .sort((a: any, b: any) => a.id.localeCompare(b.id));
+  } catch { return []; }
+}
+
+function loadBulkUploads() {
+  const dir = join(process.cwd(), 'src/content/bulk');
+  try {
+    const result: any[] = [];
+    readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .forEach(f => {
+        const data = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+        (data.photos ?? []).forEach((photo: any, i: number) => {
+          result.push({ ...photo, id: `bulk-${data.session}-${i}`, category: data.category });
+        });
+      });
+    return result;
+  } catch { return []; }
+}
+
+const portfolioItems = [
+  ...loadCategory('portraits'),
+  ...loadCategory('events'),
+  ...loadCategory('fashion'),
+  ...loadCategory('couples'),
+  ...loadCategory('hospitality'),
+  ...loadBulkUploads(),
+];
+
+const featuredPortfolio = portfolioItems.filter((item: any) => item.featured);
 const description = "Cinematic photography by Clifford Roberts III. Portraits, fashion, events, boudoir, maternity & weddings. Based in Virginia Beach, VA.";
+
+// Get translated strings
+const heroHeadline = t(locale, 'hero.headline');
+const heroEmphasis = t(locale, 'hero.headlineEmphasis');
+const marqueeItems = t(locale, 'marquee.items') as string[];
 ---
 
-<BaseLayout
+<BaseLayoutI18n
   title="Saint's Touch Photography — Clifford Roberts III"
   description={description}
+  locale={locale}
 >
   <!-- LOADER -->
   <div id="loader">
@@ -21,25 +72,27 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
 
   <!-- MOBILE NAV -->
   <div class="nav-mobile" id="nav-mobile">
-    <a href="#work">Work</a>
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="/">{t(locale, 'nav.work')}</a>
+    <a href="/services">{t(locale, 'nav.services')}</a>
+    <a href="#about">{t(locale, 'nav.about')}</a>
+    <a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a>
+    <a href="#contact">{t(locale, 'nav.contact')}</a>
     <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
-    <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
   </div>
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="nav-logo">Saint's <span>Touch</span></a>
+    <a href="/" class="nav-logo">Saint's <span>Touch</span></a>
     <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a></li>
+      <li><a href="/">{t(locale, 'nav.work')}</a></li>
+      <li><a href="/services">{t(locale, 'nav.services')}</a></li>
+      <li><a href="#about">{t(locale, 'nav.about')}</a></li>
+      <li><a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a></li>
+      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
       <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
     </ul>
+    <LanguageSwitcher locale={locale} />
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -47,16 +100,25 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-bg" id="hero-bg"></div>
+    <picture>
+      <source media="(max-width: 768px)" srcset="/images/hero-mobile.jpg" />
+      <img
+        class="hero-bg"
+        id="hero-bg"
+        src="/images/hero.jpg"
+        alt=""
+        fetchpriority="high"
+      />
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Virginia Beach · Worldwide</div>
+      <div class="hero-eyebrow">{t(locale, 'hero.eyebrow')}</div>
       <h1 class="hero-headline">
-        Where light meets<br><em>authentic emotion.</em>
+        {heroHeadline}<br><em>{heroEmphasis}</em>
       </h1>
-      <p class="hero-sub">Cinematic Portraiture &amp; Visual Storytelling</p>
+      <p class="hero-sub">{t(locale, 'hero.subtitle')}</p>
       <a href="#contact" class="hero-cta">
-        Book a Session
+        {t(locale, 'hero.cta')}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -75,25 +137,17 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     </div>
   </div>
 
-  <!-- PORTFOLIO -->
+  <!-- PORTFOLIO - RECENT WORK -->
   <section id="work">
     <div class="work-header">
       <div>
-        <div class="section-label reveal">Selected Work</div>
-        <h2 class="section-title reveal reveal-delay-1">The <em>Gallery</em></h2>
-      </div>
-      <div class="filter-bar reveal reveal-delay-2" id="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="portraits">Portraits</button>
-        <button class="filter-btn" data-filter="events">Events</button>
-        <button class="filter-btn" data-filter="fashion">Fashion</button>
-        <button class="filter-btn" data-filter="couples">Couples</button>
-        <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+        <div class="section-label reveal">{t(locale, 'portfolio.label')}</div>
+        <h2 class="section-title reveal reveal-delay-1">{t(locale, 'portfolio.title')}<em>{t(locale, 'portfolio.titleEmphasis')}</em></h2>
       </div>
     </div>
 
     <div class="gallery-grid reveal" id="gallery">
-      {portfolioItems.map((item) => (
+      {featuredPortfolio.slice(0, 10).map((item) => (
         <div
           class="gallery-item"
           data-category={item.category}
@@ -103,11 +157,15 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
           <img src={item.src} alt={item.alt} loading="lazy" />
           <div class="gallery-item-overlay">
             <span class="gallery-item-label">
-              {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+              {t(locale, `categories.${item.category}`)}
             </span>
           </div>
         </div>
       ))}
+    </div>
+
+    <div class="portfolio-cta reveal reveal-delay-2" style="text-align: center; margin-top: 60px;">
+      <a href="/portfolio" class="hero-cta">{t(locale, 'portfolio.cta')} →</a>
     </div>
   </section>
 
@@ -119,44 +177,89 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     <button id="lightbox-next">&#8250;</button>
   </div>
 
-  <!-- SERVICES -->
+  <!-- SERVICES - FEATURED ONLY -->
   <section id="services">
-    <div class="section-label reveal">Investment</div>
-    <h2 class="section-title reveal reveal-delay-1">Services &amp; <em>Pricing</em></h2>
+    <div class="section-label reveal">{t(locale, 'services.label')}</div>
+    <h2 class="section-title reveal reveal-delay-1">{t(locale, 'services.title')}<em>{t(locale, 'services.titleEmphasis')}</em></h2>
     <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="services-hint reveal reveal-delay-3">{t(locale, 'services.hint')}</p>
 
-    <div class="services-grid">
-      {services.map((service, i) => (
-        <div class={`service-card reveal reveal-delay-${Math.min(i, 3)}`}>
-          <div class="service-icon">{service.icon}</div>
-          <div class="service-name">{service.name}</div>
-          <div class="service-price">{service.price}</div>
-          <p class="service-desc">{service.description}</p>
+    <div class="services-accordion">
+      {services.slice(0, 3).map((service, i) => (
+        <div class={`svc-row reveal reveal-delay-${Math.min(i % 4, 3)}`} data-id={service.id}>
+
+          <!-- Clickable header -->
+          <button class="svc-header" aria-expanded="false" aria-controls={`tiers-${service.id}`}>
+            <div class="svc-header-left">
+              <span class="svc-icon">{service.icon}</span>
+              <div>
+                <div class="svc-name">{service.name}</div>
+                <div class="svc-desc">{service.description}</div>
+              </div>
+            </div>
+            <div class="svc-header-right">
+              <span class="svc-price-range">{service.priceRange}</span>
+              <span class="svc-chevron">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </button>
+
+          <!-- Expandable tier panel -->
+          <div class="svc-tiers" id={`tiers-${service.id}`} aria-hidden="true">
+            {service.tiers.length > 0 ? (
+              <div class="tiers-wrap">
+                {service.tiers.map((tier) => (
+                  <div class={`tier-card${tier.featured ? ' featured' : ''}`}>
+                    {tier.badge && <div class="tier-badge">{tier.badge}</div>}
+                    <div class="tier-label">Tier {tier.num}</div>
+                    <div class="tier-name">{tier.name}</div>
+                    <div class="tier-price">
+                      <sup>$</sup>{tier.price.replace('$', '')}
+                      {tier.priceSuffix && <span class="tier-price-suffix">{tier.priceSuffix}</span>}
+                    </div>
+                    <div class="tier-price-note">{tier.tagline}</div>
+                    <div class="tier-divider"></div>
+                    <div class="tier-includes">Includes</div>
+                    <ul class="tier-features">
+                      {tier.features.map((f) => <li>{f}</li>)}
+                    </ul>
+                    <a href="#contact" class={`tier-cta ${tier.featured ? 'solid' : 'outline'}`}>Book This Session</a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div class="svc-contact-prompt">
+                <p>Pricing for this service is tailored to your specific vision and needs.</p>
+                <a href="#contact" class="tier-cta outline" style="display:inline-block;margin-top:16px;">Get a Custom Quote</a>
+              </div>
+            )}
+          </div>
+
         </div>
       ))}
-    </div>
 
-    <div class="gold-line reveal" style="margin-top: 80px;"></div>
-    <div class="reveal" style="text-align: center; margin-top: 60px;">
-      <p style="font-size: 0.95rem; color: rgba(232,221,208,0.8); line-height: 1.8; margin-bottom: 32px;">
-        Rates vary by session type, location, and deliverables. Travel outside the 25-mile radius incurs a travel fee.
-      </p>
-      <a href="#contact" class="hero-cta">Get a Custom Quote</a>
+      <!-- View All Services CTA -->
+      <div class="svc-cta-row reveal" style="margin-top: 60px;">
+        <a href="/services" class="hero-cta">{t(locale, 'services.viewAll')} →</a>
+      </div>
     </div>
   </section>
 
   <!-- PROCESS -->
   <section id="process">
     <div style="max-width: 1200px; margin: 0 auto;">
-      <div class="section-label reveal">How It Works</div>
-      <h2 class="section-title reveal reveal-delay-1">The <em>Process</em></h2>
+      <div class="section-label reveal">{t(locale, 'process.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'process.title')}<em>{t(locale, 'process.titleEmphasis')}</em></h2>
 
       <div class="process-steps">
-        {processSteps.map((item) => (
-          <div class={`process-step reveal reveal-delay-${Math.min(item.step - 1, 3)}`}>
-            <div class="process-step-num">{String(item.step).padStart(2, '0')}</div>
-            <div class="process-step-title">{item.title}</div>
-            <div class="process-step-desc">{item.description}</div>
+        {(t(locale, 'process.steps') as any[]).map((step: any, i: number) => (
+          <div class={`process-step reveal reveal-delay-${Math.min(i, 3)}`}>
+            <div class="process-step-num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="process-step-title">{step.title}</div>
+            <div class="process-step-desc">{step.description}</div>
           </div>
         ))}
       </div>
@@ -166,86 +269,76 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
   <!-- ABOUT -->
   <section id="about">
     <div class="about-content">
-      <div class="section-label reveal">About</div>
-      <h2 class="section-title reveal reveal-delay-1">Meet <em>Cliff</em></h2>
+      <div class="section-label reveal">{t(locale, 'about.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'about.title')}<em>{t(locale, 'about.titleEmphasis')}</em></h2>
 
       <div class="about-image reveal reveal-delay-2">
-        <img src="images/REG2.jpg" alt="Clifford Roberts III" />
+        <img src="/images/about.jpg" alt="Clifford Roberts III" />
       </div>
 
       <div class="about-intro reveal reveal-delay-1">
-        I'm Clifford Roberts III, a visual storyteller based in Virginia Beach with a passion for cinematic photography.
+        {t(locale, 'about.intro')}
       </div>
 
       <div class="about-text reveal reveal-delay-2">
-        For the past several years, I've dedicated myself to capturing the raw emotion and authentic moments that define
-        life's most important stories. Whether it's a maternity session celebrating new beginnings, a fashion editorial
-        pushing creative boundaries, or an intimate couples moment — I approach every frame with intentionality and artistry.
-        <br />
-        <br />
-        My style blends technical mastery with genuine human connection. I don't just take photos; I create visual narratives
-        that resonate. Each session is a collaboration, and every image tells part of your story.
-        <br />
-        <br />
-        When I'm not shooting, you'll find me exploring light, pushing creative boundaries, or investing in my growth — both
-        as a photographer and as a person.
+        {t(locale, 'about.body')}
       </div>
 
-      <a href="#contact" class="hero-cta">Work Together</a>
+      <a href="#contact" class="hero-cta">{t(locale, 'about.cta')}</a>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact">
     <div class="contact-content">
-      <div class="section-label reveal">Get In Touch</div>
-      <h2 class="section-title reveal reveal-delay-1">Let's Create <em>Something</em></h2>
+      <div class="section-label reveal">{t(locale, 'contact.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'contact.title')}<em>{t(locale, 'contact.titleEmphasis')}</em></h2>
 
       <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xyzljkqo" method="POST">
         <div class="form-group">
-          <label for="name">Your Name</label>
+          <label for="name">{t(locale, 'contact.form.name')}</label>
           <input type="text" id="name" name="name" required />
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email">{t(locale, 'contact.form.email')}</label>
           <input type="email" id="email" name="email" required />
         </div>
 
         <div class="form-group">
-          <label for="phone">Phone (Optional)</label>
+          <label for="phone">{t(locale, 'contact.form.phone')}</label>
           <input type="tel" id="phone" name="phone" />
         </div>
 
         <div class="form-group">
-          <label for="service">Service Interested In</label>
+          <label for="service">{t(locale, 'contact.form.service')}</label>
           <select id="service" name="service" required style="padding: 16px; background: rgba(232,221,208,0.05); border: 1px solid rgba(201,168,124,0.2); color: var(--cream); font-family: inherit; font-size: 0.95rem; border-radius: 2px;">
-            <option value="">Select a service</option>
-            <option value="portraits">Portraits</option>
-            <option value="maternity">Maternity</option>
-            <option value="fashion">Fashion</option>
-            <option value="couples">Couples & Engagements</option>
-            <option value="events">Events</option>
-            <option value="commercial">Commercial / Hospitality</option>
-            <option value="other">Other</option>
+            <option value="">{t(locale, 'contact.form.selectService')}</option>
+            <option value="portraits">{t(locale, 'contact.serviceOptions.portraits')}</option>
+            <option value="maternity">{t(locale, 'contact.serviceOptions.maternity')}</option>
+            <option value="fashion">{t(locale, 'contact.serviceOptions.fashion')}</option>
+            <option value="couples">{t(locale, 'contact.serviceOptions.couples')}</option>
+            <option value="events">{t(locale, 'contact.serviceOptions.events')}</option>
+            <option value="commercial">{t(locale, 'contact.serviceOptions.commercial')}</option>
+            <option value="other">{t(locale, 'contact.serviceOptions.other')}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="message">Tell Me About Your Vision</label>
+          <label for="message">{t(locale, 'contact.form.message')}</label>
           <textarea id="message" name="message" required></textarea>
         </div>
 
-        <button type="submit" class="form-submit">Send Inquiry</button>
+        <button type="submit" class="form-submit">{t(locale, 'contact.form.submit')}</button>
       </form>
 
       <div style="margin-top: 80px; padding-top: 60px; border-top: 1px solid rgba(201,168,124,0.1);">
         <p style="font-size: 0.95rem; color: rgba(232,221,208,0.8); margin-bottom: 24px;">
-          Prefer to reach out directly?
+          {t(locale, 'contact.form.directText')}
         </p>
         <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;">
           <a href="https://wa.me/16562310109" target="_blank" style="color: var(--gold); font-weight: 500;">WhatsApp: +1 (656) 231-0109</a>
-          <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color: var(--gold); font-weight: 500;">@saintogsnaps</a>
+          <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color: var(--gold); font-weight: 500;">@saintstouch.photo</a>
         </div>
       </div>
     </div>
@@ -254,21 +347,19 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
   <!-- FOOTER -->
   <footer>
     <div class="footer-links">
-      <a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a>
-      <a href="https://wa.me/16562310109" target="_blank">WhatsApp</a>
-      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">{t(locale, 'footer.links.instagram')}</a>
+      <a href="https://wa.me/16562310109" target="_blank">{t(locale, 'footer.links.whatsapp')}</a>
+      <a href="#contact">{t(locale, 'footer.links.contact')}</a>
     </div>
-    <p>&copy; {new Date().getFullYear()} Saint's Touch Photography. All rights reserved.</p>
+    <p>{t(locale, 'footer.copyright', { year: new Date().getFullYear() })}</p>
   </footer>
 
-  <script is:inline>
+  <script define:vars={{marqueeItems}}>
     // LOADER
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
       setTimeout(() => {
         loader.classList.add('hidden');
-        const heroBg = document.getElementById('hero-bg');
-        if (heroBg) heroBg.classList.add('loaded');
       }, 3000);
     });
 
@@ -311,7 +402,6 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     });
 
     // MARQUEE
-    const marqueeItems = ['Portrait','Events','Fashion','Boudoir','Maternity','Weddings','Virginia Beach'];
     const track = document.getElementById('marquee-track');
     const repeat = 6;
     let html = '';
@@ -322,8 +412,7 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     }
     track.innerHTML = html;
 
-    // PORTFOLIO FILTER & LIGHTBOX
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    // LIGHTBOX
     const galleryItems = document.querySelectorAll('.gallery-item');
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
@@ -333,34 +422,8 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     let visibleItems = [];
     let lbIndex = 0;
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        galleryItems.forEach(item => {
-          const show = filter === 'all'
-            ? item.dataset.featured === 'true'
-            : item.dataset.category === filter;
-          if (show) {
-            item.classList.remove('hidden');
-            item.style.animation = 'none';
-            item.offsetHeight;
-            item.style.animation = '';
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
-
-    // Init: show only featured on load
-    galleryItems.forEach(item => {
-      if (item.dataset.featured !== 'true') item.classList.add('hidden');
-    });
-
     function getVisibleItems() {
-      return [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+      return [...galleryItems];
     }
 
     galleryItems.forEach(item => {
@@ -406,5 +469,38 @@ const description = "Cinematic photography by Clifford Roberts III. Portraits, f
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     revealEls.forEach(el => observer.observe(el));
+
+    // Services accordion
+    document.querySelectorAll('.svc-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const row    = btn.closest('.svc-row');
+        const panel  = btn.nextElementSibling;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        document.querySelectorAll('.svc-row.open').forEach(openRow => {
+          if (openRow !== row) {
+            openRow.classList.remove('open');
+            const ob = openRow.querySelector('.svc-header');
+            const op = openRow.querySelector('.svc-tiers');
+            ob.setAttribute('aria-expanded', 'false');
+            op.setAttribute('aria-hidden', 'true');
+            op.style.maxHeight = '0';
+          }
+        });
+
+        if (isOpen) {
+          row.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('aria-hidden', 'true');
+          panel.style.maxHeight = '0';
+        } else {
+          row.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          setTimeout(() => row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+        }
+      });
+    });
   </script>
-</BaseLayout>
+</BaseLayoutI18n>

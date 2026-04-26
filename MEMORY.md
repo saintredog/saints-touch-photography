@@ -2,7 +2,7 @@
 
 ## Cliff
 - Clifford Roberts III | Timezone: America/New_York
-- Photographer: saintstouch.photography | IG: @saintogsnaps
+- Photographer: saintstouch.photography | IG: @saintstouch.photo
 - WA: +16562310109
 - Education: BSCSIA @ WGU | Certs: A+, Net+, Sec+, CIOS, CSIS
 
@@ -70,7 +70,7 @@ Portfolio link: https://www.saintstouch.photography/portfolio
 - **Database**: Turso — `https://shieldshot-saintredog.aws-us-east-1.turso.io`
   - TURSO_DATABASE_URL must use `https://` not `libsql://`; always `printf 'value' | vercel env add`
 - **Admin logins**: `saintstouch.photography@gmail.com` | `cliff@shieldshot.io` / `Cliff2026!`
-- **Stripe webhook**: `https://frameclaim.io/api/webhooks/stripe` — secret stored in Vercel env as STRIPE_WEBHOOK_SECRET (rotated 2026-04-10)
+- **Stripe webhook**: `https://frameclaim.io/api/webhooks/stripe` — secret in Vercel env as STRIPE_WEBHOOK_SECRET (rotated 2026-04-10, old secret exposed in git — scrubbed)
 - **Stripe prices**: monthly `price_1TEFkz3oNH3Ff6rwln0woIAJ` | yearly `price_1TEbOa3oNH3Ff6rwZrAumiEh`
 - **Resend**: domain verified, alerts from `alerts@frameclaim.io`
 - **Checkout**: uses raw fetch to Stripe REST API (SDK v20 has Vercel connectivity issues)
@@ -86,14 +86,12 @@ Portfolio link: https://www.saintstouch.photography/portfolio
 - **Feature feedback**: Expand beyond photographers to all content creators; video/audio detection (mentioned YouTube Content ID as competitor charging 20% ad revenue)
 
 ### FrameClaim WBS Status (2026-04-01 AUDIT)
-- **Status**: 50/100 tasks (50%) | 80% launch-ready
-- **Critical Blocker**: Stripe checkout 500 error (likely missing STRIPE_SECRET_KEY in Vercel production env)
-- **Fix Time**: 5 minutes (verify env var, deploy)
-- **Launch Time**: 25 minutes total (including testing)
+- **Status**: 51/100 tasks (51%) | 80% launch-ready
+- **Critical Blocker**: ~~Stripe checkout 500 error~~ ✅ RESOLVED (2026-04-24)
 
 **By Category:**
 - Infrastructure: 3/12 (25%) — Trustpilot DNS pending
-- Payments/Stripe: 2/13 (15%) — Env var issue
+- Payments/Stripe: 3/13 (23%) ✅ Checkout working
 - Security: 9/10 (90%) ✓ Done
 - Core Features: 16/20 (80%) ✓ Good
 - Analytics: 10/16 (63%)

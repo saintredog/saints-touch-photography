@@ -1,0 +1,16 @@
+{
+  "photos": [
+    {
+      "alt": "Photo",
+      "featured": false,
+      "src": "/images/_e9a2784.jpg"
+    },
+    {
+      "alt": "Photo",
+      "featured": true,
+      "src": "/images/_e9a2865.jpg"
+    }
+  ],
+  "category": "portraits",
+  "session": "Aiko Night/Day"
+}

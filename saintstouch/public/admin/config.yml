@@ -1,0 +1,142 @@
+backend:
+  name: github
+  repo: saintredog/saintstouch-photography
+  branch: main
+  base_url: https://saintstouch-photography.pages.dev
+  auth_endpoint: api/auth
+
+site_url: https://saintstouch.photography
+display_url: https://saintstouch.photography
+logo_url: /images/hero.jpg
+
+media_folder: public/images
+public_folder: /images
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  # ─── PORTRAITS ───────────────────────────────────────────
+  - name: portraits
+    label: "📸 Portraits"
+    label_singular: Portrait
+    folder: src/content/portraits
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: id
+    slug: "{{id}}"
+    summary: "{{src}}"
+    fields:
+      - { label: ID, name: id, widget: string, hint: "Unique ID e.g. p-23" }
+      - { label: Photo, name: src, widget: image, choose_url: false }
+      - { label: Alt Text, name: alt, widget: string, default: Portrait }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+
+  # ─── EVENTS ──────────────────────────────────────────────
+  - name: events
+    label: "🎉 Events"
+    label_singular: Event
+    folder: src/content/events
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: id
+    slug: "{{id}}"
+    summary: "{{src}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Photo, name: src, widget: image, choose_url: false }
+      - { label: Alt Text, name: alt, widget: string, default: Event }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+
+  # ─── FASHION ─────────────────────────────────────────────
+  - name: fashion
+    label: "👗 Fashion"
+    label_singular: Fashion
+    folder: src/content/fashion
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: id
+    slug: "{{id}}"
+    summary: "{{src}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Photo, name: src, widget: image, choose_url: false }
+      - { label: Alt Text, name: alt, widget: string, default: Fashion }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+
+  # ─── COUPLES ─────────────────────────────────────────────
+  - name: couples
+    label: "💑 Couples"
+    label_singular: Couples
+    folder: src/content/couples
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: id
+    slug: "{{id}}"
+    summary: "{{src}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Photo, name: src, widget: image, choose_url: false }
+      - { label: Alt Text, name: alt, widget: string, default: Couples }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+
+  # ─── HOSPITALITY ─────────────────────────────────────────
+  - name: hospitality
+    label: "🏨 Hospitality"
+    label_singular: Hospitality
+    folder: src/content/hospitality
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: id
+    slug: "{{id}}"
+    summary: "{{src}}"
+    fields:
+      - { label: ID, name: id, widget: string }
+      - { label: Photo, name: src, widget: image, choose_url: false }
+      - { label: Alt Text, name: alt, widget: string, default: Hospitality }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+
+  # ─── BULK UPLOAD ─────────────────────────────────────────
+  # Use this to upload multiple photos at once.
+  # Name your session, pick category, add as many photos as you want, publish.
+  - name: bulk_upload
+    label: "⬆️ Bulk Upload"
+    label_singular: Bulk Upload Session
+    folder: src/content/bulk
+    create: true
+    delete: true
+    extension: json
+    format: json
+    identifier_field: session
+    slug: "{{session}}"
+    summary: "{{category}} — {{session}}"
+    fields:
+      - { label: "Session Name", name: session, widget: string, hint: "e.g. taina-maternity-april-2026" }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: "📸 Portraits", value: portraits }
+          - { label: "🎉 Events", value: events }
+          - { label: "👗 Fashion", value: fashion }
+          - { label: "💑 Couples", value: couples }
+          - { label: "🏨 Hospitality", value: hospitality }
+      - label: "Photos (click + Add to add more)"
+        name: photos
+        widget: list
+        minimize_collapsed: false
+        summary: "{{fields.src}}"
+        fields:
+          - { label: Photo, name: src, widget: image, choose_url: false }
+          - { label: Featured, name: featured, widget: boolean, default: false, hint: "Show first in gallery" }

@@ -1,0 +1,11 @@
+{
+  "photos": [
+    {
+      "alt": "Photo",
+      "featured": true,
+      "src": "/images/_e9a3622.jpg"
+    }
+  ],
+  "category": "portraits",
+  "session": "session1"
+}

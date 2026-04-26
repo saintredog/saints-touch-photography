@@ -1,0 +1,498 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayoutI18n from '@layouts/BaseLayoutI18n.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher.astro';
+import { services, processSteps } from '@data/portfolio';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+import { t } from '@i18n/utils';
+import type { Locale } from '@i18n/utils';
+
+const locale: Locale = 'hi';;
+
+function loadCategory(category: string) {
+  const dir = join(process.cwd(), 'src/content', category);
+  try {
+    return readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .map(f => ({ ...JSON.parse(readFileSync(join(dir, f), 'utf8')), category }))
+      .sort((a: any, b: any) => a.id.localeCompare(b.id));
+  } catch { return []; }
+}
+
+function loadBulkUploads() {
+  const dir = join(process.cwd(), 'src/content/bulk');
+  try {
+    const result: any[] = [];
+    readdirSync(dir)
+      .filter(f => f.endsWith('.json'))
+      .forEach(f => {
+        const data = JSON.parse(readFileSync(join(dir, f), 'utf8'));
+        (data.photos ?? []).forEach((photo: any, i: number) => {
+          result.push({ ...photo, id: `bulk-${data.session}-${i}`, category: data.category });
+        });
+      });
+    return result;
+  } catch { return []; }
+}
+
+const portfolioItems = [
+  ...loadCategory('portraits'),
+  ...loadCategory('events'),
+  ...loadCategory('fashion'),
+  ...loadCategory('couples'),
+  ...loadCategory('hospitality'),
+  ...loadBulkUploads(),
+];
+
+const featuredPortfolio = portfolioItems.filter((item: any) => item.featured);
+const description = "सिनेमाटिक फोटोग्राफी क्लिफोर्ड रॉबर्ट्स III द्वारा। पोर्ट्रेट, फैशन, इवेंट्स, बूदोइर, मातृत्व और शादियां। Virginia Beach, VA में स्थित।";
+
+const heroHeadline = t(locale, 'hero.headline');
+const heroEmphasis = t(locale, 'hero.headlineEmphasis');
+const marqueeItems = t(locale, 'marquee.items') as string[];
+---
+
+<BaseLayoutI18n
+  title="Saint's Touch Photography — Clifford Roberts III"
+  description={description}
+  locale={locale}
+>
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-title">Saint's Touch Photography</div>
+    <div class="loader-sub">by Clifford Roberts III</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="/hi/">{t(locale, 'nav.work')}</a>
+    <a href="/services">{t(locale, 'nav.services')}</a>
+    <a href="#about">{t(locale, 'nav.about')}</a>
+    <a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a>
+    <a href="#contact">{t(locale, 'nav.contact')}</a>
+    <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="/hi/" class="nav-logo">Saint's <span>Touch</span></a>
+    <ul class="nav-links">
+      <li><a href="/hi/">{t(locale, 'nav.work')}</a></li>
+      <li><a href="/services">{t(locale, 'nav.services')}</a></li>
+      <li><a href="#about">{t(locale, 'nav.about')}</a></li>
+      <li><a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a></li>
+      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
+    </ul>
+    <LanguageSwitcher locale={locale} />
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <picture>
+      <source media="(max-width: 768px)" srcset="/images/hero-mobile.jpg" />
+      <img
+        class="hero-bg"
+        id="hero-bg"
+        src="/images/hero.jpg"
+        alt=""
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">{t(locale, 'hero.eyebrow')}</div>
+      <h1 class="hero-headline">
+        {heroHeadline}<br><em>{heroEmphasis}</em>
+      </h1>
+      <p class="hero-sub">{t(locale, 'hero.subtitle')}</p>
+      <a href="#contact" class="hero-cta">
+        {t(locale, 'hero.cta')}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 7H13M7 1L13 7L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track" id="marquee-track">
+      <!-- items injected by JS -->
+    </div>
+  </div>
+
+  <!-- PORTFOLIO - RECENT WORK -->
+  <section id="work">
+    <div class="work-header">
+      <div>
+        <div class="section-label reveal">{t(locale, 'portfolio.label')}</div>
+        <h2 class="section-title reveal reveal-delay-1">{t(locale, 'portfolio.title')}<em>{t(locale, 'portfolio.titleEmphasis')}</em></h2>
+      </div>
+    </div>
+
+    <div class="gallery-grid reveal" id="gallery">
+      {featuredPortfolio.slice(0, 10).map((item) => (
+        <div
+          class="gallery-item"
+          data-category={item.category}
+          data-featured={item.featured}
+          data-src={item.src}
+        >
+          <img src={item.src} alt={item.alt} loading="lazy" />
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-label">
+              {t(locale, `categories.${item.category}`)}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="portfolio-cta reveal reveal-delay-2" style="text-align: center; margin-top: 60px;">
+      <a href="/hi/portfolio" class="hero-cta">{t(locale, 'portfolio.cta')} →</a>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lightbox-close">&#x2715;</button>
+    <button id="lightbox-prev">&#8249;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <button id="lightbox-next">&#8250;</button>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-label reveal">{t(locale, 'services.label')}</div>
+    <h2 class="section-title reveal reveal-delay-1">{t(locale, 'services.title')}<em>{t(locale, 'services.titleEmphasis')}</em></h2>
+    <div class="gold-line reveal reveal-delay-2"></div>
+    <p class="services-hint reveal reveal-delay-3">{t(locale, 'services.hint')}</p>
+
+    <div class="services-accordion">
+      {services.slice(0, 3).map((service, i) => (
+        <div class={`svc-row reveal reveal-delay-${Math.min(i % 4, 3)}`} data-id={service.id}>
+          <button class="svc-header" aria-expanded="false" aria-controls={`tiers-${service.id}`}>
+            <div class="svc-header-left">
+              <span class="svc-icon">{service.icon}</span>
+              <div>
+                <div class="svc-name">{service.name}</div>
+                <div class="svc-desc">{service.description}</div>
+              </div>
+            </div>
+            <div class="svc-header-right">
+              <span class="svc-price-range">{service.priceRange}</span>
+              <span class="svc-chevron">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </button>
+
+          <div class="svc-tiers" id={`tiers-${service.id}`} aria-hidden="true">
+            {service.tiers.length > 0 ? (
+              <div class="tiers-wrap">
+                {service.tiers.map((tier) => (
+                  <div class={`tier-card${tier.featured ? ' featured' : ''}`}>
+                    {tier.badge && <div class="tier-badge">{tier.badge}</div>}
+                    <div class="tier-label">Tier {tier.num}</div>
+                    <div class="tier-name">{tier.name}</div>
+                    <div class="tier-price">
+                      <sup>$</sup>{tier.price.replace('$', '')}
+                      {tier.priceSuffix && <span class="tier-price-suffix">{tier.priceSuffix}</span>}
+                    </div>
+                    <div class="tier-price-note">{tier.tagline}</div>
+                    <div class="tier-divider"></div>
+                    <div class="tier-includes">Includes</div>
+                    <ul class="tier-features">
+                      {tier.features.map((f) => <li>{f}</li>)}
+                    </ul>
+                    <a href="#contact" class={`tier-cta ${tier.featured ? 'solid' : 'outline'}`}>Book This Session</a>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div class="svc-contact-prompt">
+                <p>Pricing for this service is tailored to your specific vision and needs.</p>
+                <a href="#contact" class="tier-cta outline" style="display:inline-block;margin-top:16px;">Get a Custom Quote</a>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div class="svc-cta-row reveal" style="margin-top: 60px;">
+        <a href="/hi/services" class="hero-cta">{t(locale, 'services.viewAll')} →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="section-label reveal">{t(locale, 'process.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'process.title')}<em>{t(locale, 'process.titleEmphasis')}</em></h2>
+
+      <div class="process-steps">
+        {(t(locale, 'process.steps') as any[]).map((step: any, i: number) => (
+          <div class={`process-step reveal reveal-delay-${Math.min(i, 3)}`}>
+            <div class="process-step-num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="process-step-title">{step.title}</div>
+            <div class="process-step-desc">{step.description}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-content">
+      <div class="section-label reveal">{t(locale, 'about.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'about.title')}<em>{t(locale, 'about.titleEmphasis')}</em></h2>
+
+      <div class="about-image reveal reveal-delay-2">
+        <img src="/images/about.jpg" alt="Clifford Roberts III" />
+      </div>
+
+      <div class="about-intro reveal reveal-delay-1">
+        {t(locale, 'about.intro')}
+      </div>
+
+      <div class="about-text reveal reveal-delay-2">
+        {t(locale, 'about.body')}
+      </div>
+
+      <a href="#contact" class="hero-cta">{t(locale, 'about.cta')}</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-content">
+      <div class="section-label reveal">{t(locale, 'contact.label')}</div>
+      <h2 class="section-title reveal reveal-delay-1">{t(locale, 'contact.title')}<em>{t(locale, 'contact.titleEmphasis')}</em></h2>
+
+      <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xyzljkqo" method="POST">
+        <div class="form-group">
+          <label for="name">{t(locale, 'contact.form.name')}</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">{t(locale, 'contact.form.email')}</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">{t(locale, 'contact.form.phone')}</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+
+        <div class="form-group">
+          <label for="service">{t(locale, 'contact.form.service')}</label>
+          <select id="service" name="service" required style="padding: 16px; background: rgba(232,221,208,0.05); border: 1px solid rgba(201,168,124,0.2); color: var(--cream); font-family: inherit; font-size: 0.95rem; border-radius: 2px;">
+            <option value="">{t(locale, 'contact.form.selectService')}</option>
+            <option value="portraits">{t(locale, 'contact.serviceOptions.portraits')}</option>
+            <option value="maternity">{t(locale, 'contact.serviceOptions.maternity')}</option>
+            <option value="fashion">{t(locale, 'contact.serviceOptions.fashion')}</option>
+            <option value="couples">{t(locale, 'contact.serviceOptions.couples')}</option>
+            <option value="events">{t(locale, 'contact.serviceOptions.events')}</option>
+            <option value="commercial">{t(locale, 'contact.serviceOptions.commercial')}</option>
+            <option value="other">{t(locale, 'contact.serviceOptions.other')}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">{t(locale, 'contact.form.message')}</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">{t(locale, 'contact.form.submit')}</button>
+      </form>
+
+      <div style="margin-top: 80px; padding-top: 60px; border-top: 1px solid rgba(201,168,124,0.1);">
+        <p style="font-size: 0.95rem; color: rgba(232,221,208,0.8); margin-bottom: 24px;">
+          {t(locale, 'contact.form.directText')}
+        </p>
+        <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;">
+          <a href="https://wa.me/16562310109" target="_blank" style="color: var(--gold); font-weight: 500;">WhatsApp: +1 (656) 231-0109</a>
+          <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color: var(--gold); font-weight: 500;">@saintstouch.photo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">{t(locale, 'footer.links.instagram')}</a>
+      <a href="https://wa.me/16562310109" target="_blank">{t(locale, 'footer.links.whatsapp')}</a>
+      <a href="#contact">{t(locale, 'footer.links.contact')}</a>
+    </div>
+    <p>{t(locale, 'footer.copyright', { year: new Date().getFullYear() })}</p>
+  </footer>
+
+  <script define:vars={{marqueeItems}}>
+    // LOADER
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 3000);
+    });
+
+    // NAV SCROLL
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // MOBILE NAV
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+    let menuOpen = false;
+
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileNav.classList.toggle('open', menuOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (menuOpen) {
+        spans[0].style.transform = 'translateY(6px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+
+    window.closeMobileNav = function() {
+      menuOpen = false;
+      mobileNav.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    };
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (link.getAttribute('href').startsWith('#')) {
+          window.closeMobileNav();
+        }
+      });
+    });
+
+    // MARQUEE
+    const track = document.getElementById('marquee-track');
+    const repeat = 6;
+    let html = '';
+    for (let r = 0; r < repeat; r++) {
+      marqueeItems.forEach((item, i) => {
+        html += `<div class="marquee-item">${item}${i < marqueeItems.length - 1 ? '<span class="marquee-dot">●</span>' : ''}</div>`;
+      });
+    }
+    track.innerHTML = html;
+
+    // LIGHTBOX
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbClose = document.getElementById('lightbox-close');
+    const lbPrev = document.getElementById('lightbox-prev');
+    const lbNext = document.getElementById('lightbox-next');
+    let visibleItems = [];
+    let lbIndex = 0;
+
+    function getVisibleItems() {
+      return [...galleryItems];
+    }
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        visibleItems = getVisibleItems();
+        lbIndex = visibleItems.indexOf(item);
+        openLightbox(lbIndex);
+      });
+    });
+
+    function openLightbox(idx) {
+      lbImg.src = visibleItems[idx].dataset.src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    lbPrev.addEventListener('click', () => { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); });
+    lbNext.addEventListener('click', () => { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + visibleItems.length) % visibleItems.length; openLightbox(lbIndex); }
+      if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % visibleItems.length; openLightbox(lbIndex); }
+    });
+
+    // SCROLL REVEAL
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Services accordion
+    document.querySelectorAll('.svc-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const row    = btn.closest('.svc-row');
+        const panel  = btn.nextElementSibling;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        document.querySelectorAll('.svc-row.open').forEach(openRow => {
+          if (openRow !== row) {
+            openRow.classList.remove('open');
+            const ob = openRow.querySelector('.svc-header');
+            const op = openRow.querySelector('.svc-tiers');
+            ob.setAttribute('aria-expanded', 'false');
+            op.setAttribute('aria-hidden', 'true');
+            op.style.maxHeight = '0';
+          }
+        });
+
+        if (isOpen) {
+          row.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('aria-hidden', 'true');
+          panel.style.maxHeight = '0';
+        } else {
+          row.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          setTimeout(() => row.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+        }
+      });
+    });
+  </script>
+</BaseLayoutI18n>

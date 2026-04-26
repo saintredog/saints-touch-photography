@@ -242,7 +242,7 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: url('images/hero.jpg') center top/cover no-repeat;
+      background: url('/Users/cliffordroberts/.openclaw/workspace/saintstouch/images/_E9A2512.jpg') center top/cover no-repeat;
       transform: scale(1.05);
       transition: transform 8s ease-out;
     }
@@ -530,11 +530,182 @@
        SERVICES
     ============================================================ */
     #services { background: var(--mid); }
+
+    /* ── Tier Cards ─────────────────────────────────────── */
+    .tiers-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      margin-top: 64px;
+      align-items: end;
+    }
+    .tier-card {
+      background: #111;
+      border: 1px solid rgba(201,168,124,.12);
+      padding: 44px 36px 40px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: background .3s var(--ease);
+    }
+    .tier-card:hover { background: #161616; }
+
+    /* accent bar at top */
+    .tier-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(201,168,124,.25);
+    }
+
+    /* featured card — taller, gold accent */
+    .tier-card.featured {
+      background: #0f0f0f;
+      border-color: rgba(201,168,124,.35);
+      padding-top: 56px;
+      padding-bottom: 52px;
+      z-index: 1;
+      box-shadow: 0 0 60px rgba(201,168,124,.07);
+    }
+    .tier-card.featured::before {
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .tier-badge {
+      display: inline-block;
+      font-size: .58rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 4px 12px;
+      margin-bottom: 28px;
+      align-self: flex-start;
+    }
+
+    .tier-label {
+      font-size: .6rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      opacity: .7;
+    }
+    .tier-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .tier-name em { font-style: italic; color: var(--gold); }
+
+    .tier-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.4rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--cream);
+      margin: 20px 0 4px;
+    }
+    .tier-price sup {
+      font-size: 1.2rem;
+      vertical-align: super;
+      margin-right: 2px;
+      color: var(--gold);
+    }
+    .tier-price-note {
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 28px;
+    }
+
+    .tier-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(201,168,124,.12);
+      margin-bottom: 28px;
+    }
+
+    .tier-includes {
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: .7;
+    }
+
+    .tier-features {
+      list-style: none;
+      margin-bottom: 36px;
+      flex: 1;
+    }
+    .tier-features li {
+      font-size: .8rem;
+      line-height: 1.6;
+      color: rgba(232,221,208,.7);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(201,168,124,.07);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .tier-features li::before {
+      content: '—';
+      color: var(--gold);
+      opacity: .6;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .tier-cta {
+      display: block;
+      text-align: center;
+      padding: 14px 24px;
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background .25s var(--ease), color .25s var(--ease);
+    }
+    .tier-cta.outline {
+      border: 1px solid rgba(201,168,124,.4);
+      color: var(--cream);
+    }
+    .tier-cta.outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .tier-cta.solid {
+      background: var(--gold);
+      color: var(--black);
+      border: 1px solid var(--gold);
+    }
+    .tier-cta.solid:hover {
+      background: var(--cream);
+      border-color: var(--cream);
+    }
+
+    /* ── Specialty grid ─────────────────────────────────── */
+    .specialty-label {
+      font-size: .6rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 32px;
+      opacity: .7;
+    }
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1px;
-      margin-top: 64px;
       border: 1px solid rgba(201,168,124,.1);
     }
     .service-card {
@@ -579,6 +750,19 @@
       font-size: .8rem;
       line-height: 1.7;
       color: var(--dim);
+    }
+
+    /* ── Responsive tiers ───────────────────────────────── */
+    @media (max-width: 860px) {
+      .tiers-wrap {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+      .tier-card.featured {
+        padding-top: 44px;
+        padding-bottom: 40px;
+        order: -1;
+      }
     }
 
     /* ============================================================
@@ -1012,6 +1196,10 @@
     <div class="gallery-item" data-category="portraits" data-src="images/7E9A4094.jpg"><img src="images/7E9A4094.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
     <div class="gallery-item" data-category="portraits" data-src="images/7E9A4146.jpg"><img src="images/7E9A4146.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
     <div class="gallery-item" data-category="portraits" data-featured="true" data-src="images/7E9A4117.jpg"><img src="images/7E9A4117.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1432.jpg"><img src="images/_E9A3622.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1432.jpg"><img src="images/_E9A3460.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+    <div class="gallery-item" data-category="portraits" data-src="images/_E9A1432.jpg"><img src="images/_E9A3551.jpg" alt="Portrait" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Portrait</span></div></div>
+
 
     <!-- Events -->
     <div class="gallery-item" data-category="events" data-featured="true" data-src="images/_E9A0921.jpg"><img src="images/_E9A0921.jpg" alt="Event" loading="lazy" /><div class="gallery-item-overlay"><span class="gallery-item-label">Events</span></div></div>
@@ -1084,50 +1272,108 @@
   <h2 class="section-title reveal reveal-delay-1">Services &amp; <em>Pricing</em></h2>
   <div class="gold-line reveal reveal-delay-2"></div>
 
+  <!-- ── Tiered Pricing ── -->
+  <div class="tiers-wrap reveal reveal-delay-3">
+
+    <!-- Tier 1 -->
+    <div class="tier-card">
+      <div class="tier-label">Tier 01</div>
+      <div class="tier-name">The Essential<br><em>Session</em></div>
+      <div class="tier-price"><sup>$</sup>275<span style="font-size:1.4rem;color:var(--dim)"> – 350</span></div>
+      <div class="tier-price-note">The Gateway Package</div>
+      <div class="tier-divider"></div>
+      <div class="tier-includes">Includes</div>
+      <ul class="tier-features">
+        <li>45 min – 1 hour session</li>
+        <li>1 local Virginia Beach location</li>
+        <li>1–2 outfit changes</li>
+        <li>10–15 professionally edited photos</li>
+        <li>Private online gallery delivery</li>
+      </ul>
+      <a href="#contact" class="tier-cta outline">Book This Session</a>
+    </div>
+
+    <!-- Tier 2 — Featured -->
+    <div class="tier-card featured">
+      <div class="tier-badge">Most Popular</div>
+      <div class="tier-label">Tier 02</div>
+      <div class="tier-name">The Signature<br><em>Experience</em></div>
+      <div class="tier-price"><sup>$</sup>475</div>
+      <div class="tier-price-note">Your Sweet Spot</div>
+      <div class="tier-divider"></div>
+      <div class="tier-includes">Includes</div>
+      <ul class="tier-features">
+        <li>2 hours of shooting</li>
+        <li>Up to 2 locations</li>
+        <li>2–3 outfit changes</li>
+        <li>20–25 fully edited images</li>
+        <li>Full gallery delivery</li>
+        <li>Cinematic Lightroom &amp; Photoshop editing</li>
+      </ul>
+      <a href="#contact" class="tier-cta solid">Book This Session</a>
+    </div>
+
+    <!-- Tier 3 -->
+    <div class="tier-card">
+      <div class="tier-label">Tier 03</div>
+      <div class="tier-name">The Editorial<br><em>Session</em></div>
+      <div class="tier-price"><sup>$</sup>700<span style="font-size:1.4rem;color:var(--dim)">+</span></div>
+      <div class="tier-price-note">The Premium Package</div>
+      <div class="tier-divider"></div>
+      <div class="tier-includes">Includes</div>
+      <ul class="tier-features">
+        <li>3–4 hours of shooting</li>
+        <li>Multiple locations — VA Beach to DC, no mileage fees</li>
+        <li>Unlimited outfit changes</li>
+        <li>40+ fully edited images</li>
+        <li>Priority turnaround</li>
+        <li>Editorial-level post-production</li>
+      </ul>
+      <a href="#contact" class="tier-cta outline">Book This Session</a>
+    </div>
+
+  </div>
+
+  <!-- ── Specialty Services ── -->
+  <div class="specialty-label reveal">Specialty &amp; Commercial</div>
   <div class="services-grid">
     <div class="service-card reveal reveal-delay-1">
-      <div class="service-icon">◎</div>
-      <div class="service-name">Portraits</div>
-      <div class="service-price">Starting at $475</div>
-      <p class="service-desc">Personal branding, headshots, creative portraits. Clean, cinematic, intentional — tailored to your vision.</p>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
       <div class="service-icon">✦</div>
       <div class="service-name">Maternity</div>
       <div class="service-price">$550 – $800</div>
       <p class="service-desc">Celebrating the beauty of new life. Timeless and emotional sessions that you'll treasure forever.</p>
     </div>
-    <div class="service-card reveal reveal-delay-3">
+    <div class="service-card reveal reveal-delay-2">
       <div class="service-icon">◈</div>
       <div class="service-name">Fashion</div>
       <div class="service-price">Starting at $750</div>
       <p class="service-desc">Editorial and commercial fashion. Bold lighting, editorial direction, and cinematic post-production.</p>
     </div>
-    <div class="service-card reveal reveal-delay-4">
+    <div class="service-card reveal reveal-delay-3">
       <div class="service-icon">◇</div>
       <div class="service-name">Boudoir</div>
       <div class="service-price">Starting at $850</div>
       <p class="service-desc">Intimate, empowering, and tastefully luxurious. A safe space to celebrate your authentic self.</p>
     </div>
-    <div class="service-card reveal reveal-delay-1">
+    <div class="service-card reveal reveal-delay-4">
       <div class="service-icon">⬡</div>
       <div class="service-name">Hotels &amp; Spa</div>
       <div class="service-price">$650 – $1,000</div>
       <p class="service-desc">Commercial hospitality photography that elevates your brand — interiors, ambiance, and lifestyle content.</p>
     </div>
-    <div class="service-card reveal reveal-delay-2">
+    <div class="service-card reveal reveal-delay-1">
       <div class="service-icon">◉</div>
       <div class="service-name">Weddings</div>
       <div class="service-price">Starting at $2,500</div>
       <p class="service-desc">Your story, told beautifully. Full-day coverage with the cinematic depth your love deserves.</p>
     </div>
-    <div class="service-card reveal reveal-delay-3">
+    <div class="service-card reveal reveal-delay-2">
       <div class="service-icon">✈</div>
       <div class="service-name">International Travel</div>
-      <div class="service-price">Cost of Travel + $1,500/day</div>
+      <div class="service-price">Travel + $1,500/day</div>
       <p class="service-desc">Destination sessions anywhere in the world. Bring your vision — I'll bring the camera and the craft.</p>
     </div>
-    <div class="service-card reveal reveal-delay-4" style="display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:16px;">
+    <div class="service-card reveal reveal-delay-3" style="display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:16px;">
       <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--dim);">Not sure which package?</div>
       <a href="https://wa.me/16562310109" target="_blank" class="btn-primary">Let's Talk →</a>
     </div>

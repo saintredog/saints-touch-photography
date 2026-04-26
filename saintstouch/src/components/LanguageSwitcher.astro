@@ -1,0 +1,181 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Locale } from '@i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const languages: { code: Locale; name: string }[] = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Español' },
+  { code: 'fr', name: 'Français' },
+  { code: 'pt-br', name: 'Português' },
+  { code: 'hi', name: 'हिन्दी' },
+];
+
+const currentPath = Astro.url.pathname;
+const baseUrl = Astro.site?.toString() || 'https://saintstouch.photography';
+
+// Get the path without locale prefix
+const pathWithoutLocale = currentPath
+  .replace(/^\/[a-z]{2}(-[a-z]{2})?\//, '/')
+  .replace(/\/$/, '') || '/';
+---
+
+<div class="language-switcher">
+  <button class="lang-toggle" aria-label="Change language" id="lang-toggle">
+    <span class="lang-current">{languages.find(l => l.code === locale)?.name || 'EN'}</span>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  
+  <div class="lang-menu" id="lang-menu" hidden>
+    {languages.map((lang) => {
+      const isActive = lang.code === locale;
+      let url = '';
+      
+      if (lang.code === 'en') {
+        url = baseUrl + pathWithoutLocale;
+      } else {
+        url = baseUrl + '/' + lang.code + pathWithoutLocale;
+      }
+      
+      return (
+        <a 
+          href={url}
+          class={`lang-option ${isActive ? 'active' : ''}`}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          {lang.name}
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .language-switcher {
+    position: relative;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid rgba(201, 168, 124, 0.2);
+    color: var(--cream, #e8ddD0);
+    padding: 8px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .lang-toggle:hover {
+    border-color: rgba(201, 168, 124, 0.4);
+    color: var(--gold, #c9a87c);
+  }
+
+  .lang-toggle svg {
+    transition: transform 0.2s ease;
+  }
+
+  .lang-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: rgba(8, 8, 8, 0.95);
+    border: 1px solid rgba(201, 168, 124, 0.2);
+    border-radius: 2px;
+    min-width: 140px;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+  }
+
+  .lang-option {
+    display: block;
+    padding: 10px 16px;
+    color: rgba(232, 221, 208, 0.8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+  }
+
+  .lang-option:hover {
+    background: rgba(201, 168, 124, 0.1);
+    color: var(--gold, #c9a87c);
+  }
+
+  .lang-option.active {
+    background: rgba(201, 168, 124, 0.15);
+    color: var(--gold, #c9a87c);
+    border-left-color: var(--gold, #c9a87c);
+  }
+
+  .lang-current {
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .lang-toggle {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+    }
+
+    .lang-menu {
+      min-width: 120px;
+    }
+
+    .lang-option {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('lang-toggle');
+  const menu = document.getElementById('lang-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = !menu.hasAttribute('hidden');
+      if (isOpen) {
+        menu.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      } else {
+        menu.removeAttribute('hidden');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        menu.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close menu when clicking on a link
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>

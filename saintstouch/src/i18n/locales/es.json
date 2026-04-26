@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "logo": "Saint's Touch",
+    "work": "Trabajos",
+    "services": "Servicios",
+    "about": "Acerca de",
+    "gallery": "Guía de Galería",
+    "contact": "Contacto",
+    "instagram": "Instagram",
+    "whatsapp": "WhatsApp"
+  },
+  "hero": {
+    "eyebrow": "Virginia Beach · Worldwide",
+    "headline": "Donde la luz encuentra",
+    "headlineEmphasis": "emoción auténtica.",
+    "subtitle": "Fotografía Cinematográfica & Narración Visual",
+    "cta": "Reservar una Sesión"
+  },
+  "marquee": {
+    "items": ["Retratos", "Eventos", "Moda", "Boudoir", "Maternidad", "Bodas", "Virginia Beach"]
+  },
+  "portfolio": {
+    "label": "Trabajos Recientes",
+    "title": "Portafolio ",
+    "titleEmphasis": "Destacado",
+    "cta": "Ver Portafolio Completo"
+  },
+  "services": {
+    "label": "Inversión",
+    "title": "Servicios & ",
+    "titleEmphasis": "Precios",
+    "hint": "Selecciona un servicio para explorar opciones de precios",
+    "viewAll": "Ver Todos los Servicios"
+  },
+  "process": {
+    "label": "Cómo Funciona",
+    "title": "El ",
+    "titleEmphasis": "Proceso",
+    "steps": [
+      {
+        "title": "Consulta",
+        "description": "Empezamos contigo. Tu visión, tu historia, tus objetivos. A través de WhatsApp o una llamada, diseñamos la sesión perfecta."
+      },
+      {
+        "title": "Sesión",
+        "description": "Dirección profesional, equipo premium y iluminación cinematográfica. Tú te relajas — nosotros manejamos la artistry."
+      },
+      {
+        "title": "Edición",
+        "description": "Post-producción meticulosa. Color grading, retoque y dirección artística — puro cine."
+      },
+      {
+        "title": "Entrega",
+        "description": "Imágenes en alta resolución, impresiones o archivos digitales. Tus fotos, listas para el mundo."
+      }
+    ]
+  },
+  "about": {
+    "label": "Acerca de",
+    "title": "Conoce a ",
+    "titleEmphasis": "Cliff",
+    "intro": "Soy Clifford Roberts III, un narrador visual basado en Virginia Beach con pasión por la fotografía cinematográfica.",
+    "body": "Durante los últimos años, me he dedicado a capturar la emoción cruda y los momentos auténticos que definen las historias más importantes de la vida. Ya sea una sesión de maternidad celebrando nuevos comienzos, un editorial de moda empujando límites creativos, o un momento íntimo de parejas — abordo cada frame con intencionalidad y artistry.\n\nMi estilo combina dominio técnico con conexión humana genuina. No solo tomo fotos; creo narrativas visuales que resuenan. Cada sesión es una colaboración, y cada imagen cuenta parte de tu historia.\n\nCuando no estoy fotografiando, me encontrarás explorando luz, empujando límites creativos, o invirtiendo en mi crecimiento — tanto como fotógrafo como como persona.",
+    "cta": "Trabajemos Juntos"
+  },
+  "contact": {
+    "label": "Ponte en Contacto",
+    "title": "Vamos a Crear ",
+    "titleEmphasis": "Algo",
+    "form": {
+      "name": "Tu Nombre",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono (Opcional)",
+      "service": "Servicio Interesado",
+      "message": "Cuéntame Sobre Tu Visión",
+      "selectService": "Selecciona un servicio",
+      "submit": "Enviar Consulta",
+      "directText": "¿Prefieres ponerte en contacto directamente?"
+    },
+    "serviceOptions": {
+      "portraits": "Retratos",
+      "maternity": "Maternidad",
+      "fashion": "Moda",
+      "couples": "Parejas & Compromisos",
+      "events": "Eventos",
+      "commercial": "Comercial / Hospitalidad",
+      "other": "Otro"
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Saint's Touch Photography. Todos los derechos reservados.",
+    "links": {
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "contact": "Contacto"
+    }
+  },
+  "portfolio_page": {
+    "hero": {
+      "label": "Colección Completa",
+      "title": "Portafolio ",
+      "titleEmphasis": "Completo"
+    },
+    "description": "Explora la colección completa de trabajos en todas las categorías."
+  },
+  "services_page": {
+    "hero": {
+      "label": "Oferta Completa",
+      "title": "Servicios & ",
+      "titleEmphasis": "Precios"
+    },
+    "description": "Explora todos los servicios de fotografía con niveles de precios detallados adaptados a tu visión y presupuesto."
+  },
+  "categories": {
+    "portraits": "Retratos",
+    "events": "Eventos",
+    "fashion": "Moda",
+    "couples": "Parejas",
+    "hospitality": "Hospitalidad"
+  }
+}
