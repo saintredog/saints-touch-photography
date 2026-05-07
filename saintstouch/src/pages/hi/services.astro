@@ -31,7 +31,7 @@ const locale: Locale = 'hi';
     <a href="/gallery-guide.html">{t(locale, 'nav.gallery')}</a>
     <a href="/hi/#contact">{t(locale, 'nav.contact')}</a>
     <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
-    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+    <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color:var(--gold);">Instagram ↗</a>
   </div>
 
   <!-- NAV -->
@@ -42,7 +42,7 @@ const locale: Locale = 'hi';
       <li><a href="/hi/portfolio">Portfolio</a></li>
       <li><a href="/hi/services">{t(locale, 'nav.services')}</a></li>
       <li><a href="/hi/#about">{t(locale, 'nav.about')}</a></li>
-      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a></li>
       <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
     </ul>
     <LanguageSwitcher locale={locale} />
@@ -50,6 +50,17 @@ const locale: Locale = 'hi';
       <span></span><span></span><span></span>
     </button>
   </nav>
+
+  <!-- BOOKING URGENCY BANNER -->
+  <section id="booking-banner" style="background: linear-gradient(135deg, rgba(201,168,124,0.15) 0%, rgba(201,168,124,0.08) 100%); border-bottom: 1px solid rgba(201,168,124,0.2); padding: 40px 20px; text-align: center;">
+    <div style="max-width: 700px; margin: 0 auto;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 12px; font-weight: 300;">
+        अब गरमी 2026 के लिए परमाणu पोर्ट्रेट सेशन बुक कर रहे हैं
+      </p>
+      <p style="color: rgba(232,221,208,0.8); margin-bottom: 24px; font-size: 0.95rem;">सीमित उपलब्धता — आज ही अपना सेशन सुरक्षित करें</p>
+      <a href="/hi/#contact" style="display: inline-block; padding: 14px 32px; background: var(--gold); color: var(--black); font-family: 'Inter', sans-serif; font-weight: 500; border-radius: 2px; text-decoration: none; transition: all 0.3s; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 24px rgba(201,168,124,0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">पूछताछ करें</a>
+    </div>
+  </section>
 
   <!-- PAGE HERO -->
   <section id="services-hero" style="padding: 120px 20px 60px; text-align: center; border-bottom: 1px solid rgba(201,168,124,0.1);">
@@ -119,15 +130,60 @@ const locale: Locale = 'hi';
     </div>
   </section>
 
+  <!-- SESSION PREP GUIDE CTA -->
+  <section id="guide-cta" style="padding: 100px 20px; background: linear-gradient(180deg, rgba(8,8,8,0) 0%, rgba(201,168,124,0.08) 100%); border-top: 1px solid rgba(201,168,124,0.1);">
+    <div style="max-width: 650px; margin: 0 auto; text-align: center;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px;">अपने सल् की योजना करें</p>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--cream); margin-bottom: 16px; line-height: 1.2;">
+        अभी बुक करं नहीं गै आशा
+      </h2>
+      <p style="color: rgba(232,221,208,0.8); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.8;">
+        हमारी अंग्रेजी <strong>सल की योजना गाइड</strong> वयस्क लें और अपने सों पतरि तस्वीर की कल्पना शुरु करें। पूरी जाणकारी या सही सपाल प्राप्त करें।
+      </p>
+      <div style="background: rgba(201,168,124,0.08); border: 1px solid rgba(201,168,124,0.15); padding: 32px; border-radius: 2px; margin-bottom: 24px;">
+        <form id="guide-form" style="display: flex; flex-direction: column; gap: 16px;" onsubmit="handleGuideDownload(event)">
+          <input 
+            type="email" 
+            placeholder="aapka@email.com" 
+            required 
+            style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,124,0.2); color: var(--cream); padding: 14px 18px; border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.3s;" 
+            onfocus="this.style.borderColor='var(--gold)'; this.style.background='rgba(8,8,8,0.9)';" 
+            onblur="this.style.borderColor='rgba(201,168,124,0.2)'; this.style.background='rgba(8,8,8,0.6)';" 
+          />
+          <button 
+            type="submit" 
+            style="padding: 14px 32px; background: var(--gold); color: var(--black); border: none; font-family: 'Inter', sans-serif; font-weight: 600; border-radius: 2px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s;" 
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 24px rgba(201,168,124,0.3)';" 
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+          >
+            मुत गाइड प्राप्त करें
+          </button>
+        </form>
+        <p style="font-size: 0.75rem; color: rgba(232,221,208,0.6); text-align: center;">
+          हम आपकी गोपीधता की सहित खेलन का समन्वय करते हैं।
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-links">
-      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">{t(locale, 'footer.links.instagram')}</a>
+      <a href="https://www.instagram.com/saintogsnaps" target="_blank">{t(locale, 'footer.links.instagram')}</a>
       <a href="https://wa.me/16562310109" target="_blank">{t(locale, 'footer.links.whatsapp')}</a>
       <a href="/hi/#contact">{t(locale, 'footer.links.contact')}</a>
     </div>
     <p>{t(locale, 'footer.copyright', { year: new Date().getFullYear() })}</p>
   </footer>
+
+  <script is:inline>
+    function handleGuideDownload(e) {
+      e.preventDefault();
+      const email = e.target.querySelector('input[type="email"]').value;
+      alert('धन्यवास। अपनी इमेल में सल की योजना गाइड के लिए ऴेक करें।');
+      e.target.reset();
+    }
+  </script>
 
   <script is:inline>
     window.addEventListener('load', () => { const loader = document.getElementById('loader'); setTimeout(() => loader.classList.add('hidden'), 3000); });

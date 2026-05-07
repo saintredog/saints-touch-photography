@@ -28,7 +28,7 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
     <a href="/gallery-guide.html">Gallery Guide</a>
     <a href="/#contact">Contact</a>
     <a href="https://wa.me/16562310109" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
-    <a href="https://www.instagram.com/saintstouch.photo" target="_blank" style="color:var(--gold);">Instagram ↗</a>
+    <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color:var(--gold);">Instagram ↗</a>
   </div>
 
   <!-- NAV -->
@@ -40,7 +40,7 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
       <li><a href="/services">Services</a></li>
       <li><a href="/#about">About</a></li>
       <li><a href="/gallery-guide.html">Gallery Guide</a></li>
-      <li><a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a></li>
+      <li><a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a></li>
       <li><a href="https://wa.me/16562310109" target="_blank" class="nav-cta">WhatsApp ↗</a></li>
     </ul>
     <LanguageSwitcher locale="en" />
@@ -48,6 +48,17 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
       <span></span><span></span><span></span>
     </button>
   </nav>
+
+  <!-- BOOKING URGENCY BANNER -->
+  <section id="booking-banner" style="background: linear-gradient(135deg, rgba(201,168,124,0.15) 0%, rgba(201,168,124,0.08) 100%); border-bottom: 1px solid rgba(201,168,124,0.2); padding: 40px 20px; text-align: center;">
+    <div style="max-width: 700px; margin: 0 auto;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 12px; font-weight: 300;">
+        Now booking fine art portrait sessions for <strong style="color: var(--gold);">Summer 2026</strong>
+      </p>
+      <p style="color: rgba(232,221,208,0.8); margin-bottom: 24px; font-size: 0.95rem;">Limited availability — secure your session today</p>
+      <a href="/#contact" style="display: inline-block; padding: 14px 32px; background: var(--gold); color: var(--black); font-family: 'Inter', sans-serif; font-weight: 500; border-radius: 2px; text-decoration: none; transition: all 0.3s; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 24px rgba(201,168,124,0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Inquire Now</a>
+    </div>
+  </section>
 
   <!-- PAGE HERO -->
   <section id="services-hero" style="padding: 120px 20px 60px; text-align: center; border-bottom: 1px solid rgba(201,168,124,0.1);">
@@ -129,15 +140,65 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
     </div>
   </section>
 
+  <!-- SESSION PREP GUIDE CTA -->
+  <section id="guide-cta" style="padding: 100px 20px; background: linear-gradient(180deg, rgba(8,8,8,0) 0%, rgba(201,168,124,0.08) 100%); border-top: 1px solid rgba(201,168,124,0.1);">
+    <div style="max-width: 650px; margin: 0 auto; text-align: center;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px;">Plan Your Shoot</p>
+      <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--cream); margin-bottom: 16px; line-height: 1.2;">
+        Not ready to book yet?
+      </h2>
+      <p style="color: rgba(232,221,208,0.8); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.8;">
+        Download our free <strong>Session Planning Guide</strong> and start envisioning your dream shoot. Get exclusive tips, inspiration, and guidance delivered straight to your inbox.
+      </p>
+      <div style="background: rgba(201,168,124,0.08); border: 1px solid rgba(201,168,124,0.15); padding: 32px; border-radius: 2px; margin-bottom: 24px;">
+        <form id="guide-form" style="display: flex; flex-direction: column; gap: 16px;" onsubmit="handleGuideDownload(event)">
+          <input 
+            type="email" 
+            placeholder="your@email.com" 
+            required 
+            style="background: rgba(8,8,8,0.6); border: 1px solid rgba(201,168,124,0.2); color: var(--cream); padding: 14px 18px; border-radius: 2px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.3s;" 
+            onfocus="this.style.borderColor='var(--gold)'; this.style.background='rgba(8,8,8,0.9)';" 
+            onblur="this.style.borderColor='rgba(201,168,124,0.2)'; this.style.background='rgba(8,8,8,0.6)';" 
+          />
+          <button 
+            type="submit" 
+            style="padding: 14px 32px; background: var(--gold); color: var(--black); border: none; font-family: 'Inter', sans-serif; font-weight: 600; border-radius: 2px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s;" 
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 24px rgba(201,168,124,0.3)';" 
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+          >
+            Get Free Guide
+          </button>
+        </form>
+        <p style="font-size: 0.75rem; color: rgba(232,221,208,0.6); text-align: center;">
+          We respect your privacy. Unsubscribe anytime.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-links">
-      <a href="https://www.instagram.com/saintstouch.photo" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a>
       <a href="https://wa.me/16562310109" target="_blank">WhatsApp</a>
       <a href="/#contact">Contact</a>
     </div>
     <p>&copy; {new Date().getFullYear()} Saint's Touch Photography. All rights reserved.</p>
   </footer>
+
+  <script is:inline>
+    function handleGuideDownload(e) {
+      e.preventDefault();
+      const email = e.target.querySelector('input[type="email"]').value;
+      // For now, simulate the download and email capture
+      // You'll want to integrate this with:
+      // - Your email service (Resend, SendGrid, etc.)
+      // - A file server to host the PDF guide
+      alert('Thanks! Check your email for the Session Planning Guide.');
+      e.target.reset();
+      // In production, send email with guide link via your backend
+    }
+  </script>
 
   <script is:inline>
     // LOADER
