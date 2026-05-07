@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Session Planning Guide — Saint's Touch Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #080808;
+      --cream:  #e8ddd0;
+      --gold:   #c9a87c;
+      --gold2:  #a8845a;
+      --mid:    #1a1a1a;
+      --dim:    rgba(232,221,208,0.55);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── PRINT ── */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; color: #111; }
+      :root { --black: #fff; --cream: #111; --gold: #8a6530; --mid: #f5f5f5; }
+      .cover { page-break-after: always; }
+      .section { page-break-inside: avoid; }
+    }
+
+    /* ── NAV BAR ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(8,8,8,0.95);
+      border-bottom: 1px solid rgba(201,168,124,0.15);
+      padding: 14px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--cream);
+    }
+    .topbar-logo span { color: var(--gold); }
+    .topbar-actions { display: flex; gap: 16px; align-items: center; }
+    .btn-print {
+      padding: 8px 20px; border: 1px solid rgba(201,168,124,0.4);
+      color: var(--cream); font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; cursor: pointer; background: transparent;
+      border-radius: 1px; transition: all 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .btn-print:hover { background: rgba(201,168,124,0.1); border-color: var(--gold); }
+    .btn-book {
+      padding: 8px 20px; background: var(--gold); color: var(--black);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600; border: none; cursor: pointer; border-radius: 1px;
+      transition: all 0.2s; font-family: 'Inter', sans-serif; text-decoration: none;
+      display: inline-block;
+    }
+    .btn-book:hover { background: #d4b88c; text-decoration: none; }
+
+    /* ── COVER ── */
+    .cover {
+      min-height: 100vh; padding-top: 70px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 40%, rgba(201,168,124,0.08) 0%, transparent 70%),
+        linear-gradient(180deg, var(--black) 0%, rgba(8,8,8,0.8) 100%);
+    }
+    .cover-photo-bg {
+      position: absolute; inset: 0;
+      background-image: url('/images/_E9A3622.jpg');
+      background-size: cover; background-position: center 20%;
+      opacity: 0.12; filter: grayscale(30%);
+    }
+    .cover-inner { position: relative; z-index: 2; max-width: 640px; padding: 40px 24px; }
+    .cover-label {
+      font-size: 0.68rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 24px;
+    }
+    .cover-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 300; line-height: 1;
+      color: var(--cream); margin-bottom: 24px;
+    }
+    .cover-title em { font-style: italic; color: var(--gold); }
+    .cover-divider {
+      width: 60px; height: 1px; background: var(--gold);
+      margin: 0 auto 28px;
+    }
+    .cover-sub {
+      font-size: 0.9rem; color: var(--dim); line-height: 1.8; max-width: 440px; margin: 0 auto;
+    }
+    .cover-photo-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin-top: 48px; width: 100%; max-width: 560px;
+    }
+    .cover-photo-grid img {
+      width: 100%; height: 140px; object-fit: cover; border-radius: 1px;
+      opacity: 0.85;
+    }
+
+    /* ── CONTENT WRAPPER ── */
+    .content { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 64px 0 40px;
+      border-top: 1px solid rgba(201,168,124,0.08);
+    }
+    .section:first-child { border-top: none; }
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(201,168,124,0.08); line-height: 1;
+      margin-bottom: -20px;
+    }
+    .section-label {
+      font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300;
+      color: var(--cream); line-height: 1.1; margin-bottom: 24px;
+    }
+    .section-title em { font-style: italic; }
+    .section-body { color: var(--dim); font-size: 0.9rem; line-height: 1.85; }
+    .section-body p + p { margin-top: 14px; }
+    .section-body strong { color: var(--cream); font-weight: 500; }
+
+    /* ── TIPS GRID ── */
+    .tips-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px; background: rgba(201,168,124,0.06);
+      margin-top: 32px;
+    }
+    .tip-card {
+      background: var(--black); padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .tip-card:hover { background: #0d0d0d; }
+    .tip-icon { font-size: 1.6rem; margin-bottom: 12px; }
+    .tip-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 400; color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .tip-body { font-size: 0.82rem; color: var(--dim); line-height: 1.7; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 0; }
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid rgba(201,168,124,0.06);
+      font-size: 0.88rem; color: var(--dim);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: ''; flex-shrink: 0;
+      width: 18px; height: 18px; margin-top: 1px;
+      border: 1px solid rgba(201,168,124,0.3); border-radius: 2px;
+    }
+    .checklist li strong { color: var(--cream); font-weight: 500; }
+
+    /* ── COLOR PALETTE ── */
+    .palette { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .swatch {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .swatch-color {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 1px solid rgba(201,168,124,0.1);
+    }
+    .swatch-label { font-size: 0.7rem; color: var(--dim); letter-spacing: 0.05em; text-align: center; }
+
+    .do-dont {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px;
+    }
+    .do-list, .dont-list { display: flex; flex-direction: column; gap: 0; }
+    .do-list h4, .dont-list h4 {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 12px; font-weight: 500;
+    }
+    .do-list h4 { color: #8db48e; }
+    .dont-list h4 { color: #c47a7a; }
+    .do-list li, .dont-list li {
+      list-style: none; padding: 10px 0;
+      border-bottom: 1px solid rgba(201,168,124,0.06);
+      font-size: 0.83rem; color: var(--dim);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .do-list li::before { content: '✓'; color: #8db48e; font-weight: 600; flex-shrink: 0; }
+    .dont-list li::before { content: '✕'; color: #c47a7a; font-weight: 600; flex-shrink: 0; }
+
+    /* ── PHOTO ACCENT ── */
+    .photo-accent {
+      margin: 36px 0; border-radius: 2px; overflow: hidden;
+      position: relative;
+    }
+    .photo-accent img {
+      width: 100%; max-height: 400px; object-fit: cover; display: block;
+      opacity: 0.88;
+    }
+    .photo-accent-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.8), transparent);
+      padding: 24px 20px 16px;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .photo-duo {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 36px 0;
+    }
+    .photo-duo img {
+      width: 100%; height: 280px; object-fit: cover; border-radius: 1px;
+      opacity: 0.88;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { margin-top: 28px; display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 24px; padding: 20px 0;
+      border-bottom: 1px solid rgba(201,168,124,0.06);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--gold); line-height: 1.2;
+      padding-top: 2px;
+    }
+    .timeline-content h4 {
+      font-size: 0.88rem; font-weight: 500; color: var(--cream); margin-bottom: 4px;
+    }
+    .timeline-content p { font-size: 0.82rem; color: var(--dim); }
+
+    /* ── QUOTE ── */
+    .pullquote {
+      border-left: 2px solid var(--gold);
+      padding: 16px 24px; margin: 32px 0;
+      background: rgba(201,168,124,0.04);
+    }
+    .pullquote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-style: italic; font-weight: 300;
+      color: var(--cream); line-height: 1.5;
+    }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      background: linear-gradient(135deg, rgba(201,168,124,0.12) 0%, rgba(201,168,124,0.05) 100%);
+      border: 1px solid rgba(201,168,124,0.2);
+      padding: 48px 40px; text-align: center; margin-top: 64px; border-radius: 2px;
+    }
+    .cta-block h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--cream); margin-bottom: 12px;
+    }
+    .cta-block h2 em { font-style: italic; color: var(--gold); }
+    .cta-block p { color: var(--dim); font-size: 0.9rem; margin-bottom: 28px; }
+    .cta-block .btn-book { font-size: 0.85rem; padding: 14px 36px; }
+
+    /* ── FOOTER ── */
+    .guide-footer {
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid rgba(201,168,124,0.08);
+      color: var(--dim); font-size: 0.75rem; letter-spacing: 0.05em;
+    }
+    .guide-footer a { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 12px 20px; }
+      .do-dont { grid-template-columns: 1fr; }
+      .photo-duo { grid-template-columns: 1fr; }
+      .cover-photo-grid { grid-template-columns: repeat(3, 1fr); }
+      .cta-block { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar no-print">
+    <div class="topbar-logo">Saint's <span>Touch</span> Photography</div>
+    <div class="topbar-actions">
+      <button class="btn-print" onclick="window.print()">Save as PDF</button>
+      <a href="/#contact" class="btn-book">Book Your Session</a>
+    </div>
+  </div>
+
+  <!-- COVER -->
+  <section class="cover">
+    <div class="cover-photo-bg"></div>
+    <div class="cover-inner">
+      <div class="cover-label">Saint's Touch Photography · Clifford Roberts III</div>
+      <h1 class="cover-title">Session<br/><em>Planning Guide</em></h1>
+      <div class="cover-divider"></div>
+      <p class="cover-sub">
+        Everything you need to know to prepare for your fine art portrait session — from what to wear to what to expect on the day.
+      </p>
+      <div class="cover-photo-grid">
+        <img src="/images/7E9A4117.jpg" alt="Portrait session" loading="lazy"/>
+        <img src="/images/_E9A1350.jpg" alt="Portrait session" loading="lazy"/>
+        <img src="/images/_E9A3622.jpg" alt="Portrait session" loading="lazy"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <!-- 01 · WELCOME -->
+    <div class="section">
+      <div class="section-num">01</div>
+      <div class="section-label">Welcome</div>
+      <h2 class="section-title">You're in good <em>hands</em></h2>
+      <div class="section-body">
+        <p>
+          I created this guide because the best sessions don't happen by accident. When you arrive prepared — knowing what to wear, when to show up, and what to expect — you relax faster, connect more naturally, and we capture something real.
+        </p>
+        <p>
+          This is your roadmap. Read through it, share it with anyone joining your session, and reach out if you have questions. I'm here to make this easy.
+        </p>
+        <p>— <strong>Clifford Roberts III</strong> · Saint's Touch Photography</p>
+      </div>
+    </div>
+
+    <!-- 02 · WHAT TO WEAR -->
+    <div class="section">
+      <div class="section-num">02</div>
+      <div class="section-label">Wardrobe</div>
+      <h2 class="section-title">What to <em>Wear</em></h2>
+      <div class="section-body">
+        <p>
+          Your wardrobe sets the emotional tone of the entire session. You don't need to be formal — you need to feel like <strong>yourself on your best day</strong>. Here's how to approach it:
+        </p>
+      </div>
+
+      <div class="photo-accent">
+        <img src="/images/_MG_7856-Edit.jpg" alt="Fashion portrait session" loading="lazy"/>
+        <div class="photo-accent-caption">Wardrobe that tells a story</div>
+      </div>
+
+      <div class="section-body">
+        <p><strong>Bring 2–3 outfit options.</strong> We'll pick the best one together on the day. Different looks give us variety and create more usable images from a single session.</p>
+      </div>
+
+      <div class="tips-grid" style="margin-top: 28px;">
+        <div class="tip-card">
+          <div class="tip-icon">🎨</div>
+          <div class="tip-title">Stick to a palette</div>
+          <div class="tip-body">Neutrals, earth tones, and muted colors photograph beautifully. Cream, olive, burgundy, navy — all work. Avoid neon or heavy patterns.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🧵</div>
+          <div class="tip-title">Texture wins</div>
+          <div class="tip-body">Linen, silk, velvet, knit — these add depth and dimension on camera. Flat, shiny synthetics often look cheap in photos even if they don't in person.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📐</div>
+          <div class="tip-title">Fit matters most</div>
+          <div class="tip-body">Well-fitted clothes photograph a thousand times better than anything baggy or ill-fitting. When in doubt, go slightly more tailored.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">👟</div>
+          <div class="tip-title">Don't forget shoes</div>
+          <div class="tip-body">Shoes appear in more shots than you'd think. Match or coordinate with your look — worn-out sneakers with a dress can break the whole image.</div>
+        </div>
+      </div>
+
+      <div class="do-dont" style="margin-top: 32px;">
+        <ul class="do-list">
+          <h4>Do Wear</h4>
+          <li>Solid colors and subtle patterns</li>
+          <li>Layers you can remove or add</li>
+          <li>Clothing you feel confident in</li>
+          <li>Well-fitting silhouettes</li>
+          <li>Coordinated (not matching) for couples/groups</li>
+        </ul>
+        <ul class="dont-list">
+          <h4>Avoid</h4>
+          <li>Logos or large text</li>
+          <li>Wrinkled clothing (iron beforehand)</li>
+          <li>Overly busy prints</li>
+          <li>Anything that doesn't fit you now</li>
+          <li>Head-to-toe identical outfits in groups</li>
+        </ul>
+      </div>
+
+      <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--cream); margin-top:36px; margin-bottom:16px; font-weight:300;">Color Palette Inspiration</h3>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#e8ddd0;"></div><div class="swatch-label">Cream</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#c9a87c;"></div><div class="swatch-label">Caramel</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#6b5a4e;"></div><div class="swatch-label">Mocha</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#4a5a4c;"></div><div class="swatch-label">Sage</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2c3e50;"></div><div class="swatch-label">Navy</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#6e3b3b;"></div><div class="swatch-label">Burgundy</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#3c3c3c;"></div><div class="swatch-label">Charcoal</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#d9cfc5;"></div><div class="swatch-label">Stone</div></div>
+      </div>
+    </div>
+
+    <!-- 03 · HAIR & BEAUTY -->
+    <div class="section">
+      <div class="section-num">03</div>
+      <div class="section-label">Preparation</div>
+      <h2 class="section-title">Hair & <em>Beauty</em></h2>
+      <div class="section-body">
+        <p>
+          You don't need to look dramatically different from how you normally look. In fact, <strong>the best results come from an elevated version of your everyday self</strong> — not a costume.
+        </p>
+      </div>
+
+      <div class="tips-grid" style="margin-top: 28px;">
+        <div class="tip-card">
+          <div class="tip-icon">💄</div>
+          <div class="tip-title">Makeup</div>
+          <div class="tip-body">Slightly more than your everyday look. Camera tends to soften features — a bit more definition goes a long way. Matte finishes photograph better than shine.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💇</div>
+          <div class="tip-title">Hair</div>
+          <div class="tip-body">Schedule any haircut 1–2 weeks before (not the day before). Bring styling products. Have a backup plan — a simple updo or natural look in case humidity acts up.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💅</div>
+          <div class="tip-title">Nails</div>
+          <div class="tip-body">Your hands will appear in many shots. Clean, neutral nails or a fresh manicure makes a real difference. Skip the chipped polish.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🌿</div>
+          <div class="tip-title">Skin</div>
+          <div class="tip-body">Moisturize the day before. If you're prone to redness, bring blotting papers. Avoid drastic tanning or skin treatments within a week of the session.</div>
+        </div>
+      </div>
+
+      <div class="pullquote" style="margin-top:32px;">
+        <p>"The goal isn't perfection — it's presence. When you feel good, it shows."</p>
+      </div>
+    </div>
+
+    <!-- 04 · LOCATION & TIMING -->
+    <div class="section">
+      <div class="section-num">04</div>
+      <div class="section-label">Location & Light</div>
+      <h2 class="section-title">Timing Your <em>Session</em></h2>
+
+      <div class="photo-duo">
+        <img src="/images/_E9A1350.jpg" alt="Golden hour portrait" loading="lazy"/>
+        <img src="/images/7E9A8458.jpg" alt="Portrait session" loading="lazy"/>
+      </div>
+
+      <div class="section-body">
+        <p>
+          Light is everything in photography. The difference between a stunning image and an average one is often just <strong>when</strong> the shot was taken, not where.
+        </p>
+      </div>
+
+      <div class="tips-grid" style="margin-top: 28px;">
+        <div class="tip-card">
+          <div class="tip-icon">🌅</div>
+          <div class="tip-title">Golden Hour</div>
+          <div class="tip-body">The hour after sunrise and hour before sunset create soft, warm, directional light that's flattering for portraits. This is when outdoor sessions shine.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">☁️</div>
+          <div class="tip-title">Overcast Days</div>
+          <div class="tip-body">Don't cancel if it's cloudy. Overcast skies act as a giant soft box — even, flattering light with no harsh shadows. Some of the best portraits happen on grey days.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🏙️</div>
+          <div class="tip-title">Urban Locations</div>
+          <div class="tip-body">Brick walls, alleyways, rooftops, parking decks — architecture creates incredible backdrops and geometric interest. Perfect for editorial and personal brand work.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🌳</div>
+          <div class="tip-title">Nature Settings</div>
+          <div class="tip-body">Fields, forests, coastlines — natural settings bring a timeless quality. Virginia Beach has incredible variety within 30 minutes.</div>
+        </div>
+      </div>
+
+      <div class="section-body" style="margin-top:24px;">
+        <p><strong>Not sure on a location?</strong> Tell me your vibe and I'll suggest 2–3 options. I know the best spots around Virginia Beach and the Hampton Roads area — including the ones that aren't overcrowded.</p>
+      </div>
+    </div>
+
+    <!-- 05 · WHAT TO BRING -->
+    <div class="section">
+      <div class="section-num">05</div>
+      <div class="section-label">Checklist</div>
+      <h2 class="section-title">What to <em>Bring</em></h2>
+      <div class="section-body">
+        <p>Pack a bag the night before. These are the essentials:</p>
+      </div>
+      <ul class="checklist">
+        <li><span><strong>2–3 outfits</strong> — steamed and ready to wear</span></li>
+        <li><span><strong>Comfortable shoes</strong> for walking between locations</span></li>
+        <li><span><strong>Touch-up kit</strong> — blotting papers, lipstick/gloss, small mirror</span></li>
+        <li><span><strong>Hair products/backup plan</strong> — travel-size spray, pins, hair tie</span></li>
+        <li><span><strong>Water bottle</strong> — sessions can run 1–3 hours; stay hydrated</span></li>
+        <li><span><strong>Any meaningful props</strong> — instruments, books, heirlooms, florals</span></li>
+        <li><span><strong>A light snack</strong> — especially for early-morning golden hour sessions</span></li>
+        <li><span><strong>Reference images</strong> — if you have a Pinterest board or specific poses in mind, bring it</span></li>
+        <li><span><strong>Open mind</strong> — some of the best shots come from moments we didn't plan</span></li>
+      </ul>
+    </div>
+
+    <!-- 06 · DAY-OF GUIDE -->
+    <div class="section">
+      <div class="section-num">06</div>
+      <div class="section-label">Day of Your Session</div>
+      <h2 class="section-title">What to <em>Expect</em></h2>
+      <div class="section-body">
+        <p>Here's what a typical session flow looks like — from arrival to wrap:</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">Arrive</div>
+          <div class="timeline-content">
+            <h4>15 minutes early</h4>
+            <p>Gives you time to settle, get comfortable, and do any last-minute touch-ups. Rushing straight into shooting creates tension that shows up in photos.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">First 15</div>
+          <div class="timeline-content">
+            <h4>Warm-up shots</h4>
+            <p>We'll talk, scout the spot, and ease in. These frames aren't meant to be your hero shots — they're for calibrating light, angles, and getting you relaxed. Don't worry how these look.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Mid</div>
+          <div class="timeline-content">
+            <h4>The flow state</h4>
+            <p>This is when it clicks. You've forgotten about the camera, you're moving naturally, and I'm catching the real moments. Trust the process — this is where your best images come from.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Outfit ②</div>
+          <div class="timeline-content">
+            <h4>Quick change</h4>
+            <p>If you brought multiple outfits, we'll swap here. We may move locations too. Keep the momentum going — don't overthink the second look.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">Wrap</div>
+          <div class="timeline-content">
+            <h4>Final frames</h4>
+            <p>We'll end with a few intentional, specific shots — any particular poses or setups you wanted. Then we review a few images together before calling it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 · POSING -->
+    <div class="section">
+      <div class="section-num">07</div>
+      <div class="section-label">Direction</div>
+      <h2 class="section-title">Posing & <em>Direction</em></h2>
+
+      <div class="photo-accent">
+        <img src="/images/_MG_8207-Edit.jpg" alt="Directed portrait" loading="lazy"/>
+        <div class="photo-accent-caption">Directed movement, authentic result</div>
+      </div>
+
+      <div class="section-body">
+        <p>
+          <strong>You don't need to know how to pose.</strong> That's my job. I'll direct you through movements — not static positions — because movement creates natural, alive expressions far better than "hold still and smile."
+        </p>
+        <p>
+          Expect to walk, turn, look away and back, laugh at something I say (or don't say), and forget you're being photographed. That's the goal.
+        </p>
+      </div>
+
+      <div class="tips-grid" style="margin-top:28px;">
+        <div class="tip-card">
+          <div class="tip-icon">🚶</div>
+          <div class="tip-title">Move naturally</div>
+          <div class="tip-body">Walk toward me, away from me, turn slowly. Movement creates flow in images that static posing never can.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">😊</div>
+          <div class="tip-title">Don't force the smile</div>
+          <div class="tip-body">A real smile takes half a second to arrive after something genuinely amusing. I'll work to create those moments — your job is to let them happen.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">👁️</div>
+          <div class="tip-title">Eyes are everything</div>
+          <div class="tip-body">Relax your eyes — don't over-widen them. Slightly squinting (called "smizing") creates warmth and avoids the deer-in-headlights look.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🗣️</div>
+          <div class="tip-title">Speak up</div>
+          <div class="tip-body">If something feels awkward or you want to try something specific, say so. This is your session. I want you to love every image.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 · AFTER -->
+    <div class="section">
+      <div class="section-num">08</div>
+      <div class="section-label">After the Session</div>
+      <h2 class="section-title">Gallery Delivery & <em>Next Steps</em></h2>
+      <div class="section-body">
+        <p>
+          Once we wrap, I begin the editing process. Here's what to expect:
+        </p>
+      </div>
+
+      <div class="tips-grid" style="margin-top:28px;">
+        <div class="tip-card">
+          <div class="tip-icon">⏱️</div>
+          <div class="tip-title">Turnaround</div>
+          <div class="tip-body">Most sessions are delivered within 1–2 weeks. Rush delivery is available — just ask at booking. You'll receive a link to your private online gallery via email.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🖼️</div>
+          <div class="tip-title">Your gallery</div>
+          <div class="tip-body">You'll get high-resolution, web-optimized, and print-ready files. Downloads are easy. Gallery links stay active for 30 days — download promptly and back them up.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🖨️</div>
+          <div class="tip-title">Printing</div>
+          <div class="tip-body">I partner with professional print labs for wall art, albums, and prints. Ask about print packages at booking — printed memories outlast digital files.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📤</div>
+          <div class="tip-title">Sharing</div>
+          <div class="tip-body">Tag <strong>@saintogsnaps</strong> when you post. I reshare clients I love — it's also a great way to connect with future clients who look like you.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL CTA -->
+    <div class="cta-block">
+      <h2>Ready to <em>book</em>?</h2>
+      <p>Summer 2026 sessions are filling fast. Let's get your date on the calendar.</p>
+      <a href="/#contact" class="btn-book">Inquire About Your Session</a>
+      <p style="margin-top:20px; font-size:0.8rem; color:var(--dim);">
+        Or reach out directly:<br/>
+        WhatsApp: <a href="https://wa.me/16195096448">+1 (619) 509-6448</a> &nbsp;·&nbsp;
+        Instagram: <a href="https://www.instagram.com/saintogsnaps" target="_blank">@saintogsnaps</a>
+      </p>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <div class="guide-footer">
+    <p>© 2026 Saint's Touch Photography · Clifford Roberts III · Virginia Beach, VA</p>
+    <p style="margin-top:6px;"><a href="https://saintstouch.photography">saintstouch.photography</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/saintogsnaps">@saintogsnaps</a></p>
+  </div>
+
+</body>
+</html>

@@ -169,6 +169,7 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
             Get Free Guide
           </button>
         </form>
+        <div id="guide-msg" style="display:none; text-align:center;"></div>
         <p style="font-size: 0.75rem; color: rgba(232,221,208,0.6); text-align: center;">
           We respect your privacy. Unsubscribe anytime.
         </p>
@@ -187,16 +188,55 @@ const description = "Saint's Touch Photography services and pricing. Portraits, 
   </footer>
 
   <script is:inline>
-    function handleGuideDownload(e) {
+    async function handleGuideDownload(e) {
       e.preventDefault();
-      const email = e.target.querySelector('input[type="email"]').value;
-      // For now, simulate the download and email capture
-      // You'll want to integrate this with:
-      // - Your email service (Resend, SendGrid, etc.)
-      // - A file server to host the PDF guide
-      alert('Thanks! Check your email for the Session Planning Guide.');
-      e.target.reset();
-      // In production, send email with guide link via your backend
+      const form = e.target;
+      const emailInput = form.querySelector('input[type="email"]');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const msgEl = document.getElementById('guide-msg');
+      const email = emailInput.value.trim();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      if (msgEl) { msgEl.textContent = ''; msgEl.style.display = 'none'; }
+
+      try {
+        const res = await fetch('/api/guide-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+          form.style.display = 'none';
+          if (msgEl) {
+            msgEl.textContent = '✓ Check your inbox — the guide is on its way!';
+            msgEl.style.display = 'block';
+            msgEl.style.color = '#8db48e';
+            msgEl.style.fontSize = '0.9rem';
+            msgEl.style.padding = '16px 0';
+          }
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Get Free Guide';
+          if (msgEl) {
+            msgEl.textContent = data.error || 'Something went wrong. Please try again.';
+            msgEl.style.display = 'block';
+            msgEl.style.color = '#c47a7a';
+            msgEl.style.fontSize = '0.85rem';
+            msgEl.style.padding = '12px 0';
+          }
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get Free Guide';
+        if (msgEl) {
+          msgEl.textContent = 'Network error. Please try again.';
+          msgEl.style.display = 'block';
+          msgEl.style.color = '#c47a7a';
+        }
+      }
     }
   </script>
 
