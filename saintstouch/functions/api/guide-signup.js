@@ -4,7 +4,7 @@
  */
 
 const GUIDE_URL = 'https://saintstouch.photography/session-planning-guide.html';
-const FROM_EMAIL = 'hello@frameclaim.io';
+const FROM_EMAIL = 'hello@saintstouch.photography';
 const FROM_NAME = "Saint's Touch Photography";
 const REPLY_TO  = 'hello@saintstouch.photography';
 

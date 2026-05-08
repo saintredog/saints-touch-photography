@@ -4,7 +4,7 @@
  */
 
 const NOTIFY_EMAIL  = 'saintstouch.photography@gmail.com';
-const FROM_EMAIL    = 'hello@frameclaim.io';
+const FROM_EMAIL    = 'hello@saintstouch.photography';
 const FROM_NAME     = "Saint's Touch Photography";
 const REPLY_TO_NAME = "Saint's Touch Website";
 
