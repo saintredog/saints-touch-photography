@@ -4,8 +4,9 @@
  */
 
 const GUIDE_URL = 'https://saintstouch.photography/session-planning-guide.html';
-const FROM_EMAIL = 'hello@saintstouch.photography';
+const FROM_EMAIL = 'hello@frameclaim.io';
 const FROM_NAME = "Saint's Touch Photography";
+const REPLY_TO  = 'hello@saintstouch.photography';
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -116,7 +117,7 @@ export async function onRequestPost(context) {
         to: [email],
         subject: "Your free Session Planning Guide is here ✨",
         html: emailHtml,
-        reply_to: FROM_EMAIL,
+        reply_to: REPLY_TO,
       }),
     });
 
