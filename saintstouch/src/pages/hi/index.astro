@@ -286,7 +286,7 @@ const marqueeItems = t(locale, 'marquee.items') as string[];
       <div class="section-label reveal">{t(locale, 'contact.label')}</div>
       <h2 class="section-title reveal reveal-delay-1">{t(locale, 'contact.title')}<em>{t(locale, 'contact.titleEmphasis')}</em></h2>
 
-      <form class="contact-form reveal reveal-delay-2" action="https://formspree.io/f/xyzljkqo" method="POST">
+      <form class="contact-form reveal reveal-delay-2" id="contact-form">
         <div class="form-group">
           <label for="name">{t(locale, 'contact.form.name')}</label>
           <input type="text" id="name" name="name" required />
@@ -321,7 +321,8 @@ const marqueeItems = t(locale, 'marquee.items') as string[];
           <textarea id="message" name="message" required></textarea>
         </div>
 
-        <button type="submit" class="form-submit">{t(locale, 'contact.form.submit')}</button>
+        <button type="submit" class="form-submit" id="contact-submit">{t(locale, 'contact.form.submit')}</button>
+        <div id="contact-msg" style="display:none;margin-top:16px;text-align:center;font-size:0.88rem;"></div>
       </form>
 
       <div style="margin-top: 80px; padding-top: 60px; border-top: 1px solid rgba(201,168,124,0.1);">
@@ -329,7 +330,7 @@ const marqueeItems = t(locale, 'marquee.items') as string[];
           {t(locale, 'contact.form.directText')}
         </p>
         <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;">
-          <a href="https://wa.me/16195096448" target="_blank" style="color: var(--gold); font-weight: 500;">WhatsApp: +1 (656) 231-0109</a>
+          <a href="https://wa.me/16195096448" target="_blank" style="color: var(--gold); font-weight: 500;">WhatsApp: +1 (619) 509-6448</a>
           <a href="https://www.instagram.com/saintogsnaps" target="_blank" style="color: var(--gold); font-weight: 500;">@saintogsnaps</a>
         </div>
       </div>
@@ -494,5 +495,51 @@ const marqueeItems = t(locale, 'marquee.items') as string[];
         }
       });
     });
+
+    // ── Contact form async submit ────────────────────────────────────────
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('contact-submit');
+        const msg = document.getElementById('contact-msg');
+        const data = {
+          name: contactForm.querySelector('[name=name]').value,
+          email: contactForm.querySelector('[name=email]').value,
+          phone: (contactForm.querySelector('[name=phone]') || {}).value || '',
+          service: contactForm.querySelector('[name=service]').value,
+          message: contactForm.querySelector('[name=message]').value,
+        };
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        msg.style.display = 'none';
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          const json = await res.json();
+          if (json.ok) {
+            contactForm.style.display = 'none';
+            msg.textContent = '\u2713 Message sent! You\'ll hear back within 24\u201348 hours.';
+            msg.style.color = '#8db48e';
+            msg.style.display = 'block';
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+            msg.textContent = json.error || 'Something went wrong. Please try again.';
+            msg.style.color = '#c47a7a';
+            msg.style.display = 'block';
+          }
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          msg.textContent = 'Network error. Please try again.';
+          msg.style.color = '#c47a7a';
+          msg.style.display = 'block';
+        }
+      });
+    }
   </script>
 </BaseLayoutI18n>
