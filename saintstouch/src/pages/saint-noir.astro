@@ -1,0 +1,521 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const description = "Saint Noir is a quarterly editorial publication exploring the intersection of portraiture, fashion, and light. Curated and directed by Clifford of Saint's Touch Photography.";
+---
+
+<BaseLayout
+  title="Saint Noir — An Editorial Publication by Saint's Touch"
+  description={description}
+>
+
+<style>
+  /* ── SAINT NOIR DESIGN SYSTEM ── */
+  :root {
+    --sn-bg:      #1A1614;
+    --sn-bg2:     #211D1B;
+    --sn-gold:    #B8975A;
+    --sn-gold-dim: rgba(184,151,90,0.35);
+    --sn-white:   #F5F0EA;
+    --sn-dim:     rgba(245,240,234,0.55);
+    --sn-border:  1px solid rgba(184,151,90,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Override global bg for this page */
+  body { background: var(--sn-bg); }
+
+  #sn-page {
+    background: var(--sn-bg);
+    color: var(--sn-white);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  #sn-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    transition: background 0.4s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  #sn-nav.scrolled {
+    background: rgba(26,22,20,0.97);
+    border-bottom-color: rgba(184,151,90,0.2);
+  }
+  .sn-nav-back {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sn-dim); text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sn-nav-back:hover { color: var(--sn-gold); }
+  .sn-nav-back::before { content: '←'; font-size: 12px; }
+  .sn-nav-wordmark {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--sn-white); font-weight: 400;
+  }
+  .sn-nav-link {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--sn-dim); text-decoration: none; transition: color 0.2s;
+  }
+  .sn-nav-link:hover { color: var(--sn-gold); }
+
+  /* ── HERO / MASTHEAD ── */
+  #sn-hero {
+    height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .sn-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('/images/7E9A4117.jpg');
+    background-size: cover; background-position: center 30%;
+    filter: grayscale(20%) brightness(0.45);
+    transition: transform 10s ease;
+  }
+  #sn-hero:hover .sn-hero-bg { transform: scale(1.03); }
+  .sn-hero-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(26,22,20,0.2) 0%,
+      rgba(26,22,20,0.1) 40%,
+      rgba(26,22,20,0.7) 80%,
+      var(--sn-bg) 100%
+    );
+  }
+  .sn-hero-inner {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 24px;
+    opacity: 0; animation: snFadeUp 1.2s 0.4s ease forwards;
+  }
+  .sn-hero-label {
+    font-size: 10px; letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--sn-gold); margin-bottom: 28px; display: block;
+  }
+  .sn-masthead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 14vw, 12rem);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--sn-white);
+    text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  }
+  .sn-hero-rule {
+    width: 80px; height: 1px; background: var(--sn-gold);
+    margin: 28px auto;
+  }
+  .sn-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-style: italic; font-weight: 300;
+    color: var(--sn-dim); letter-spacing: 0.12em;
+  }
+  .sn-hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    opacity: 0; animation: snFadeUp 1s 1.8s ease forwards;
+  }
+  .sn-hero-scroll span {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--sn-dim); writing-mode: vertical-rl;
+  }
+  .sn-scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--sn-gold), transparent);
+    animation: snPulse 2s ease-in-out infinite;
+  }
+
+  /* ── CURRENT ISSUE ── */
+  #sn-current {
+    background: var(--sn-bg2);
+    padding: 100px 48px;
+  }
+  .sn-current-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 5fr 4fr; gap: 80px; align-items: center;
+  }
+  .sn-issue-img-wrap {
+    position: relative;
+  }
+  .sn-issue-img {
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover;
+    border: var(--sn-border);
+    display: block;
+  }
+  .sn-issue-img-label {
+    position: absolute; top: -12px; left: 24px;
+    background: var(--sn-bg2);
+    padding: 4px 12px;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--sn-gold); border: var(--sn-border);
+  }
+  .sn-issue-meta { display: flex; flex-direction: column; gap: 0; }
+  .sn-issue-label {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--sn-gold); margin-bottom: 16px;
+  }
+  .sn-issue-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--sn-white); margin-bottom: 8px;
+  }
+  .sn-issue-season {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.1rem;
+    color: var(--sn-gold); margin-bottom: 28px;
+  }
+  .sn-issue-rule {
+    width: 40px; height: 1px; background: var(--sn-gold-dim); margin-bottom: 28px;
+  }
+  .sn-issue-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: var(--sn-dim); line-height: 1.85;
+    margin-bottom: 40px;
+  }
+  .sn-btn-outline {
+    display: inline-block;
+    padding: 12px 28px;
+    border: 1px solid var(--sn-gold);
+    color: var(--sn-gold);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    text-decoration: none; font-family: 'Jost', sans-serif; font-weight: 400;
+    transition: all 0.25s;
+  }
+  .sn-btn-outline:hover {
+    background: var(--sn-gold); color: var(--sn-bg);
+  }
+
+  /* ── ABOUT STRIP ── */
+  #sn-about {
+    background: var(--sn-bg);
+    padding: 100px 48px;
+    border-top: var(--sn-border);
+    border-bottom: var(--sn-border);
+  }
+  .sn-about-inner {
+    max-width: 720px; margin: 0 auto; text-align: center;
+  }
+  .sn-about-label {
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--sn-gold); margin-bottom: 36px; display: block;
+  }
+  .sn-about-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+    font-style: italic; font-weight: 300;
+    color: var(--sn-white); line-height: 1.75;
+    margin-bottom: 32px;
+  }
+  .sn-about-origin {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--sn-gold-dim);
+  }
+
+  /* ── ARCHIVE GRID ── */
+  #sn-archive {
+    background: var(--sn-bg2);
+    padding: 100px 48px;
+  }
+  .sn-archive-inner { max-width: 1100px; margin: 0 auto; }
+  .sn-archive-label {
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--sn-gold); margin-bottom: 48px; display: block;
+  }
+  .sn-archive-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .sn-archive-card { cursor: default; }
+  .sn-archive-card-img-wrap {
+    position: relative; overflow: hidden; aspect-ratio: 3/4; margin-bottom: 16px;
+    border: 1px solid transparent; transition: border-color 0.3s;
+  }
+  .sn-archive-card:hover .sn-archive-card-img-wrap {
+    border-color: rgba(184,151,90,0.4);
+  }
+  .sn-archive-card-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+  .sn-archive-card:hover .sn-archive-card-img { transform: scale(1.04); }
+  .sn-archive-card-num {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--sn-dim); margin-bottom: 8px;
+  }
+  .sn-archive-card-link {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sn-gold); text-decoration: none; transition: opacity 0.2s;
+  }
+  .sn-archive-card-link:hover { opacity: 0.7; }
+  /* Placeholder cards */
+  .sn-archive-placeholder .sn-archive-card-img-wrap {
+    border: 1px dashed rgba(184,151,90,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sn-archive-placeholder .sn-placeholder-text {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(184,151,90,0.3);
+  }
+
+  /* ── COLLAB CTA ── */
+  #sn-collab {
+    background: var(--sn-bg);
+    padding: 120px 48px;
+    border-top: var(--sn-border);
+    text-align: center;
+  }
+  .sn-collab-inner { max-width: 720px; margin: 0 auto; }
+  .sn-collab-label {
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--sn-gold); margin-bottom: 20px; display: block;
+  }
+  .sn-collab-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; color: var(--sn-white);
+    line-height: 1.1; margin-bottom: 20px;
+  }
+  .sn-collab-body {
+    font-size: 0.9rem; color: var(--sn-dim);
+    line-height: 1.8; margin-bottom: 40px;
+  }
+  .sn-collab-btns {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  #sn-footer {
+    background: var(--sn-bg2);
+    padding: 40px 48px;
+    border-top: var(--sn-border);
+  }
+  .sn-footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .sn-footer-pub {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sn-dim);
+  }
+  .sn-footer-copy {
+    font-size: 10px; color: rgba(245,240,234,0.3); letter-spacing: 0.05em;
+  }
+  .sn-footer-links { display: flex; gap: 24px; }
+  .sn-footer-links a {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--sn-dim); text-decoration: none; transition: color 0.2s;
+  }
+  .sn-footer-links a:hover { color: var(--sn-gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes snFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes snPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Scroll reveal */
+  .sn-reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .sn-reveal.visible { opacity: 1; transform: none; }
+  .sn-reveal-d1 { transition-delay: 0.1s; }
+  .sn-reveal-d2 { transition-delay: 0.2s; }
+  .sn-reveal-d3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #sn-nav { padding: 16px 24px; }
+    #sn-current, #sn-about, #sn-archive, #sn-collab { padding: 72px 24px; }
+    .sn-current-inner { grid-template-columns: 1fr; gap: 48px; }
+    .sn-archive-grid { grid-template-columns: 1fr 1fr; }
+    .sn-footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+    #sn-footer { padding: 32px 24px; }
+  }
+  @media (max-width: 540px) {
+    .sn-masthead { letter-spacing: 0.1em; }
+    .sn-archive-grid { grid-template-columns: 1fr; }
+    .sn-collab-btns { flex-direction: column; align-items: center; }
+  }
+</style>
+
+<!-- Load Jost font for this page -->
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<div id="sn-page">
+
+  <!-- NAV -->
+  <nav id="sn-nav">
+    <a href="/" class="sn-nav-back">Saint's Touch</a>
+    <span class="sn-nav-wordmark">Saint Noir</span>
+    <a href="#sn-archive" class="sn-nav-link">Issue Archive</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="sn-hero">
+    <div class="sn-hero-bg"></div>
+    <div class="sn-hero-gradient"></div>
+    <div class="sn-hero-inner">
+      <span class="sn-hero-label">A Saint's Touch Publication</span>
+      <h1 class="sn-masthead">Saint<br/>Noir</h1>
+      <div class="sn-hero-rule"></div>
+      <p class="sn-tagline">Portraiture. Fashion. Light.</p>
+    </div>
+    <div class="sn-hero-scroll">
+      <span>Scroll</span>
+      <div class="sn-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- CURRENT ISSUE -->
+  <section id="sn-current">
+    <div class="sn-current-inner">
+      <div class="sn-issue-img-wrap sn-reveal">
+        <span class="sn-issue-img-label">Current Issue</span>
+        <img
+          class="sn-issue-img"
+          src="/images/_E9A3622.jpg"
+          alt="Saint Noir — Issue 01 Cover"
+          loading="lazy"
+        />
+      </div>
+      <div class="sn-issue-meta">
+        <span class="sn-issue-label sn-reveal">Issue Archive</span>
+        <h2 class="sn-issue-title sn-reveal sn-reveal-d1">Issue 01</h2>
+        <div class="sn-issue-season sn-reveal sn-reveal-d1">Spring / Summer 2026</div>
+        <div class="sn-issue-rule sn-reveal sn-reveal-d2"></div>
+        <p class="sn-issue-desc sn-reveal sn-reveal-d2">
+          Shadows, stillness, and skin. The inaugural issue of Saint Noir explores
+          fine art portraiture at its most intimate — bodies in light, faces in shadow,
+          stories that don't need words.
+        </p>
+        <a href="#" class="sn-btn-outline sn-reveal sn-reveal-d3">View Issue →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section id="sn-about">
+    <div class="sn-about-inner">
+      <span class="sn-about-label sn-reveal">About the Publication</span>
+      <p class="sn-about-body sn-reveal sn-reveal-d1">
+        "Saint Noir is a quarterly editorial publication exploring the intersection
+        of portraiture, fashion, and light. Each issue is curated and directed by
+        Clifford — photographer and founder of Saint's Touch — and features original
+        shoots, intentional casting, and visual storytelling with no filler."
+      </p>
+      <span class="sn-about-origin sn-reveal sn-reveal-d2">Virginia Beach, VA — Est. 2026</span>
+    </div>
+  </section>
+
+  <!-- ARCHIVE GRID -->
+  <section id="sn-archive">
+    <div class="sn-archive-inner">
+      <span class="sn-archive-label sn-reveal">All Issues</span>
+      <div class="sn-archive-grid">
+
+        <!-- Issue 01 -->
+        <div class="sn-archive-card sn-reveal">
+          <div class="sn-archive-card-img-wrap">
+            <img
+              class="sn-archive-card-img"
+              src="/images/_MG_7856-Edit.jpg"
+              alt="Saint Noir Issue 01"
+              loading="lazy"
+            />
+          </div>
+          <div class="sn-archive-card-num">Issue 01 &nbsp;·&nbsp; Spring / Summer 2026</div>
+          <a href="#" class="sn-archive-card-link">View Issue →</a>
+        </div>
+
+        <!-- Placeholder 02 -->
+        <div class="sn-archive-card sn-archive-placeholder sn-reveal sn-reveal-d1">
+          <div class="sn-archive-card-img-wrap">
+            <span class="sn-placeholder-text">Coming Soon</span>
+          </div>
+          <div class="sn-archive-card-num">Issue 02 &nbsp;·&nbsp; Fall / Winter 2026</div>
+        </div>
+
+        <!-- Placeholder 03 -->
+        <div class="sn-archive-card sn-archive-placeholder sn-reveal sn-reveal-d2">
+          <div class="sn-archive-card-img-wrap">
+            <span class="sn-placeholder-text">Coming Soon</span>
+          </div>
+          <div class="sn-archive-card-num">Issue 03 &nbsp;·&nbsp; Spring / Summer 2027</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLAB CTA -->
+  <section id="sn-collab">
+    <div class="sn-collab-inner">
+      <span class="sn-collab-label sn-reveal">Work With Saint Noir</span>
+      <h2 class="sn-collab-title sn-reveal sn-reveal-d1">Photographers. Models.<br/>Creative Directors.</h2>
+      <p class="sn-collab-body sn-reveal sn-reveal-d2">
+        Saint Noir accepts editorial submissions and creative collaborations on a rolling basis.
+        If your work belongs in these pages, let's talk.
+      </p>
+      <div class="sn-collab-btns sn-reveal sn-reveal-d3">
+        <a href="/#contact" class="sn-btn-outline">Submit Work</a>
+        <a href="/#contact" class="sn-btn-outline">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="sn-footer">
+    <div class="sn-footer-inner">
+      <span class="sn-footer-pub">Saint Noir is a publication of Saint's Touch Photography &amp; Videography</span>
+      <span class="sn-footer-copy">&copy; {new Date().getFullYear()} Saint's Touch Photography</span>
+      <div class="sn-footer-links">
+        <a href="https://www.instagram.com/saintogsnaps" target="_blank">Instagram</a>
+        <a href="https://wa.me/16195096448" target="_blank">WhatsApp</a>
+        <a href="/">Back to Site</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /sn-page -->
+
+<script is:inline>
+  // Nav scroll state
+  const snNav = document.getElementById('sn-nav');
+  window.addEventListener('scroll', () => {
+    snNav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Scroll reveal
+  const snRevealEls = document.querySelectorAll('.sn-reveal');
+  const snObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        snObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  snRevealEls.forEach(el => snObserver.observe(el));
+
+  // Carry custom cursor from parent site if it exists
+  if (document.getElementById('cursor-dot')) {
+    document.getElementById('cursor-dot').style.display = 'block';
+    document.getElementById('cursor-ring').style.display = 'block';
+  }
+</script>
+
+</BaseLayout>
